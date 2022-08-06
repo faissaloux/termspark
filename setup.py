@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='termspark',
-    version='0.0.3',
+    version='0.0.4',
     author='Faissal Wahabali',
     author_email='fwahabali@gmail.com',
     description='Takes control of terminal',
