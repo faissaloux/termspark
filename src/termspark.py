@@ -6,21 +6,19 @@ class TermSpark:
     center = ''
     separator = ' '
     line_is_set = False
-    colors_codes = [
-        '[30m', # grey
-        '[31m', # red
-        '[32m', # green
-        '[33m', # yellow
-        '[34m', # blue
-        '[35m', # magenta
-        '[36m', # cyan
-        '[0m',  # reset
-    ]
     placements = [
         'left',
         'right',
         'center',
     ]
+    colors = range(30, 37)
+    highlights = range(40, 48)
+    attributes = range(1, 9)
+
+    design_codes = []
+
+    def __init__(self):
+        self.set_design_codes()
 
     def print_left(self, string):
         self.left = string
@@ -53,7 +51,7 @@ class TermSpark:
     def calculate_colors_codes_length(self):
         colors_codes_length = 0
 
-        for color_code in self.colors_codes:
+        for color_code in self.design_codes:
             for placement in self.placements:
                 placement_content = getattr(self, placement)
                 if color_code in placement_content:
@@ -64,7 +62,17 @@ class TermSpark:
     def line(self, separator = None):
         self.line_is_set = True
         self.set_separator(separator)
+
         return self
+
+    def set_design_codes(self):
+        for color in self.colors:
+            self.design_codes.append(f'[{color}m')
+        for highlight in self.highlights:
+            self.design_codes.append(f'[{highlight}m')
+        for attribute in self.attributes:
+            self.design_codes.append(f'[{attribute}m')
+        self.design_codes.append('[0m')
 
     def __del__(self):
         self.calculate_separator_length()
