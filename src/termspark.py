@@ -51,11 +51,11 @@ class TermSpark:
     def calculate_colors_codes_length(self):
         colors_codes_length = 0
 
-        for color_code in self.design_codes:
+        for design_code in self.design_codes:
             for placement in self.placements:
                 placement_content = getattr(self, placement)
-                if color_code in placement_content:
-                    colors_codes_length += (len(color_code) * placement_content.count(color_code)) + placement_content.count(color_code)
+                if design_code in placement_content:
+                    colors_codes_length += (len(design_code) * placement_content.count(design_code)) + placement_content.count(design_code)
 
         return colors_codes_length
 
@@ -67,12 +67,17 @@ class TermSpark:
 
     def set_design_codes(self):
         for color in self.colors:
-            self.design_codes.append(f'[{color}m')
+            if f'[{color}m' not in self.design_codes:
+                self.design_codes.append(f'[{color}m')
         for highlight in self.highlights:
-            self.design_codes.append(f'[{highlight}m')
+            if f'[{highlight}m' not in self.design_codes:
+                self.design_codes.append(f'[{highlight}m')
         for attribute in self.attributes:
-            self.design_codes.append(f'[{attribute}m')
-        self.design_codes.append('[0m')
+            if f'[{attribute}m' not in self.design_codes:
+                self.design_codes.append(f'[{attribute}m')
+        
+        if f'[0m' not in self.design_codes:
+            self.design_codes.append('[0m')
 
     def __del__(self):
         self.calculate_separator_length()
