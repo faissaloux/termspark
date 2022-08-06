@@ -11,6 +11,9 @@ class TermSpark:
         '[31m', # red
         '[32m', # green
         '[33m', # yellow
+        '[34m', # blue
+        '[35m', # magenta
+        '[36m', # cyan
         '[0m',  # reset
     ]
     placements = [
