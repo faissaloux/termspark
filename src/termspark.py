@@ -36,7 +36,8 @@ class TermSpark:
         return self
 
     def set_separator(self, separator):
-        if separator: self.separator = separator[0]
+        if len(separator) > 1: raise Exception("Sorry, separator must contain only one character") 
+        self.separator = separator
 
         return self
 
