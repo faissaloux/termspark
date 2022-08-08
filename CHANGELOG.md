@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.5...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.6...main)
+
+## [v0.0.6](https://github.com/faissaloux/termspark/compare/v0.0.5...v0.0.6) - 2022-08-08
+### FIXED
+- fix: colors codes length ([0d40735](https://github.com/faissaloux/termspark/commit/0d4073592ceab28542d39725e1c3e6819ba6eea9))
 
 ## [v0.0.5](https://github.com/faissaloux/termspark/compare/v0.0.4...v0.0.5) - 2022-08-08
 ### Added
