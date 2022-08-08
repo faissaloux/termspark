@@ -1,4 +1,10 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.4...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.5...main)
+
+## [v0.0.5](https://github.com/faissaloux/termspark/compare/v0.0.4...v0.0.5) - 2022-08-08
+### Added
+- colors support ([6954b08](https://github.com/faissaloux/termspark/commit/6954b086d57fcfc152e8190b284336d6b1cbd6df))
+### Changed
+- separator can contain only one character ([5397277](https://github.com/faissaloux/termspark/commit/539727739d336572c2061b6d5cdeb807d09c4923))
 
 ## [v0.0.4](https://github.com/faissaloux/termspark/compare/v0.0.3...v0.0.4) - 2022-08-06
 
