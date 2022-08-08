@@ -1,8 +1,8 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='termspark',
-    version='0.0.4',
+    version='0.0.5',
     author='Faissal Wahabali',
     author_email='fwahabali@gmail.com',
     description='Takes control of terminal',
@@ -12,9 +12,10 @@ setup(
     keywords='terminal, cmd, design',
     python_requires='>=3.7',
     url='https://github.com/faissaloux/termspark',
-    py_modules=["termspark"],
-    package_dir={'': 'src'},
-    install_requires=[],
+    packages=find_packages(),
+    install_requires=[
+        'colorama==0.4.5',
+    ],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.7",

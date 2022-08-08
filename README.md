@@ -18,3 +18,23 @@
 
 > **Note**
 > Separator can contain only one character max.
+
+##### You can also paint your content
+
+**Supported colors:**
+- black
+- red
+- green
+- yellow
+- blue
+- magenta
+- cyan
+- white
+
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().print_right('RIGHT', 'blue')
+    TermSpark().print_left('LEFT', 'red')
+    TermSpark().print_center('CENTER', 'green')
+```
