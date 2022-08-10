@@ -7,4 +7,3 @@ class Fore:
     MAGENTA = 35
     CYAN    = 36
     WHITE   = 37
-    RESET   = 39
