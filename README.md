@@ -1,3 +1,5 @@
+![PyPI](https://img.shields.io/pypi/v/termspark?style=for-the-badge) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/termspark?style=for-the-badge) ![PyPI - Status](https://img.shields.io/pypi/status/termspark?style=for-the-badge)
+
 # Installation
 ```bash
     pip install termspark
