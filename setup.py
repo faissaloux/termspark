@@ -16,6 +16,11 @@ setup(
     install_requires=[
         'colorama==0.4.5',
     ],
+    extras_require={
+        'dev': [
+            'pytest==7.1.2',
+        ]
+    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.7",

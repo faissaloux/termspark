@@ -63,7 +63,7 @@ class TermSpark:
 
         for placement in self.placements:
             content_length += len(getattr(self, placement)['painted_content'])
-        self.separator_length = os.get_terminal_size()[0] - content_length + colors_codes_length
+        self.separator_length = self.get_terminal_width() - content_length + colors_codes_length
 
     def calculate_colors_codes_length(self):
         colors_codes_length = 0
@@ -95,6 +95,13 @@ class TermSpark:
         
         if f'[0m' not in self.design_codes:
             self.design_codes.append('[0m')
+
+    def get_terminal_width(self):
+        try:
+            width = os.get_terminal_size()[0]
+        except OSError:
+            width = 80
+        return width
 
     def __del__(self):
         self.calculate_separator_length()
