@@ -78,7 +78,7 @@ class TermSpark:
 
     def line(self, separator = None):
         self.line_is_set = True
-        self.set_separator(separator)
+        self.set_separator(separator if separator else self.separator)
 
         return self
 
