@@ -1,4 +1,4 @@
-![PyPI](https://img.shields.io/pypi/v/termspark?style=for-the-badge) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/termspark?style=for-the-badge) ![PyPI - Status](https://img.shields.io/pypi/status/termspark?style=for-the-badge)
+[![Test Python package](https://github.com/faissaloux/termspark/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/faissaloux/termspark/actions/workflows/tests.yml) ![PyPI](https://img.shields.io/pypi/v/termspark) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/termspark) ![PyPI - Status](https://img.shields.io/pypi/status/termspark)
 
 # Installation
 ```bash
