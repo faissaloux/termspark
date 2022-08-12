@@ -1,9 +1,9 @@
 from .constants.fore import Fore
 
 class Painter:
-    PREFIX  = '\u001b['
+    PREFIX  = '\x1b['
     SUFFIX  = 'm'
-    RESET   = '\u001b[0m'
+    RESET   = '\x1b[0m'
 
     def __init__(self, content, color):
         self.content = content

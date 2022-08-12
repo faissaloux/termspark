@@ -1,7 +1,7 @@
 from termspark import TermSpark
 import pytest
 
-class TestSetParams():
+class TestTermsparkAttributes:
     def test_can_set_separator(self):
         termspark = TermSpark()
         assert termspark.separator == ' ' # Default

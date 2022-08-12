@@ -74,7 +74,7 @@ class TermSpark:
                 if design_code in placement_content:
                     colors_codes_length += (len(design_code) * placement_content.count(design_code)) + placement_content.count(design_code)
 
-        return colors_codes_length - len('\u001b')
+        return colors_codes_length - len('\x1b')
 
     def line(self, separator = None):
         self.line_is_set = True
@@ -103,7 +103,7 @@ class TermSpark:
             width = 80
         return width
 
-    def __del__(self):
+    def render(self):
         self.calculate_separator_length()
         separator_mid_width = self.separator * int( self.separator_length / 2 )
 
@@ -113,4 +113,10 @@ class TermSpark:
             else:
                 center = self.separator * self.separator_length
 
-            print(self.left['painted_content'] + center + self.right['painted_content'])
+            return self.left['painted_content'] + center + self.right['painted_content']
+
+    def __del__(self):
+        print(self.render())
+
+    def __repr__(self):
+        return self.render()
