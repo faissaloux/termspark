@@ -40,3 +40,21 @@
     TermSpark().print_left('LEFT', 'red')
     TermSpark().print_center('CENTER', 'green')
 ```
+
+**Supported highlights:**
+- black
+- red
+- green
+- yellow
+- blue
+- magenta
+- cyan
+- white
+
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().print_right('RIGHT', None, 'magenta')
+    TermSpark().print_left('LEFT', 'red', 'white')
+    TermSpark().print_center('CENTER', 'white', 'blue')
+```

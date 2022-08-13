@@ -8,16 +8,19 @@ class TermSpark:
     left = {
         'content': '',
         'color': '',
+        'highlight': '',
         'painted_content': '',
     }
     right = {
         'content': '',
         'color': '',
+        'highlight': '',
         'painted_content': '',
     }
     center = {
         'content': '',
         'color': '',
+        'highlight': '',
         'painted_content': '',
     }
     separator = ' '
@@ -28,7 +31,7 @@ class TermSpark:
         'center',
     ]
     colors = range(30, 37)
-    highlights = range(40, 48)
+    highlights = range(41, 48)
     attributes = range(1, 9)
 
     design_codes = []
@@ -36,18 +39,18 @@ class TermSpark:
     def __init__(self):
         self.set_design_codes()
 
-    def print_left(self, content, color = None):
-        self.left = Structurer(content, color).form()
+    def print_left(self, content, color = None, highlight = None):
+        self.left = Structurer(content, color, highlight).form()
 
         return self
 
-    def print_right(self, content, color = None):
-        self.right = Structurer(content, color).form()
+    def print_right(self, content, color = None, highlight = None):
+        self.right = Structurer(content, color, highlight).form()
 
         return self
 
-    def print_center(self, content, color = None):
-        self.center = Structurer(content, color).form()
+    def print_center(self, content, color = None, highlight = None):
+        self.center = Structurer(content, color, highlight).form()
 
         return self
 
