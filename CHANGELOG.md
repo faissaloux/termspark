@@ -1,4 +1,11 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.6...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.7...main)
+
+## [v0.0.7](https://github.com/faissaloux/termspark/compare/v0.0.6...v0.0.7) - 2022-08-13
+### FIXED
+- fix: line() cant accept None for separator ([302a162](https://github.com/faissaloux/termspark/commit/302a1624f83de11f91a4a051d13fe6725c94150a))
+
+### ADDED
+- highlights support ([aa2f18f](https://github.com/faissaloux/termspark/commit/aa2f18f01a65cad285c47c20991bf46254f0990c))
 
 ## [v0.0.6](https://github.com/faissaloux/termspark/compare/v0.0.5...v0.0.6) - 2022-08-08
 ### FIXED
