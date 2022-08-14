@@ -6,6 +6,7 @@ class Highlight:
     MAGENTA         = 45
     CYAN            = 46
     GRAY            = 100
+    GREY            = 100
     LIGHT_RED       = 101
     LIGHT_GREEN     = 102
     LIGHT_YELLOW    = 103

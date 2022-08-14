@@ -25,6 +25,9 @@ class TestFore:
     def test_gray(self):
         assert Fore.GRAY == 90
 
+    def test_grey(self):
+        assert Fore.GREY == 90
+
     def test_light_red(self):
         assert Fore.LIGHT_RED == 91
 

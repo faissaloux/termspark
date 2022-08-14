@@ -22,6 +22,9 @@ class TestHighlight:
     def test_gray(self):
         assert Highlight.GRAY == 100
 
+    def test_grey(self):
+        assert Highlight.GREY == 100
+
     def test_light_red(self):
         assert Highlight.LIGHT_RED == 101
 

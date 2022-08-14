@@ -32,7 +32,7 @@
 - magenta
 - cyan
 - white
-- gray
+- gray / grey
 - light red
 - light green
 - light yellow
@@ -57,7 +57,7 @@
 - magenta
 - cyan
 - white
-- gray
+- gray / grey
 - light red
 - light green
 - light yellow

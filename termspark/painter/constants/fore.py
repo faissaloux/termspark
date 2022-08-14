@@ -7,6 +7,7 @@ class Fore:
     MAGENTA         = 35
     CYAN            = 36
     GRAY            = 90
+    GREY            = 90
     LIGHT_RED       = 91
     LIGHT_GREEN     = 92
     LIGHT_YELLOW    = 93
