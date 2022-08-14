@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.8...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.9...main)
+
+## [v0.0.9](https://github.com/faissaloux/termspark/compare/v0.0.8...v0.0.9) - 2022-08-14
+### ADDED
+- support grey as gray ([32d32df](https://github.com/faissaloux/termspark/commit/32d32df4e2a4da5c517c99975797648f880d8dfc))
 
 ## [v0.0.8](https://github.com/faissaloux/termspark/compare/v0.0.7...v0.0.8) - 2022-08-14
 ### ADDED
