@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.7...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.8...main)
+
+## [v0.0.8](https://github.com/faissaloux/termspark/compare/v0.0.7...v0.0.8) - 2022-08-14
+### ADDED
+- support more colors and highlights ([c8c6900](https://github.com/faissaloux/termspark/commit/c8c690063c2d089be5f3d8c2f935825635288240))
 
 ## [v0.0.7](https://github.com/faissaloux/termspark/compare/v0.0.6...v0.0.7) - 2022-08-13
 ### FIXED
