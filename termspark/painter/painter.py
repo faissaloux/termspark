@@ -8,8 +8,8 @@ class Painter:
 
     def __init__(self, content, color = None, highlight = None):
         self.content = content
-        self.color = color
-        self.highlight = highlight
+        self.color = color.replace(' ', '_') if color else color
+        self.highlight = highlight.replace(' ', '_') if highlight else highlight
 
     def paint(self):
         return f"{self.paint_color()}{self.paint_highlight()}{self.content}{self.reset()}"

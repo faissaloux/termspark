@@ -21,3 +21,24 @@ class TestFore:
 
     def test_cyan(self):
         assert Fore.CYAN == 36
+
+    def test_gray(self):
+        assert Fore.GRAY == 90
+
+    def test_light_red(self):
+        assert Fore.LIGHT_RED == 91
+
+    def test_light_green(self):
+        assert Fore.LIGHT_GREEN == 92
+
+    def test_light_yellow(self):
+        assert Fore.LIGHT_YELLOW == 93
+
+    def test_light_blue(self):
+        assert Fore.LIGHT_BLUE == 94
+
+    def test_light_magenta(self):
+        assert Fore.LIGHT_MAGENTA == 95
+
+    def test_light_cyan(self):
+        assert Fore.LIGHT_CYAN == 96

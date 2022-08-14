@@ -32,13 +32,20 @@
 - magenta
 - cyan
 - white
+- gray
+- light red
+- light green
+- light yellow
+- light blue
+- light magenta
+- light cyan
 
 ```python
     from termspark.termspark import TermSpark
 
     TermSpark().print_right('RIGHT', 'blue')
-    TermSpark().print_left('LEFT', 'red')
-    TermSpark().print_center('CENTER', 'green')
+    TermSpark().print_left('LEFT', 'light red')
+    TermSpark().print_center('CENTER', 'light_green')
 ```
 
 **Supported highlights:**
@@ -50,11 +57,18 @@
 - magenta
 - cyan
 - white
+- gray
+- light red
+- light green
+- light yellow
+- light blue
+- light magenta
+- light cyan
 
 ```python
     from termspark.termspark import TermSpark
 
-    TermSpark().print_right('RIGHT', None, 'magenta')
+    TermSpark().print_right('RIGHT', None, 'light_magenta')
     TermSpark().print_left('LEFT', 'red', 'white')
-    TermSpark().print_center('CENTER', 'white', 'blue')
+    TermSpark().print_center('CENTER', 'white', 'light blue')
 ```

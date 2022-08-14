@@ -1,6 +1,7 @@
 import os
-from .structurer.structurer import Structurer
 import colorama
+from itertools import chain
+from .structurer.structurer import Structurer
 
 colorama.init()
 
@@ -30,8 +31,8 @@ class TermSpark:
         'right',
         'center',
     ]
-    colors = range(30, 37)
-    highlights = range(41, 48)
+    colors = chain(range(30, 37), range(90, 97))
+    highlights = chain(range(41, 47), range(100, 108))
     attributes = range(1, 9)
 
     design_codes = []

@@ -22,6 +22,13 @@ class TestPainter:
         assert painter.color == 'red'
         assert painter.paint() == f'\x1b[{Fore.RED}mcontent\x1b[0m'
 
+    def test_can_add_existed_multi_words_fore_color(self):
+        painter = Painter('content', 'light red')
+
+        assert painter.content == 'content'
+        assert painter.color == 'light_red'
+        assert painter.paint() == f'\x1b[{Fore.LIGHT_RED}mcontent\x1b[0m'
+
     def test_return_content_when_unexisted_fore_color(self):
         painter = Painter('content', 'pink')
 
@@ -35,6 +42,13 @@ class TestPainter:
         assert painter.content == 'content'
         assert painter.highlight == 'blue'
         assert painter.paint() == f'\x1b[{Highlight.BLUE}mcontent\x1b[0m'
+
+    def test_can_add_existed_multi_words_highlight(self):
+        painter = Painter('content', None, 'light red')
+
+        assert painter.content == 'content'
+        assert painter.highlight == 'light_red'
+        assert painter.paint() == f'\x1b[{Highlight.LIGHT_RED}mcontent\x1b[0m'
 
     def test_return_content_when_unexisted_highlight(self):
         painter = Painter('content', None, 'pink')
