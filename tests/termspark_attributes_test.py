@@ -19,21 +19,18 @@ class TestTermsparkAttributes:
 
     def test_can_set_left_content(self):
         termspark = TermSpark()
-        assert termspark.left['content'] == '' # Default
 
         termspark.print_left('LEFT')
         assert termspark.left['content'] == 'LEFT'
 
     def test_can_set_right_content(self):
         termspark = TermSpark()
-        assert termspark.right['content'] == '' # Default
 
         termspark.print_right('RIGHT')
         assert termspark.right['content'] == 'RIGHT'
 
     def test_can_set_center_content(self):
         termspark = TermSpark()
-        assert termspark.center['content'] == '' # Default
 
         termspark.print_center('CENTER')
         assert termspark.center['content'] == 'CENTER'

@@ -2,28 +2,14 @@ import os
 import colorama
 from itertools import chain
 from .structurer.structurer import Structurer
+from .helpers.existenceChecker import ExistenceChecker
 
 colorama.init()
 
 class TermSpark:
-    left = {
-        'content': '',
-        'color': '',
-        'highlight': '',
-        'painted_content': '',
-    }
-    right = {
-        'content': '',
-        'color': '',
-        'highlight': '',
-        'painted_content': '',
-    }
-    center = {
-        'content': '',
-        'color': '',
-        'highlight': '',
-        'painted_content': '',
-    }
+    left = {}
+    right = {}
+    center = {}
     separator = ' '
     line_is_set = False
     placements = [
@@ -66,7 +52,8 @@ class TermSpark:
         content_length = 0
 
         for placement in self.placements:
-            content_length += len(getattr(self, placement)['painted_content'])
+            painted_content = ExistenceChecker().dictionary_key(getattr(self, placement), 'painted_content')
+            content_length += len(painted_content)
         self.separator_length = self.get_terminal_width() - content_length + colors_codes_length
 
     def calculate_colors_codes_length(self):
@@ -74,7 +61,7 @@ class TermSpark:
 
         for design_code in self.design_codes:
             for placement in self.placements:
-                placement_content = getattr(self, placement)['painted_content']
+                placement_content = ExistenceChecker().dictionary_key(getattr(self, placement), 'painted_content')
                 if design_code in placement_content:
                     colors_codes_length += (len(design_code) * placement_content.count(design_code)) + placement_content.count(design_code)
 
@@ -112,12 +99,15 @@ class TermSpark:
         separator_mid_width = self.separator * int( self.separator_length / 2 )
 
         if 'content' in self.left or 'content' in self.right or 'content' in self.center or self.line_is_set:
-            if len(self.center['content']) > 0:
+            center_content = ExistenceChecker().dictionary_key(self.center, 'content')
+            if len( center_content ) > 0:
                 center = separator_mid_width + self.center['painted_content'] + separator_mid_width
             else:
                 center = self.separator * self.separator_length
 
-            return self.left['painted_content'] + center + self.right['painted_content']
+            left_painted_content = ExistenceChecker().dictionary_key(self.left, 'painted_content')
+            right_painted_content = ExistenceChecker().dictionary_key(self.right, 'painted_content')
+            return left_painted_content + center + right_painted_content
 
     def __del__(self):
         print(self.render())
