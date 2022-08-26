@@ -10,12 +10,16 @@
     from termspark import TermSpark
 
     TermSpark().print_right('RIGHT')
+    TermSpark().spark_right('RIGHT')
     TermSpark().print_left('LEFT')
+    TermSpark().spark_left('LEFT')
     TermSpark().print_center('CENTER')
+    TermSpark().spark_center('CENTER')
     TermSpark().line('.')
 
     TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.')
     TermSpark().print_left('LEFT').print_center('CENTER').print_right('RIGHT').set_separator('.')
+    TermSpark().spark_left('LEFT').spark_center('CENTER').spark_right('RIGHT').set_separator('.')
 ```
 
 > **Note**
@@ -72,3 +76,13 @@
     TermSpark().print_left('LEFT', 'red', 'white')
     TermSpark().print_center('CENTER', 'white', 'light blue')
 ```
+
+##### You can use different styles on same position
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue'])
+    TermSpark().spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow'])
+    TermSpark().spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red'])
+```
+`You know you can use them all together 😉`
