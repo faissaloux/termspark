@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.11...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.12...main)
+
+## [v0.0.12](https://github.com/faissaloux/termspark/compare/v0.0.11...v0.0.12) - 2022-08-26
+### ADDED
+- can call termspark functions separately [a74ae1c](https://github.com/faissaloux/termspark/commit/a74ae1c985005e5d7d124c88296bc883ab46c76b)
 
 ## [v0.0.11](https://github.com/faissaloux/termspark/compare/v0.0.10...v0.0.11) - 2022-08-26
 ### FIXED
