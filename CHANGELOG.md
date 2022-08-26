@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.10...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.11...main)
+
+## [v0.0.11](https://github.com/faissaloux/termspark/compare/v0.0.10...v0.0.11) - 2022-08-26
+### FIXED
+- raise exception when trying to pass a list to printer [d805366](https://github.com/faissaloux/termspark/commit/d805366eb6b0c5c575cea40d35601de4a9063795)
 
 ## [v0.0.10](https://github.com/faissaloux/termspark/compare/v0.0.9...v0.0.10) - 2022-08-26
 ### ADDED
