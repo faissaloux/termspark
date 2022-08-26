@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.9...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.10...main)
+
+## [v0.0.10](https://github.com/faissaloux/termspark/compare/v0.0.9...v0.0.10) - 2022-08-26
+### ADDED
+- support different styles on same position [b9aef26](https://github.com/faissaloux/termspark/commit/b9aef267ebbb77c4659643d39e6f03b53220c4e2)
 
 ## [v0.0.9](https://github.com/faissaloux/termspark/compare/v0.0.8...v0.0.9) - 2022-08-14
 ### ADDED
