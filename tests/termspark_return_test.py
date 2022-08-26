@@ -137,6 +137,22 @@ class TestTermsparkReturn:
 
         assert str(termspark) == 'LEFT' + '.' * int(rest_space / 2) + 'CENTER' + '.' * int(rest_space / 2) + 'RIGHT'
 
+    def test_can_call_functions_separately(self):
+        termspark = TermSpark()
+        termspark.print_left('LEFT')
+        termspark.print_right('RIGHT')
+        termspark.print_center('CENTER')
+        termspark.set_separator('.')
+        termspark.spark()
+
+        terminal_width = termspark.get_terminal_width()
+        right_content_space = len('RIGHT')
+        center_content_space = len('CENTER')
+        left_content_space = len('LEFT')
+        rest_space = terminal_width - left_content_space - right_content_space - center_content_space - len('\x1b')
+
+        assert str(termspark) == 'LEFT' + '.' * int(rest_space / 2) + 'CENTER' + '.' * int(rest_space / 2) + 'RIGHT'
+
     def test_default_line(self):
         termspark = TermSpark().line()
 

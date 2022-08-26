@@ -45,21 +45,21 @@ class TermSpark:
         return self
 
     def spark_left(self, *contents):
-        self.spark('left', *contents)
+        self.spark_position('left', *contents)
 
         return self
 
     def spark_right(self, *contents):
-        self.spark('right', *contents)
+        self.spark_position('right', *contents)
 
         return self
 
     def spark_center(self, *contents):
-        self.spark('center', *contents)
+        self.spark_position('center', *contents)
 
         return self
 
-    def spark(self, position, *contents):
+    def spark_position(self, position, *contents):
         positionContent = {}
 
         if (isinstance(contents[0], list)):
@@ -141,7 +141,7 @@ class TermSpark:
             right_painted_content = ExistenceChecker().dictionary_key(self.right, 'painted_content')
             return left_painted_content + center + right_painted_content
 
-    def __del__(self):
+    def spark(self):
         print(self.render())
 
     def __repr__(self):
