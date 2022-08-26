@@ -9,23 +9,23 @@
 ```python
     from termspark import TermSpark
 
-    TermSpark().print_right('RIGHT')
-    TermSpark().spark_right('RIGHT')
-    TermSpark().print_left('LEFT')
-    TermSpark().spark_left('LEFT')
-    TermSpark().print_center('CENTER')
-    TermSpark().spark_center('CENTER')
-    TermSpark().line('.')
+    TermSpark().print_right('RIGHT').spark()
+    TermSpark().spark_right('RIGHT').spark()
+    TermSpark().print_left('LEFT').spark()
+    TermSpark().spark_left('LEFT').spark()
+    TermSpark().print_center('CENTER').spark()
+    TermSpark().spark_center('CENTER').spark()
+    TermSpark().line('.').spark()
 
-    TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.')
-    TermSpark().print_left('LEFT').print_center('CENTER').print_right('RIGHT').set_separator('.')
-    TermSpark().spark_left('LEFT').spark_center('CENTER').spark_right('RIGHT').set_separator('.')
+    TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').spark()
+    TermSpark().print_left('LEFT').print_center('CENTER').print_right('RIGHT').set_separator('.').spark()
+    TermSpark().spark_left('LEFT').spark_center('CENTER').spark_right('RIGHT').set_separator('.').spark()
 ```
 
 > **Note**
 > Separator can contain only one character max.
 
-##### You can also paint your content
+### You can also paint your content
 
 **Supported colors:**
 - black
@@ -47,9 +47,9 @@
 ```python
     from termspark.termspark import TermSpark
 
-    TermSpark().print_right('RIGHT', 'blue')
-    TermSpark().print_left('LEFT', 'light red')
-    TermSpark().print_center('CENTER', 'light_green')
+    TermSpark().print_right('RIGHT', 'blue').spark()
+    TermSpark().print_left('LEFT', 'light red').spark()
+    TermSpark().print_center('CENTER', 'light_green').spark()
 ```
 
 **Supported highlights:**
@@ -72,17 +72,34 @@
 ```python
     from termspark.termspark import TermSpark
 
-    TermSpark().print_right('RIGHT', None, 'light_magenta')
-    TermSpark().print_left('LEFT', 'red', 'white')
-    TermSpark().print_center('CENTER', 'white', 'light blue')
+    TermSpark().print_right('RIGHT', None, 'light_magenta').spark()
+    TermSpark().print_left('LEFT', 'red', 'white').spark()
+    TermSpark().print_center('CENTER', 'white', 'light blue').spark()
 ```
 
-##### You can use different styles on same position
+### You can use different styles on same position
 ```python
     from termspark.termspark import TermSpark
 
-    TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue'])
-    TermSpark().spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow'])
-    TermSpark().spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red'])
+    TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue']).spark()
+    TermSpark().spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow']).spark()
+    TermSpark().spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red']).spark()
 ```
 `You know you can use them all together 😉`
+
+### Lines are too long to write a termspark line! ☹️
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue']).spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow']).spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red']).spark()
+```
+#### You can separate them by calling each function in a line 🤤
+```python
+    from termspark.termspark import TermSpark
+
+    termspark = TermSpark()
+    termspark.spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue'])
+    termspark.spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow'])
+    termspark.spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red'])
+    termspark.spark()
+```
