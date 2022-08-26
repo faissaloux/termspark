@@ -20,3 +20,21 @@ class TestTermsparkColors:
         color_code_length = termspark.calculate_colors_codes_length()
 
         assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.BLUE) + 'm' + '\x1b[0m') - len('\x1b')
+
+    def test_spark_one_content(self):
+        termspark = TermSpark().spark_left('LEFT', 'red', 'white')
+        color_code_length = termspark.calculate_colors_codes_length()
+
+        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') - len('\x1b')
+
+    def test_spark_support_one_content_list(self):
+        termspark = TermSpark().spark_right(['RIGHT', 'red', 'white'])
+        color_code_length = termspark.calculate_colors_codes_length()
+
+        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') - len('\x1b')
+
+    def test_spark_support_multiple_content_lists(self):
+        termspark = TermSpark().spark_center(['CENTER', 'red', 'white'], ['CENTER', 'white', 'magenta'])
+        color_code_length = termspark.calculate_colors_codes_length()
+
+        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.MAGENTA) + 'm' + '\x1b[0m') - len('\x1b')

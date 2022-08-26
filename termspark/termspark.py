@@ -12,7 +12,7 @@ class TermSpark:
     center = {}
     separator = ' '
     line_is_set = False
-    placements = [
+    positions = [
         'left',
         'right',
         'center',
@@ -41,6 +41,35 @@ class TermSpark:
 
         return self
 
+    def spark_left(self, *contents):
+        self.spark('left', *contents)
+
+        return self
+
+    def spark_right(self, *contents):
+        self.spark('right', *contents)
+
+        return self
+
+    def spark_center(self, *contents):
+        self.spark('center', *contents)
+
+        return self
+
+    def spark(self, position, *contents):
+        positionContent = {}
+
+        if (isinstance(contents[0], list)):
+            for content in contents:
+                if not positionContent:
+                    positionContent = Structurer(*content).form()
+                else:
+                    positionContent['painted_content'] += Structurer(*content).form()['painted_content']
+        else:
+            positionContent = Structurer(*contents).form()
+
+        setattr(self, position, positionContent)
+
     def set_separator(self, separator):
         if len(separator) > 1: raise Exception("Sorry, separator can contain only one character") 
         self.separator = separator
@@ -51,8 +80,8 @@ class TermSpark:
         colors_codes_length = self.calculate_colors_codes_length()
         content_length = 0
 
-        for placement in self.placements:
-            painted_content = ExistenceChecker().dictionary_key(getattr(self, placement), 'painted_content')
+        for position in self.positions:
+            painted_content = ExistenceChecker().dictionary_key(getattr(self, position), 'painted_content')
             content_length += len(painted_content)
         self.separator_length = self.get_terminal_width() - content_length + colors_codes_length
 
@@ -60,10 +89,10 @@ class TermSpark:
         colors_codes_length = 0
 
         for design_code in self.design_codes:
-            for placement in self.placements:
-                placement_content = ExistenceChecker().dictionary_key(getattr(self, placement), 'painted_content')
-                if design_code in placement_content:
-                    colors_codes_length += (len(design_code) * placement_content.count(design_code)) + placement_content.count(design_code)
+            for position in self.positions:
+                position_content = ExistenceChecker().dictionary_key(getattr(self, position), 'painted_content')
+                if design_code in position_content:
+                    colors_codes_length += (len(design_code) * position_content.count(design_code)) + position_content.count(design_code)
 
         return colors_codes_length - len('\x1b')
 
