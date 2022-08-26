@@ -23,17 +23,38 @@ class TestTermsparkAttributes:
         termspark.print_left('LEFT')
         assert termspark.left['content'] == 'LEFT'
 
+    def test_raise_exception_when_passing_list_to_print_left(self):
+        termspark = TermSpark()
+
+        with pytest.raises(Exception):
+            termspark.print_left(['LEFT', 'red'])
+        assert termspark.left == {} # Default
+
     def test_can_set_right_content(self):
         termspark = TermSpark()
 
         termspark.print_right('RIGHT')
         assert termspark.right['content'] == 'RIGHT'
 
+    def test_raise_exception_when_passing_list_to_print_right(self):
+        termspark = TermSpark()
+
+        with pytest.raises(Exception):
+            termspark.print_right(['RIGHT', 'blue'])
+        assert termspark.right == {} # Default
+
     def test_can_set_center_content(self):
         termspark = TermSpark()
 
         termspark.print_center('CENTER')
         assert termspark.center['content'] == 'CENTER'
+
+    def test_raise_exception_when_passing_list_to_print_center(self):
+        termspark = TermSpark()
+
+        with pytest.raises(Exception):
+            termspark.print_center(['CENTER', 'blue'])
+        assert termspark.center == {} # Default
 
     def test_can_set_line(self):
         termspark = TermSpark()

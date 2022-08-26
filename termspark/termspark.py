@@ -27,16 +27,19 @@ class TermSpark:
         self.set_design_codes()
 
     def print_left(self, content, color = None, highlight = None):
+        if isinstance(content, list): raise Exception("maybe you wanna use spark_left")
         self.left = Structurer(content, color, highlight).form()
 
         return self
 
     def print_right(self, content, color = None, highlight = None):
+        if isinstance(content, list): raise Exception("maybe you wanna use spark_right")
         self.right = Structurer(content, color, highlight).form()
 
         return self
 
     def print_center(self, content, color = None, highlight = None):
+        if isinstance(content, list): raise Exception("maybe you wanna use spark_center")
         self.center = Structurer(content, color, highlight).form()
 
         return self
@@ -71,7 +74,7 @@ class TermSpark:
         setattr(self, position, positionContent)
 
     def set_separator(self, separator):
-        if len(separator) > 1: raise Exception("Sorry, separator can contain only one character") 
+        if len(separator) > 1: raise Exception("Sorry, separator can contain only one character")
         self.separator = separator
 
         return self
