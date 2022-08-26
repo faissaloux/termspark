@@ -87,7 +87,7 @@
 ```
 `You know you can use them all together 😉`
 
-### Lines are too long to write a termspark line! ☹️
+### Lines are too long to write a termspark line! 😑
 ```python
     from termspark.termspark import TermSpark
 
