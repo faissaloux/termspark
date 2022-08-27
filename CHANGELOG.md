@@ -1,4 +1,10 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.12...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.13...main)
+
+## [v0.0.13](https://github.com/faissaloux/termspark/compare/v0.0.13...v0.0.13) - 2022-08-27
+### CHANGED
+- custom exceptions [6a0950c](https://github.com/faissaloux/termspark/commit/6a0950c595d60faee2b744db47c83b922cf7b23b)
+### ADDED
+- can chain multiple same position sparks [fa0c4db](https://github.com/faissaloux/termspark/commit/fa0c4dba861133a6e96465fd3dbf84505431998a)
 
 ## [v0.0.12](https://github.com/faissaloux/termspark/compare/v0.0.11...v0.0.12) - 2022-08-26
 ### ADDED
