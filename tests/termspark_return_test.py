@@ -153,6 +153,24 @@ class TestTermsparkReturn:
 
         assert str(termspark) == 'LEFT' + '.' * int(rest_space / 2) + 'CENTER' + '.' * int(rest_space / 2) + 'RIGHT'
 
+    def test_can_chain_multiple_same_position_spark(self):
+        termspark = TermSpark()
+        termspark.spark_left(['*'])
+        termspark.spark_left('LEFT')
+        termspark.spark_right('*')
+        termspark.spark_right(['RIGHT'])
+        termspark.spark_center('CENTER')
+        termspark.set_separator('.')
+        termspark.spark()
+
+        terminal_width = termspark.get_terminal_width()
+        right_content_space = len('RIGHT') + len('*')
+        center_content_space = len('CENTER')
+        left_content_space = len('LEFT') + len('*')
+        rest_space = terminal_width - left_content_space - right_content_space - center_content_space - len('\x1b')
+
+        assert str(termspark) == '*LEFT' + '.' * int(rest_space / 2) + 'CENTER' + '.' * int(rest_space / 2) + '*RIGHT'
+
     def test_default_line(self):
         termspark = TermSpark().line()
 

@@ -62,7 +62,7 @@ class TermSpark:
         setattr(self, position, positionContent)
 
     def spark_position(self, position, *contents):
-        positionContent = {}
+        positionContent = getattr(self, position) if getattr(self, position) else {}
 
         if (isinstance(contents[0], list)):
             for content in contents:
@@ -71,7 +71,10 @@ class TermSpark:
                 else:
                     positionContent['painted_content'] += Structurer(*content).form()['painted_content']
         else:
-            positionContent = Structurer(*contents).form()
+            if not positionContent:
+                positionContent = Structurer(*contents).form()
+            else:
+                positionContent['painted_content'] += Structurer(*contents).form()['painted_content']
 
         setattr(self, position, positionContent)
 

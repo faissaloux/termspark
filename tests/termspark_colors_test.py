@@ -13,13 +13,13 @@ class TestTermsparkColors:
         termspark = TermSpark().print_left('LEFT', 'red').print_right('RIGHT', 'blue')
         color_code_length = termspark.calculate_colors_codes_length()
 
-        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm' + '\x1b[0m') + len('\x1b[' + str(Fore.BLUE) + 'm' + '\x1b[0m') - len('\x1b')
+        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm' + '\x1b[0m') + len('\x1b[' + str(Fore.BLUE) + 'm') + len('\x1b[0m') - len('\x1b')
 
     def test_multiple_colors_and_highlights_code_length_calculation(self):
         termspark = TermSpark().print_left('LEFT', 'red', 'white').print_right('RIGHT', 'white', 'blue')
         color_code_length = termspark.calculate_colors_codes_length()
 
-        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.BLUE) + 'm' + '\x1b[0m') - len('\x1b')
+        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.BLUE) + 'm') + len('\x1b[0m') - len('\x1b')
 
     def test_spark_one_content(self):
         termspark = TermSpark().spark_left('LEFT', 'red', 'white')
@@ -37,4 +37,12 @@ class TestTermsparkColors:
         termspark = TermSpark().spark_center(['CENTER', 'red', 'white'], ['CENTER', 'white', 'magenta'])
         color_code_length = termspark.calculate_colors_codes_length()
 
-        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.MAGENTA) + 'm' + '\x1b[0m') - len('\x1b')
+        assert color_code_length == len('\x1b[' + str(Fore.RED) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.MAGENTA) + 'm') + len('\x1b[0m') - len('\x1b')
+
+    def test_can_chain_multiple_same_position_spark(self):
+        termspark = TermSpark()
+        termspark.spark_left([' * ', 'black', 'white'])
+        termspark.spark_left([' LEFT ', 'white', 'red'])
+        color_code_length = termspark.calculate_colors_codes_length()
+
+        assert color_code_length == len('\x1b[' + str(Fore.BLACK) + 'm') + len('\x1b[' + str(Highlight.WHITE) + 'm') + len('\x1b[0m') + len('\x1b[' + str(Highlight.RED) + 'm') + len('\x1b[0m') - len('\x1b')
