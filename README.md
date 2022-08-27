@@ -25,7 +25,7 @@
 > **Note**
 > Separator can contain only one character max.
 
-### You can also paint your content
+## You can also paint your content
 
 **Supported colors:**
 - black
@@ -77,7 +77,7 @@
     TermSpark().print_center('CENTER', 'white', 'light blue').spark()
 ```
 
-### You can use different styles on same position
+## You can use different styles on same position
 ```python
     from termspark.termspark import TermSpark
 
@@ -87,13 +87,13 @@
 ```
 `You know you can use them all together 😉`
 
-### Lines are too long to write a termspark line! 😑
+## Lines are too long to write a termspark line! 😑
 ```python
     from termspark.termspark import TermSpark
 
     TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue']).spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow']).spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red']).spark()
 ```
-#### You can separate them by calling each function in a line 🤤
+### You can separate them by calling each function in a line 🤤
 ```python
     from termspark.termspark import TermSpark
 
@@ -101,5 +101,18 @@
     termspark.spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue'])
     termspark.spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow'])
     termspark.spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red'])
+    termspark.spark()
+```
+### Still too long 🙄 Got you 🤩
+```python
+    from termspark.termspark import TermSpark
+
+    termspark = TermSpark()
+    termspark.spark_left([' * ', 'gray', 'white'])
+    termspark.spark_left(' Info ', 'white', 'blue')
+    termspark.spark_center([' * ', 'gray', 'white'])
+    termspark.spark_center([' Warning ', 'white', 'yellow'])
+    termspark.spark_right(' * ', 'gray', 'white')
+    termspark.spark_right([' Error ', 'white', 'red'])
     termspark.spark()
 ```
