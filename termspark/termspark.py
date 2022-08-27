@@ -1,10 +1,9 @@
 import os
-import colorama
 from itertools import chain
 from .structurer.structurer import Structurer
 from .helpers.existenceChecker import ExistenceChecker
-
-colorama.init()
+from .exceptions.printerArgException import PrinterArgException
+from .exceptions.argCharsExceededException import ArgCharsExceededException
 
 class TermSpark:
     left = {}
@@ -57,7 +56,7 @@ class TermSpark:
         return self
 
     def print_position(self, position, content, color, highlight):
-        if isinstance(content, list): raise Exception(f"maybe you wanna use spark_{position}")
+        if isinstance(content, list): raise PrinterArgException(position)
         positionContent = Structurer(content, color, highlight).form()
 
         setattr(self, position, positionContent)
@@ -77,7 +76,7 @@ class TermSpark:
         setattr(self, position, positionContent)
 
     def set_separator(self, separator):
-        if len(separator) > 1: raise Exception("Sorry, separator can contain only one character")
+        if len(separator) > 1: raise ArgCharsExceededException('separator', 'one')
         self.separator = separator
 
         return self

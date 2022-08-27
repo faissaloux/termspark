@@ -1,5 +1,7 @@
 from termspark import TermSpark
 import pytest
+from termspark.exceptions.printerArgException import PrinterArgException
+from termspark.exceptions.argCharsExceededException import ArgCharsExceededException
 
 class TestTermsparkAttributes:
     def test_can_set_separator(self):
@@ -13,7 +15,7 @@ class TestTermsparkAttributes:
         termspark = TermSpark()
         assert termspark.separator == ' ' # Default
 
-        with pytest.raises(Exception):
+        with pytest.raises(ArgCharsExceededException):
             termspark.set_separator('..')
         assert termspark.separator == ' ' # Default
 
@@ -26,7 +28,7 @@ class TestTermsparkAttributes:
     def test_raise_exception_when_passing_list_to_print_left(self):
         termspark = TermSpark()
 
-        with pytest.raises(Exception):
+        with pytest.raises(PrinterArgException):
             termspark.print_left(['LEFT', 'red'])
         assert termspark.left == {} # Default
 
@@ -39,7 +41,7 @@ class TestTermsparkAttributes:
     def test_raise_exception_when_passing_list_to_print_right(self):
         termspark = TermSpark()
 
-        with pytest.raises(Exception):
+        with pytest.raises(PrinterArgException):
             termspark.print_right(['RIGHT', 'blue'])
         assert termspark.right == {} # Default
 
@@ -52,7 +54,7 @@ class TestTermsparkAttributes:
     def test_raise_exception_when_passing_list_to_print_center(self):
         termspark = TermSpark()
 
-        with pytest.raises(Exception):
+        with pytest.raises(PrinterArgException):
             termspark.print_center(['CENTER', 'blue'])
         assert termspark.center == {} # Default
 
