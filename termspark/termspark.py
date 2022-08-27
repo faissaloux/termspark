@@ -27,20 +27,17 @@ class TermSpark:
         self.set_design_codes()
 
     def print_left(self, content, color = None, highlight = None):
-        if isinstance(content, list): raise Exception("maybe you wanna use spark_left")
-        self.left = Structurer(content, color, highlight).form()
+        self.print_position('left', content, color, highlight)
 
         return self
 
     def print_right(self, content, color = None, highlight = None):
-        if isinstance(content, list): raise Exception("maybe you wanna use spark_right")
-        self.right = Structurer(content, color, highlight).form()
+        self.print_position('right', content, color, highlight)
 
         return self
 
     def print_center(self, content, color = None, highlight = None):
-        if isinstance(content, list): raise Exception("maybe you wanna use spark_center")
-        self.center = Structurer(content, color, highlight).form()
+        self.print_position('center', content, color, highlight)
 
         return self
 
@@ -58,6 +55,12 @@ class TermSpark:
         self.spark_position('center', *contents)
 
         return self
+
+    def print_position(self, position, content, color, highlight):
+        if isinstance(content, list): raise Exception(f"maybe you wanna use spark_{position}")
+        positionContent = Structurer(content, color, highlight).form()
+
+        setattr(self, position, positionContent)
 
     def spark_position(self, position, *contents):
         positionContent = {}
