@@ -74,8 +74,14 @@ class TermSpark:
 
     def appendPositionContent(self, positionContent, *content):
         if not positionContent:
-            positionContent = Structurer(*content).form()
+            positionContent['content'] = [Structurer(*content).form()['content']]
+            positionContent['color'] = [Structurer(*content).form()['color']]
+            positionContent['highlight'] = [Structurer(*content).form()['highlight']]
+            positionContent['painted_content'] = Structurer(*content).form()['painted_content']
         else:
+            positionContent['content'].append(Structurer(*content).form()['content'])
+            positionContent['color'].append(Structurer(*content).form()['color'])
+            positionContent['highlight'].append(Structurer(*content).form()['highlight'])
             positionContent['painted_content'] += Structurer(*content).form()['painted_content']
 
         return positionContent
