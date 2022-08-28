@@ -66,17 +66,19 @@ class TermSpark:
 
         if (isinstance(contents[0], list)):
             for content in contents:
-                if not positionContent:
-                    positionContent = Structurer(*content).form()
-                else:
-                    positionContent['painted_content'] += Structurer(*content).form()['painted_content']
+                positionContent = self.appendPositionContent(positionContent, *content)
         else:
-            if not positionContent:
-                positionContent = Structurer(*contents).form()
-            else:
-                positionContent['painted_content'] += Structurer(*contents).form()['painted_content']
+            positionContent = self.appendPositionContent(positionContent, *contents)
 
         setattr(self, position, positionContent)
+
+    def appendPositionContent(self, positionContent, *content):
+        if not positionContent:
+            positionContent = Structurer(*content).form()
+        else:
+            positionContent['painted_content'] += Structurer(*content).form()['painted_content']
+
+        return positionContent
 
     def set_separator(self, separator):
         if len(separator) > 1: raise ArgCharsExceededException('separator', 'one')
