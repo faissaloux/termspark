@@ -2,7 +2,7 @@ from termspark import TermSpark
 from termspark.painter.constants.fore import Fore
 from termspark.painter.constants.highlight import Highlight
 
-class TestTermsparkColors:
+class TestColors:
     def test_one_color_code_length_calculation(self):
         termspark = TermSpark().print_left('LEFT', 'red')
         color_code_length = termspark.calculate_colors_codes_length()
