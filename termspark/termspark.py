@@ -1,6 +1,7 @@
 import os
 from itertools import chain
 from .structurer.structurer import Structurer
+from .painter.painter import Painter
 from .helpers.existenceChecker import ExistenceChecker
 from .exceptions.printerArgException import PrinterArgException
 from .exceptions.argCharsExceededException import ArgCharsExceededException
@@ -77,12 +78,10 @@ class TermSpark:
             positionContent['content'] = [Structurer(*content).form()['content']]
             positionContent['color'] = [Structurer(*content).form()['color']]
             positionContent['highlight'] = [Structurer(*content).form()['highlight']]
-            positionContent['painted_content'] = Structurer(*content).form()['painted_content']
         else:
             positionContent['content'].append(Structurer(*content).form()['content'])
             positionContent['color'].append(Structurer(*content).form()['color'])
             positionContent['highlight'].append(Structurer(*content).form()['highlight'])
-            positionContent['painted_content'] += Structurer(*content).form()['painted_content']
 
         return positionContent
 
@@ -140,6 +139,7 @@ class TermSpark:
         return width
 
     def render(self):
+        self.paint_content()
         self.calculate_separator_length()
         separator_mid_width = self.separator * int( self.separator_length / 2 )
 
@@ -153,6 +153,14 @@ class TermSpark:
             left_painted_content = ExistenceChecker().dictionary_key(self.left, 'painted_content')
             right_painted_content = ExistenceChecker().dictionary_key(self.right, 'painted_content')
             return left_painted_content + center + right_painted_content
+
+    def paint_content(self):
+        for position in self.positions:
+            pos = getattr(self, position) if getattr(self, position) else {}
+            if pos:
+                pos['painted_content'] = Painter().position(pos).paint()
+
+            setattr(self, position, pos)
 
     def spark(self):
         print(self.render())

@@ -1,31 +1,40 @@
 from .constants.fore import Fore
 from .constants.highlight import Highlight
+from ..helpers.list import List
 
 class Painter:
+    painted = ''
     PREFIX  = '\x1b['
     SUFFIX  = 'm'
     RESET   = '\x1b[0m'
 
-    def __init__(self, content, color = None, highlight = None):
-        self.content = content
-        self.color = color.replace(' ', '_') if color else color
-        self.highlight = highlight.replace(' ', '_') if highlight else highlight
+    def position(self, position):
+        self.content = position['content'] if isinstance(position['content'], list) else [position['content']]
+        self.color = position['color'] if isinstance(position['color'], list) else [position['color']]
+        self.highlight = position['highlight'] if isinstance(position['highlight'], list) else [position['highlight']]
+
+        self.color = List().snake(self.color)
+        self.highlight = List().snake(self.highlight)
+        return self
 
     def paint(self):
-        return f"{self.paint_color()}{self.paint_highlight()}{self.content}{self.reset()}"
+        for index, content in enumerate(self.content):
+            self.painted += f"{self.paint_color(self.color[index])}{self.paint_highlight(self.highlight[index])}{content}{self.reset(self.color[index], self.highlight[index])}"
 
-    def paint_color(self):
-        if self.color and hasattr(Fore, self.color.upper()):
-            return f"{self.PREFIX}{getattr(Fore, self.color.upper())}{self.SUFFIX}"
+        return self.painted
+
+    def paint_color(self, color):
+        if color and hasattr(Fore, color.upper()):
+            return f"{self.PREFIX}{getattr(Fore, color.upper())}{self.SUFFIX}"
         return ''
 
-    def paint_highlight(self):
-        if self.highlight and hasattr(Highlight, self.highlight.upper()):
-            return f"{self.PREFIX}{getattr(Highlight, self.highlight.upper())}{self.SUFFIX}"
+    def paint_highlight(self, highlight):
+        if highlight and hasattr(Highlight, highlight.upper()):
+            return f"{self.PREFIX}{getattr(Highlight, highlight.upper())}{self.SUFFIX}"
         return ''
 
-    def reset(self):
-        if (self.color and hasattr(Fore, self.color.upper())) or (self.highlight and hasattr(Highlight, self.highlight.upper())):
+    def reset(self, color, highlight):
+        if (color and hasattr(Fore, color.upper())) or (highlight and hasattr(Highlight, highlight.upper())):
             return self.RESET
         else:
             return ''
