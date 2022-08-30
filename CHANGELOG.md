@@ -1,6 +1,9 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v0.0.13...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.0.0...main)
 
-## [v0.0.13](https://github.com/faissaloux/termspark/compare/v0.0.13...v0.0.13) - 2022-08-27
+## [v1.0.0](https://github.com/faissaloux/termspark/compare/v0.0.13...v1.0.0) - 2022-08-31
+### FIXED
+- raise exception when mixing printer and sparker of same position [6e39756](https://github.com/faissaloux/termspark/commit/6e397561896f8921073d66c1be369d03a87a8fdd)
+## [v0.0.13](https://github.com/faissaloux/termspark/compare/v0.0.12...v0.0.13) - 2022-08-27
 ### CHANGED
 - custom exceptions [6a0950c](https://github.com/faissaloux/termspark/commit/6a0950c595d60faee2b744db47c83b922cf7b23b)
 ### ADDED
