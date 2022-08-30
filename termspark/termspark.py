@@ -5,17 +5,18 @@ from .painter.painter import Painter
 from .helpers.existenceChecker import ExistenceChecker
 from .exceptions.printerArgException import PrinterArgException
 from .exceptions.argCharsExceededException import ArgCharsExceededException
-
+from .exceptions.printerSparkerMixException import PrinterSparkerMixException
 class TermSpark:
     left = {}
     right = {}
     center = {}
     separator = ' '
     line_is_set = False
+    printed = []
     positions = [
         'left',
-        'right',
         'center',
+        'right',
     ]
     colors = chain(range(30, 37), range(90, 97))
     highlights = chain(range(41, 47), range(100, 108))
@@ -25,6 +26,7 @@ class TermSpark:
 
     def __init__(self):
         self.set_design_codes()
+        self.printed = []
 
     def print_left(self, content, color = None, highlight = None):
         self.print_position('left', content, color, highlight)
@@ -59,10 +61,12 @@ class TermSpark:
     def print_position(self, position, content, color, highlight):
         if isinstance(content, list): raise PrinterArgException(position)
         positionContent = Structurer(content, color, highlight).form()
+        self.printed.append(position)
 
         setattr(self, position, positionContent)
 
     def spark_position(self, position, *contents):
+        if position in self.printed: raise PrinterSparkerMixException(position)
         positionContent = getattr(self, position) if getattr(self, position) else {}
 
         if (isinstance(contents[0], list)):
@@ -152,6 +156,7 @@ class TermSpark:
 
             left_painted_content = ExistenceChecker().dictionary_key(self.left, 'painted_content')
             right_painted_content = ExistenceChecker().dictionary_key(self.right, 'painted_content')
+
             return left_painted_content + center + right_painted_content
 
     def paint_content(self):

@@ -1,6 +1,7 @@
 from termspark import TermSpark
 import pytest
 from termspark.exceptions.printerArgException import PrinterArgException
+from termspark.exceptions.printerSparkerMixException import PrinterSparkerMixException
 
 class TestPrintersTest:
     def test_can_set_left_content(self):
@@ -86,3 +87,21 @@ class TestPrintersTest:
         with pytest.raises(PrinterArgException):
             termspark.print_center(['CENTER', 'blue'])
         assert termspark.center == {} # Default
+
+    def test_raise_exception_when_mix_printer_with_same_position_sparker(self):
+        termspark = TermSpark()
+
+        with pytest.raises(PrinterSparkerMixException):
+            termspark.print_left('LEFT', 'red').print_center('CENTER', 'blue').spark_center(['CENTER', 'gray', 'blue'])
+        assert termspark.printed == ['left', 'center']
+
+    def test_can_mix_printer_with_different_position_sparker(self):
+        termspark = TermSpark()
+        termspark.print_left('LEFT', 'blue').spark_right(['RIGHT', 'gray', 'blue'])
+
+        assert termspark.printed == ['left']
+        assert termspark.left['content'] == 'LEFT'
+        assert termspark.left['color'] == 'blue'
+        assert termspark.right['content'] == ['RIGHT']
+        assert termspark.right['color'] == ['gray']
+        assert termspark.right['highlight'] == ['blue']
