@@ -19,7 +19,7 @@ Please review these guidelines before submitting any pull requests.
 
 Clone your fork, then install the dev dependencies:
 ```bash
-composer install
+pip install -e .[dev]
 ```
 ## Tests
 
