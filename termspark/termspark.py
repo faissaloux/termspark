@@ -15,8 +15,8 @@ class TermSpark:
     separator: str = ' '
     line_is_set: bool = False
     printed: List[str] = []
-    colors: chain[int] = chain(range(30, 37), range(90, 97))
-    highlights: chain[int] = chain(range(41, 47), range(100, 108))
+    colors: chain = chain(range(30, 37), range(90, 97))
+    highlights: chain = chain(range(41, 47), range(100, 108))
     attributes: range = range(1, 9)
     design_codes: List[str] = []
     positions: List[str] = [
@@ -26,6 +26,9 @@ class TermSpark:
     ]
 
     def __init__(self):
+        print('====================================')
+        print(chain(range(30, 37), range(90, 97)))
+        print('====================================')
         self.set_design_codes()
         self.printed = []
 
