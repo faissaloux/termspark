@@ -1,7 +1,7 @@
 import termspark.termspark
 
 class ArgCharsExceededException(Exception):
-    def __init__(self, arg, max):
+    def __init__(self, arg: str, max: str):
         self.arg = arg
         self.max = max
 

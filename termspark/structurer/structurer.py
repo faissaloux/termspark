@@ -1,10 +1,12 @@
+from typing import Optional, Dict
+
 class Structurer:
-    def __init__(self, content, color = None, highlight = None):
+    def __init__(self, content: str, color: Optional[str] = None, highlight: Optional[str] = None):
         self.content = content
         self.color = color
         self.highlight = highlight
 
-    def form(self):
+    def form(self) -> Dict[str, str]:
         return {
             'content': self.content if self.content else '',
             'color': self.color if self.color else '',

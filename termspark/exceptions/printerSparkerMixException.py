@@ -1,7 +1,7 @@
 import termspark.termspark
 
 class PrinterSparkerMixException(Exception):
-    def __init__(self, position):
+    def __init__(self, position: str):
         self.position = position
 
     def __str__(self):
