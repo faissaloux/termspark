@@ -1,4 +1,4 @@
-name: Termspark
+name: Tests
 
 on: [push, pull_request]
 
