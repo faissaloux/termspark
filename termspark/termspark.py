@@ -26,9 +26,6 @@ class TermSpark:
     ]
 
     def __init__(self):
-        print('====================================')
-        print(chain(range(30, 37), range(90, 97)))
-        print('====================================')
         self.set_design_codes()
         self.printed = []
 
