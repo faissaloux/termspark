@@ -7,7 +7,7 @@ Please review these guidelines before submitting any pull requests.
 
 1. Fork the project
 3. Create a new branch
-3. Code, **test**, commit and push
+3. Code, **test**, **format**, commit and push
 4. Open a pull request detailing your changes.
 
 ## Guidelines
@@ -42,13 +42,14 @@ Run all tests:
 ```bash
 pytest
 ```
-or
-```bash
-python -m pytest
-```
 
 > **Note**
 > Make sure tests cover 100%
 ```bash
 pytest --cov
+```
+
+## Format after stage
+```bash
+pre-commit run
 ```
