@@ -6,11 +6,11 @@ class TestPainter:
     def test_prefix(self):
         painter = Painter()
         assert painter.PREFIX == '\x1b['
-    
+
     def test_suffix(self):
         painter = Painter()
         assert painter.SUFFIX == 'm'
-    
+
     def test_reset(self):
         painter = Painter()
         assert painter.RESET == '\x1b[0m'
