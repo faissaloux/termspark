@@ -23,6 +23,7 @@ Please review these guidelines before submitting any pull requests.
     python -m venv venv
 ```
 - Activate your virtual environment
+
 | Platform | Shell           | Command to activate venv          |
 |----------|-----------------|-----------------------------------|
 | POSIX    | bash/zsh        | $ source venv/bin/activate        |
