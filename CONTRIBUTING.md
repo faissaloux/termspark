@@ -23,14 +23,14 @@ Please review these guidelines before submitting any pull requests.
     python -m venv venv
 ```
 - Activate your virtual environment
-| Platform | Shell           | Command to activate venv             |
-| -------- | --------------- | ---------------------------------    |
-| POSIX    | bash/zsh        | $ source <venv>/bin/activate         |
-|          | fish            | $ source <venv>/bin/activate.fish    |
-|          | csh/tcsh        | $ source <venv>/bin/activate.csh     |
-|          | PowerShell Core | C:\> <venv>\Scripts\activate.bat     |
-| Windows  | cmd.exe         | $ source <venv>/bin/activate         |
-|          | PowerShell      | PS C:\> <venv>\Scripts\Activate.ps1  |
+| Platform | Shell           | Command to activate venv          |
+|----------|-----------------|-----------------------------------|
+| POSIX    | bash/zsh        | $ source venv/bin/activate        |
+|          | fish            | $ source venv/bin/activate.fish   |
+|          | csh/tcsh        | $ source venv/bin/activate.csh    |
+|          | PowerShell Core | C:\> venv\Scripts\activate.bat    |
+| Windows  | cmd.exe         | $ source venv/bin/activate        |
+|          | PowerShell      | PS C:\> venv\Scripts\Activate.ps1 |
 
 - Install the dev dependencies:
 ```bash
