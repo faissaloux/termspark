@@ -16,13 +16,27 @@ Please review these guidelines before submitting any pull requests.
 * You may need to [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) to avoid merge conflicts.
 
 ## Setup
+- Clone your fork
 
-Clone your fork, then install the dev dependencies:
+- Setup your virtual environment using `venv`
+```bash
+    python -m venv venv
+```
+- Activate your virtual environment
+| Platform | Shell           | Command to activate venv             |
+| -------- | --------------- | ---------------------------------    |
+| POSIX    | bash/zsh        | $ source <venv>/bin/activate         |
+|          | fish            | $ source <venv>/bin/activate.fish    |
+|          | csh/tcsh        | $ source <venv>/bin/activate.csh     |
+|          | PowerShell Core | C:\> <venv>\Scripts\activate.bat     |
+| Windows  | cmd.exe         | $ source <venv>/bin/activate         |
+|          | PowerShell      | PS C:\> <venv>\Scripts\Activate.ps1  |
+
+- Install the dev dependencies:
 ```bash
 pip install -e .[dev]
 ```
 ## Tests
-
 Run all tests:
 ```bash
 pytest
