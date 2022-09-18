@@ -132,7 +132,7 @@ class TermSpark:
         for attribute in self.attributes:
             if f'[{attribute}m' not in self.design_codes:
                 self.design_codes.append(f'[{attribute}m')
-        
+
         if f'[0m' not in self.design_codes:
             self.design_codes.append('[0m')
 
