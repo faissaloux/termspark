@@ -18,6 +18,6 @@ repos:
   - id: pretty-format-yaml
     args: [--autofix]
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v0.981
+  rev: v0.990
   hooks:
   - id: mypy
