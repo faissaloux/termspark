@@ -13,7 +13,7 @@ repos:
   - id: pretty-format-json
     args: [--autofix]
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.5.0
+  rev: v2.6.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix]
