@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.2.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.2.1...main)
+
+## [v1.2.1](https://github.com/faissaloux/termspark/compare/v1.2.0...v1.2.1) - 2023-01-25
+# FIXED
+- Fix pytyped ([#9](https://github.com/faissaloux/termspark/pull/9))
 
 ## [v1.2.0](https://github.com/faissaloux/termspark/compare/v1.1.0...v1.2.0) - 2023-01-25
 ### ADDED
