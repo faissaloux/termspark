@@ -1,4 +1,10 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.1.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.2.0...main)
+
+## [v1.2.0](https://github.com/faissaloux/termspark/compare/v1.1.0...v1.2.0) - 2023-01-25
+### ADDED
+- python3.11 support ([#7](https://github.com/faissaloux/termspark/pull/7))
+## FIXED
+- Add py.typed file ([#8](https://github.com/faissaloux/termspark/pull/8))
 
 ## [v1.1.0](https://github.com/faissaloux/termspark/compare/v1.0.0...v1.1.0) - 2022-09-03
 ### ADDED
