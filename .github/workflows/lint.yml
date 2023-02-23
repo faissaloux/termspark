@@ -15,10 +15,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -e .[dev]
+      run: make install
 
     - name: Check static types
-      run: |
-        mypy --show-error-codes termspark tests
+      run: make lint
