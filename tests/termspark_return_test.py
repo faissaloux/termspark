@@ -1,4 +1,4 @@
-from termspark import TermSpark
+from termspark.termspark import TermSpark
 
 
 class TestTermsparkReturn:

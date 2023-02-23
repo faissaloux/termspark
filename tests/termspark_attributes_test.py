@@ -1,7 +1,7 @@
 import pytest
 
-from termspark import TermSpark
 from termspark.exceptions.argCharsExceededException import ArgCharsExceededException
+from termspark.termspark import TermSpark
 
 
 class TestTermsparkAttributes:

@@ -1,6 +1,6 @@
-from termspark import TermSpark
 from termspark.painter.constants.fore import Fore
 from termspark.painter.constants.highlight import Highlight
+from termspark.termspark import TermSpark
 
 
 class TestColors:

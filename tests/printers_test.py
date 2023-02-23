@@ -1,8 +1,8 @@
 import pytest
 
-from termspark import TermSpark
 from termspark.exceptions.printerArgException import PrinterArgException
 from termspark.exceptions.printerSparkerMixException import PrinterSparkerMixException
+from termspark.termspark import TermSpark
 
 
 class TestPrintersTest:
