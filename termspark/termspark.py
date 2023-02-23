@@ -168,8 +168,8 @@ class TermSpark:
 
             setattr(self, position, pos)
 
-    def spark(self):
-        print(self.render())
+    def spark(self, end="\n"):
+        print(self.render(), end=end)
 
     def __repr__(self) -> str:
         return self.render()
