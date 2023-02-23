@@ -1,5 +1,6 @@
 from termspark.painter.constants.highlight import Highlight
 
+
 class TestHighlight:
     def test_red(self):
         assert Highlight.RED == 41

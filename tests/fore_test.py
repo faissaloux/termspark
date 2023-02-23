@@ -1,5 +1,6 @@
 from termspark.painter.constants.fore import Fore
 
+
 class TestFore:
     def test_black(self):
         assert Fore.BLACK == 30
