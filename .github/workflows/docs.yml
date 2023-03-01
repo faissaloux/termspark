@@ -1,0 +1,29 @@
+name: Build and Deploy Docs
+on:
+  push:
+    branches:
+    - main
+    - docs-webpage
+
+jobs:
+  docs-deploy:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: make install_docs
+    - name: Build docs
+      run: make build_docs
+    - name: Deploy docs
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: docs_build/
