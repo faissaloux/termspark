@@ -1,0 +1,54 @@
+site_name: Termspark
+site_description: Translate your translation files.
+site_url: https://termspark.faissaloux.com
+
+theme:
+  features:
+  - header.autohide
+  - content.code.copy
+  - search.suggest
+  - search.highlight
+  - content.tabs.link
+  name: material
+  palette:
+  - scheme: default
+    primary: indigo
+    accent: blue
+    toggle:
+      icon: material/lightbulb
+      name: Switch to dark mode
+  - scheme: slate
+    primary: indigo
+    accent: blue
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to light mode
+  favicon: assets/favicon.png
+  logo: assets/logo.png
+  icon:
+    repo: fontawesome/brands/github-alt
+
+repo_name: faissaloux/termspark
+repo_url: https://github.com/faissaloux/termspark
+
+nav:
+- About: index.md
+- Installation: installation.md
+- Usage: usage.md
+- Changelog: changelog.md
+- License: license.md
+
+markdown_extensions:
+- pymdownx.highlight
+- pymdownx.superfences
+
+extra:
+  social:
+  - icon: fontawesome/brands/github-alt
+    link: https://github.com/faissaloux
+  - icon: fontawesome/brands/twitter
+    link: https://twitter.com/faissaloux
+  - icon: fontawesome/brands/linkedin
+    link: https://www.linkedin.com/in/faissaloux
+  - icon: fontawesome/solid/globe
+    link: https://faissaloux.com
