@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.2.1...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.3.0...main)
+
+## [v1.3.0](https://github.com/faissaloux/termspark/compare/v1.2.1...v1.3.0) - 2023-02-23
+### ADDED
+- Customizable end parameter ([#13](https://github.com/faissaloux/termspark/pull/13))
 
 ## [v1.2.1](https://github.com/faissaloux/termspark/compare/v1.2.0...v1.2.1) - 2023-01-25
 # FIXED
