@@ -11,6 +11,7 @@ from .structurer.structurer import Structurer
 
 
 class TermSpark:
+    mode: str = "color"
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
@@ -185,22 +186,33 @@ class TermSpark:
         ):
             center_content = ExistenceChecker().dictionary_key(self.center, "content")
             if len(center_content) > 0:
-                center = (
-                    separator_mid_width
-                    + self.center["painted_content"]
-                    + separator_mid_width
-                )
+                if self.mode == "raw":
+                    center = (
+                        separator_mid_width
+                        + self.center["content"]
+                        + separator_mid_width
+                    )
+                else:
+                    center = (
+                        separator_mid_width
+                        + self.center["painted_content"]
+                        + separator_mid_width
+                    )
             else:
                 center = self.separator * self.separator_length
 
-            left_painted_content = ExistenceChecker().dictionary_key(
-                self.left, "painted_content"
-            )
-            right_painted_content = ExistenceChecker().dictionary_key(
-                self.right, "painted_content"
-            )
+            if self.mode == "raw":
+                left_content = ExistenceChecker().dictionary_key(self.left, "content")
+                right_content = ExistenceChecker().dictionary_key(self.right, "content")
+            else:
+                left_content = ExistenceChecker().dictionary_key(
+                    self.left, "painted_content"
+                )
+                right_content = ExistenceChecker().dictionary_key(
+                    self.right, "painted_content"
+                )
 
-        return left_painted_content + center + right_painted_content
+        return left_content + center + right_content
 
     def paint_content(self):
         for position in self.positions:
@@ -212,6 +224,10 @@ class TermSpark:
 
     def spark(self, end="\n"):
         print(self.render(), end=end)
+
+    def raw(self) -> str:
+        self.mode = "raw"
+        return self.render()
 
     def __repr__(self) -> str:
         return self.render()
