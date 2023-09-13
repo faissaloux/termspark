@@ -118,3 +118,12 @@
     termspark.spark_right([' Error ', 'white', 'red'])
     termspark.spark()
 ```
+
+### Raw
+You can print raw version wich is colors-code-free so you can print clean text into files for example.
+
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
+```
