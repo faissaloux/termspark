@@ -12,6 +12,7 @@ from .structurer.structurer import Structurer
 
 class TermSpark:
     mode: str = "color"
+    width: int = 0
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
@@ -118,6 +119,11 @@ class TermSpark:
 
         return self
 
+    def set_width(self, width: int):
+        self.width = width
+
+        return self
+
     def calculate_separator_length(self):
         colors_codes_length = self.calculate_colors_codes_length()
         content_length = 0
@@ -127,9 +133,7 @@ class TermSpark:
                 getattr(self, position), "painted_content"
             )
             content_length += len(painted_content)
-        self.separator_length = (
-            self.get_terminal_width() - content_length + colors_codes_length
-        )
+        self.separator_length = self.get_width() - content_length + colors_codes_length
 
     def calculate_colors_codes_length(self) -> int:
         colors_codes_length = 0
@@ -171,7 +175,14 @@ class TermSpark:
             width = os.get_terminal_size()[0]
         except OSError:
             width = 80
+
         return width
+
+    def get_width(self) -> int:
+        if self.width == 0:
+            self.width = self.get_terminal_width()
+
+        return self.width
 
     def render(self) -> str:
         self.paint_content()

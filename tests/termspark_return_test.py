@@ -281,3 +281,9 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         assert str(termspark) == "." * (terminal_width - len("\x1b"))
+
+    def test_force_width(self):
+        width = 100
+        termspark = TermSpark().set_width(width).line(".")
+
+        assert str(termspark) == "." * (width - len("\x1b"))
