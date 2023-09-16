@@ -111,3 +111,22 @@
     termspark.spark_right([' Error ', 'white', 'red'])
     termspark.spark()
 ```
+
+## Raw
+You can print raw version which is colors-code-free so you can print clean text into files for example.
+
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
+```
+
+## Force Width
+You can customize width instead of the default full terminal width.
+
+```python
+    from termspark.termspark import TermSpark
+
+    TermSpark().set_width(40).print_left("LEFT", "red").print_right("RIGHT", "blue").spark()
+```
+
