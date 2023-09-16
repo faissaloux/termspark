@@ -119,8 +119,8 @@
     termspark.spark()
 ```
 
-### Raw
-You can print raw version wich is colors-code-free so you can print clean text into files for example.
+## Raw
+You can print raw version which is colors-code-free so you can print clean text into files for example.
 
 ```python
     from termspark.termspark import TermSpark
@@ -128,7 +128,7 @@ You can print raw version wich is colors-code-free so you can print clean text i
     TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
 ```
 
-### Force Width
+## Force Width
 You can customize width instead of the default full terminal width.
 
 ```python
