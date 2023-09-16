@@ -1,4 +1,9 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.3.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.4.0...main)
+
+## [v1.4.0](https://github.com/faissaloux/termspark/compare/v1.3.0...v1.4.0) - 2023-09-16
+### ADDED
+- Force width ([#34](https://github.com/faissaloux/termspark/pull/34))
+- Raw mode ([#33](https://github.com/faissaloux/termspark/pull/33))
 
 ## [v1.3.0](https://github.com/faissaloux/termspark/compare/v1.2.1...v1.3.0) - 2023-02-23
 ### ADDED
