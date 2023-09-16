@@ -17,6 +17,9 @@ install: clean
 install_docs: clean
 	pip install -e ."[docs]"
 
+update_docs_changelog: clean
+	cp CHANGELOG.md docs/changelog.md
+
 build_docs: clean
 	mkdocs build -d docs_build
 
