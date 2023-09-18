@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.4.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.4.1...main)
+
+## [v1.4.1](https://github.com/faissaloux/termspark/compare/v1.4.0...v1.4.1) - 2023-09-18
+# FIXED
+- Fix raw not working with spark methods ([#37](https://github.com/faissaloux/termspark/pull/37))
 
 ## [v1.4.0](https://github.com/faissaloux/termspark/compare/v1.3.0...v1.4.0) - 2023-09-16
 ### ADDED
