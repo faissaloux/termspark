@@ -213,8 +213,12 @@ class TermSpark:
                 center = self.separator * self.separator_length
 
             if self.mode == "raw":
-                left_content = ExistenceChecker().dictionary_key(self.left, "content")
-                right_content = ExistenceChecker().dictionary_key(self.right, "content")
+                left_content = " ".join(
+                    ExistenceChecker().dictionary_key(self.left, "content")
+                )
+                right_content = " ".join(
+                    ExistenceChecker().dictionary_key(self.right, "content")
+                )
             else:
                 left_content = ExistenceChecker().dictionary_key(
                     self.left, "painted_content"
