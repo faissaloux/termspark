@@ -200,7 +200,9 @@ class TermSpark:
                 if self.mode == "raw":
                     center = (
                         separator_mid_width
-                        + self.center["content"]
+                        + " ".join(
+                            ExistenceChecker().dictionary_key(self.center, "content")
+                        )
                         + separator_mid_width
                     )
                 else:

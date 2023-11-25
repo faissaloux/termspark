@@ -13,3 +13,11 @@ class TestRaw:
         termspark.raw()
 
         assert termspark.mode == "raw"
+
+    def test_raw_with_one_side_multiple_content(self):
+        termspark = TermSpark()
+        termspark.spark_center([" * ", "gray", "white"])
+        termspark.spark_center([" Info ", "white", "blue"])
+        termspark.raw()
+
+        assert termspark.mode == "raw"
