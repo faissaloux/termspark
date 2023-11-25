@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.5.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.5.1...main)
+
+## [v1.5.1](https://github.com/faissaloux/termspark/compare/v1.5.0...v1.5.1) - 2023-11-25
+# FIXED
+- Fix center multiple content in raw mode ([#44](https://github.com/faissaloux/termspark/pull/44))
 
 ## [v1.5.0](https://github.com/faissaloux/termspark/compare/v1.4.1...v1.5.0) - 2023-10-10
 # ADDED
