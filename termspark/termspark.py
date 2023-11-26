@@ -199,11 +199,9 @@ class TermSpark:
             if len(center_content) > 0:
                 if self.mode == "raw":
                     center = (
-                        separator_mid_width
-                        + " ".join(
-                            ExistenceChecker().dictionary_key(self.center, "content")
-                        )
-                        + separator_mid_width
+                        separator_mid_width + self.center["content"]
+                        if isinstance(self.center["content"], str)
+                        else " ".join(center_content) + separator_mid_width
                     )
                 else:
                     center = (
@@ -215,12 +213,22 @@ class TermSpark:
                 center = self.separator * self.separator_length
 
             if self.mode == "raw":
-                left_content = " ".join(
-                    ExistenceChecker().dictionary_key(self.left, "content")
-                )
-                right_content = " ".join(
-                    ExistenceChecker().dictionary_key(self.right, "content")
-                )
+                left_content = ExistenceChecker().dictionary_key(self.left, "content")
+                right_content = ExistenceChecker().dictionary_key(self.right, "content")
+
+                if len(left_content) > 0:
+                    left_content = (
+                        self.left["content"]
+                        if isinstance(self.left["content"], str)
+                        else " ".join(left_content)
+                    )
+
+                if len(right_content) > 0:
+                    right_content = (
+                        self.right["content"]
+                        if isinstance(self.right["content"], str)
+                        else " ".join(right_content)
+                    )
             else:
                 left_content = ExistenceChecker().dictionary_key(
                     self.left, "painted_content"
@@ -239,8 +247,54 @@ class TermSpark:
 
             setattr(self, position, pos)
 
+    def trim(self, chars_number):
+        self.positions.reverse()
+        chars_number_left = chars_number
+
+        for position in self.positions:
+            new_content = []
+            if "content" in getattr(self, position).keys():
+                if isinstance(getattr(self, position)["content"], list):
+                    getattr(self, position)["content"].reverse()
+                    for content in getattr(self, position)["content"]:
+                        if chars_number_left > 0:
+                            if len(content) > chars_number_left:
+                                new_content.append(
+                                    content[0 : len(content) - chars_number_left]
+                                )
+                                chars_number_left -= chars_number
+                            else:
+                                chars_number_left = chars_number_left - len(content)
+                        else:
+                            new_content.append(content)
+
+                    getattr(self, position)["content"] = new_content
+                    getattr(self, position)["content"].reverse()
+                else:
+                    content = getattr(self, position)["content"]
+                    if chars_number_left > 0:
+                        new_content.append(
+                            content[0 : len(content) - chars_number_left]
+                        )
+                        chars_number_left -= chars_number
+                    else:
+                        new_content.append(content)
+                    getattr(self, position)["content"] = new_content
+
+        self.positions.reverse()
+        self.mode = "color"
+
+        print(self.render())
+
     def spark(self, end="\n"):
-        print(self.render(), end=end)
+        raw = self.raw()
+        to_trim = len(raw) - self.get_terminal_width() - 1
+
+        if to_trim > 0:
+            self.trim(to_trim)
+        else:
+            self.mode = "color"
+            print(self.render(), end=end)
 
     def raw(self) -> str:
         self.mode = "raw"
