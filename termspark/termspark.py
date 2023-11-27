@@ -5,6 +5,8 @@ from typing import Dict, List, Optional
 from .exceptions.argCharsExceededException import ArgCharsExceededException
 from .exceptions.printerArgException import PrinterArgException
 from .exceptions.printerSparkerMixException import PrinterSparkerMixException
+from .exceptions.minNotReachedException import MinNotReachedException
+from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .helpers.existenceChecker import ExistenceChecker
 from .painter.painter import Painter
 from .structurer.structurer import Structurer
@@ -66,6 +68,105 @@ class TermSpark:
 
     def spark_center(self, *contents: List[str]):
         self.spark_position("center", *contents)
+
+        return self
+    
+    def max_left(self, max: int):
+        if "left" in self.printed:
+            raise MaxLenNotSupported("print_left")
+
+        if max < 1:
+            raise MinNotReachedException("max", 1)
+
+        chars_number = max
+        new_content = []
+        breakIndex = 0
+
+        for index, sentence in enumerate(self.left["content"]):
+            if chars_number <= 0:
+                break
+
+            if len(sentence) < chars_number:
+                new_content.append(sentence)
+                chars_number -= len(sentence)
+            elif len(sentence) == chars_number:
+                new_content.append(sentence[0 : chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+            else:
+                new_content.append(sentence[0 : chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+
+        self.left["content"] = new_content
+        self.left["color"] = self.left["color"][0:breakIndex]
+        self.left["highlight"] = self.left["highlight"][0:breakIndex]
+
+        return self
+    
+    def max_right(self, max: int):
+        if "right" in self.printed:
+            raise MaxLenNotSupported("print_right")
+
+        if max < 1:
+            raise MinNotReachedException("max", 1)
+
+        chars_number = max
+        new_content = []
+        breakIndex = 0
+
+        for index, sentence in enumerate(self.right["content"]):
+            if chars_number <= 0:
+                break
+
+            if len(sentence) < chars_number:
+                new_content.append(sentence)
+                chars_number -= len(sentence)
+            elif len(sentence) == chars_number:
+                new_content.append(sentence[0 : chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+            else:
+                new_content.append(sentence[0 : chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+
+        self.right["content"] = new_content
+        self.right["color"] = self.right["color"][0:breakIndex]
+        self.right["highlight"] = self.right["highlight"][0:breakIndex]
+
+        return self
+    
+    def max_center(self, max: int):
+        if "center" in self.printed:
+            raise MaxLenNotSupported("print_center")
+
+        if max < 1:
+            raise MinNotReachedException("max", 1)
+
+        chars_number = max
+        new_content = []
+        breakIndex = 0
+
+        for index, sentence in enumerate(self.center["content"]):
+            if chars_number <= 0:
+                break
+
+            if len(sentence) < chars_number:
+                new_content.append(sentence)
+                chars_number -= len(sentence)
+            elif len(sentence) == chars_number:
+                new_content.append(sentence[0 : chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+            else:
+                new_content.append(sentence[0 : chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+
+        self.center["content"] = new_content
+        self.center["color"] = self.center["color"][0:breakIndex]
+        self.center["highlight"] = self.center["highlight"][0:breakIndex]
 
         return self
 
