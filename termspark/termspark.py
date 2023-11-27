@@ -70,10 +70,10 @@ class TermSpark:
         self.spark_position("center", *contents)
 
         return self
-
-    def max_left(self, max: int):
-        if "left" in self.printed:
-            raise MaxLenNotSupported("print_left")
+    
+    def max_position(self, position: str, max: int):
+        if position in self.printed:
+            raise MaxLenNotSupported(f"print_{position}")
 
         if max < 1:
             raise MinNotReachedException("max", 1)
@@ -82,7 +82,7 @@ class TermSpark:
         new_content = []
         breakIndex = 0
 
-        for index, sentence in enumerate(self.left["content"]):
+        for index, sentence in enumerate(getattr(self, position)["content"]):
             if chars_number <= 0:
                 break
 
@@ -98,75 +98,22 @@ class TermSpark:
                 chars_number -= len(sentence)
                 breakIndex = index + 1
 
-        getattr(self, "left")["content"] = new_content
-        getattr(self, "left")["color"] = getattr(self, "left")["color"][0:breakIndex]
-        getattr(self, "left")["highlight"] = getattr(self, "left")["highlight"][0:breakIndex]
+        getattr(self, position)["content"] = new_content
+        getattr(self, position)["color"] = getattr(self, position)["color"][0:breakIndex]
+        getattr(self, position)["highlight"] = getattr(self, position)["highlight"][0:breakIndex]
+
+    def max_left(self, max: int):
+        self.max_position("left", max)
 
         return self
 
     def max_right(self, max: int):
-        if "right" in self.printed:
-            raise MaxLenNotSupported("print_right")
-
-        if max < 1:
-            raise MinNotReachedException("max", 1)
-
-        chars_number = max
-        new_content = []
-        breakIndex = 0
-
-        for index, sentence in enumerate(self.right["content"]):
-            if chars_number <= 0:
-                break
-
-            if len(sentence) < chars_number:
-                new_content.append(sentence)
-                chars_number -= len(sentence)
-            elif len(sentence) == chars_number:
-                new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
-                breakIndex = index + 1
-            else:
-                new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
-                breakIndex = index + 1
-
-        getattr(self, "right")["content"] = new_content
-        getattr(self, "right")["color"] = getattr(self, "right")["color"][0:breakIndex]
-        getattr(self, "right")["highlight"] = getattr(self, "right")["highlight"][0:breakIndex]
+        self.max_position("right", max)
 
         return self
 
     def max_center(self, max: int):
-        if "center" in self.printed:
-            raise MaxLenNotSupported("print_center")
-
-        if max < 1:
-            raise MinNotReachedException("max", 1)
-
-        chars_number = max
-        new_content = []
-        breakIndex = 0
-
-        for index, sentence in enumerate(self.center["content"]):
-            if chars_number <= 0:
-                break
-
-            if len(sentence) < chars_number:
-                new_content.append(sentence)
-                chars_number -= len(sentence)
-            elif len(sentence) == chars_number:
-                new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
-                breakIndex = index + 1
-            else:
-                new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
-                breakIndex = index + 1
-
-        getattr(self, "center")["content"] = new_content
-        getattr(self, "center")["color"] = getattr(self, "center")["color"][0:breakIndex]
-        getattr(self, "center")["highlight"] = getattr(self, "center")["highlight"][0:breakIndex]
+        self.max_position("center", max)
 
         return self
 
