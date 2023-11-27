@@ -98,9 +98,9 @@ class TermSpark:
                 chars_number -= len(sentence)
                 breakIndex = index + 1
 
-        self.left["content"] = new_content
-        self.left["color"] = self.left["color"][0:breakIndex]
-        self.left["highlight"] = self.left["highlight"][0:breakIndex]
+        getattr(self, "left")["content"] = new_content
+        getattr(self, "left")["color"] = getattr(self, "left")["color"][0:breakIndex]
+        getattr(self, "left")["highlight"] = getattr(self, "left")["highlight"][0:breakIndex]
 
         return self
 
@@ -131,9 +131,9 @@ class TermSpark:
                 chars_number -= len(sentence)
                 breakIndex = index + 1
 
-        self.right["content"] = new_content
-        self.right["color"] = self.right["color"][0:breakIndex]
-        self.right["highlight"] = self.right["highlight"][0:breakIndex]
+        getattr(self, "right")["content"] = new_content
+        getattr(self, "right")["color"] = getattr(self, "right")["color"][0:breakIndex]
+        getattr(self, "right")["highlight"] = getattr(self, "right")["highlight"][0:breakIndex]
 
         return self
 
@@ -164,9 +164,9 @@ class TermSpark:
                 chars_number -= len(sentence)
                 breakIndex = index + 1
 
-        self.center["content"] = new_content
-        self.center["color"] = self.center["color"][0:breakIndex]
-        self.center["highlight"] = self.center["highlight"][0:breakIndex]
+        getattr(self, "center")["content"] = new_content
+        getattr(self, "center")["color"] = getattr(self, "center")["color"][0:breakIndex]
+        getattr(self, "center")["highlight"] = getattr(self, "center")["highlight"][0:breakIndex]
 
         return self
 
