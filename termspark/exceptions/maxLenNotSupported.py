@@ -7,6 +7,7 @@ class MaxLenNotSupported(Exception):
 
     def __str__(self):
         message = termspark.TermSpark().print_left(
-            f"Max Length not supported for {self.method}, use spark_[position] instead!", "red"
+            f"Max Length not supported for {self.method}, use spark_[position] instead!",
+            "red",
         )
         return str(message)

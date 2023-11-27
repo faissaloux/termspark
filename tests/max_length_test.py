@@ -1,7 +1,7 @@
 import pytest
 
-from termspark.exceptions.minNotReachedException import MinNotReachedException
 from termspark.exceptions.maxLenNotSupported import MaxLenNotSupported
+from termspark.exceptions.minNotReachedException import MinNotReachedException
 from termspark.termspark import TermSpark
 
 
