@@ -3,6 +3,8 @@ from itertools import chain
 from typing import Dict, List, Optional
 
 from .exceptions.argCharsExceededException import ArgCharsExceededException
+from .exceptions.maxLenNotSupported import MaxLenNotSupported
+from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.printerArgException import PrinterArgException
 from .exceptions.printerSparkerMixException import PrinterSparkerMixException
 from .helpers.existenceChecker import ExistenceChecker
@@ -66,6 +68,56 @@ class TermSpark:
 
     def spark_center(self, *contents: List[str]):
         self.spark_position("center", *contents)
+
+        return self
+
+    def max_position(self, position: str, max: int):
+        if position in self.printed:
+            raise MaxLenNotSupported(f"print_{position}")
+
+        if max < 1:
+            raise MinNotReachedException("max", 1)
+
+        chars_number = max
+        new_content = []
+        breakIndex = 0
+
+        for index, sentence in enumerate(getattr(self, position)["content"]):
+            if chars_number <= 0:
+                break
+
+            if len(sentence) < chars_number:
+                new_content.append(sentence)
+                chars_number -= len(sentence)
+            elif len(sentence) == chars_number:
+                new_content.append(sentence[0:chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+            else:
+                new_content.append(sentence[0:chars_number])
+                chars_number -= len(sentence)
+                breakIndex = index + 1
+
+        getattr(self, position)["content"] = new_content
+        getattr(self, position)["color"] = getattr(self, position)["color"][
+            0:breakIndex
+        ]
+        getattr(self, position)["highlight"] = getattr(self, position)["highlight"][
+            0:breakIndex
+        ]
+
+    def max_left(self, max: int):
+        self.max_position("left", max)
+
+        return self
+
+    def max_right(self, max: int):
+        self.max_position("right", max)
+
+        return self
+
+    def max_center(self, max: int):
+        self.max_position("center", max)
 
         return self
 
