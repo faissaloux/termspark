@@ -278,17 +278,17 @@ class TermSpark:
 
         if isinstance(getattr(self, active_position)["content"], list):
             getattr(self, active_position)["content"][0] = (
-                extra_left_space
-                + getattr(self, active_position)["content"][0]
+                extra_left_space + getattr(self, active_position)["content"][0]
             )
 
             getattr(self, active_position)["content"][-1] = (
-                getattr(self, active_position)["content"][-1]
-                + extra_right_space
+                getattr(self, active_position)["content"][-1] + extra_right_space
             )
         else:
             getattr(self, active_position)["content"] = (
-                extra_left_space + getattr(self, active_position)["content"] + extra_right_space
+                extra_left_space
+                + getattr(self, active_position)["content"]
+                + extra_right_space
             )
 
     def render(self) -> str:
