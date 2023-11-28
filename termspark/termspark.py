@@ -70,7 +70,7 @@ class TermSpark:
         self.spark_position("center", *contents)
 
         return self
-    
+
     def max_position(self, position: str, max: int):
         if position in self.printed:
             raise MaxLenNotSupported(f"print_{position}")
@@ -99,8 +99,12 @@ class TermSpark:
                 breakIndex = index + 1
 
         getattr(self, position)["content"] = new_content
-        getattr(self, position)["color"] = getattr(self, position)["color"][0:breakIndex]
-        getattr(self, position)["highlight"] = getattr(self, position)["highlight"][0:breakIndex]
+        getattr(self, position)["color"] = getattr(self, position)["color"][
+            0:breakIndex
+        ]
+        getattr(self, position)["highlight"] = getattr(self, position)["highlight"][
+            0:breakIndex
+        ]
 
     def max_left(self, max: int):
         self.max_position("left", max)
