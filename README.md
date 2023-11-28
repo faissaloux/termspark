@@ -47,7 +47,7 @@
 - light cyan
 
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     TermSpark().print_right('RIGHT', 'blue').spark()
     TermSpark().print_left('LEFT', 'light red').spark()
@@ -72,7 +72,7 @@
 - light cyan
 
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     TermSpark().print_right('RIGHT', None, 'light_magenta').spark()
     TermSpark().print_left('LEFT', 'red', 'white').spark()
@@ -81,7 +81,7 @@
 
 ## You can use different styles on same position
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue']).spark()
     TermSpark().spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow']).spark()
@@ -91,13 +91,13 @@
 
 ## Lines are too long to write a termspark line! 😑
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue']).spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow']).spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red']).spark()
 ```
 ### You can separate them by calling each function in a line 🤤
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     termspark = TermSpark()
     termspark.spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue'])
@@ -107,7 +107,7 @@
 ```
 ### Still too long 🙄 Got you 🤩
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     termspark = TermSpark()
     termspark.spark_left([' * ', 'gray', 'white'])
@@ -123,7 +123,7 @@
 You can print raw version which is colors-code-free so you can print clean text into files for example.
 
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
 ```
@@ -132,7 +132,7 @@ You can print raw version which is colors-code-free so you can print clean text 
 You can customize width instead of the default full terminal width.
 
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     TermSpark().set_width(40).print_left("LEFT", "red").print_right("RIGHT", "blue").spark()
 ```
@@ -140,7 +140,7 @@ You can customize width instead of the default full terminal width.
 ## Set content max width
 You can specify max width of content depending on position using `max_[position](max_characters)`.
 ```python
-    from termspark.termspark import TermSpark
+    from termspark import TermSpark
 
     termspark = TermSpark()
     termspark.spark_left(["LEFT", "red"])
