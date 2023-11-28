@@ -245,30 +245,28 @@ class TermSpark:
 
     def take_full_width(self):
         not_empty_positions = 0
-        not_empty_position = None
+        active_position = None
 
         for position in self.positions:
             if "content" in getattr(self, position):
-                not_empty_position = position
+                active_position = position
                 not_empty_positions += 1
 
         if not_empty_positions > 1:
             raise MultiplePositionsNotSupported()
 
         empty_space = self.get_width() - len(
-            "".join(getattr(self, not_empty_position)["content"])
+            "".join(getattr(self, active_position)["content"])
         )
 
-        if isinstance(getattr(self, not_empty_position)["content"], list):
-            if not_empty_position == "left":
-                getattr(self, not_empty_position)["content"][-1] = (
-                    getattr(self, not_empty_position)["content"][-1] + " " * empty_space
-                )
-            elif not_empty_position == "right":
-                getattr(self, not_empty_position)["content"][0] = (
-                    " " * empty_space + getattr(self, not_empty_position)["content"][0]
-                )
-            else:
+        match active_position:
+            case "left":
+                extra_left_space = ""
+                extra_right_space = " " * empty_space
+            case "right":
+                extra_left_space = " " * empty_space
+                extra_right_space = ""
+            case "center":
                 half_empty_space = empty_space // 2
 
                 extra_left_space = " " * half_empty_space
@@ -278,34 +276,20 @@ class TermSpark:
                     else " " * half_empty_space
                 )
 
-                getattr(self, not_empty_position)["content"][0] = (
-                    extra_left_space
-                    + getattr(self, not_empty_position)["content"][0]
-                    + extra_right_space
-                )
+        if isinstance(getattr(self, active_position)["content"], list):
+            getattr(self, active_position)["content"][0] = (
+                extra_left_space
+                + getattr(self, active_position)["content"][0]
+            )
+
+            getattr(self, active_position)["content"][-1] = (
+                getattr(self, active_position)["content"][-1]
+                + extra_right_space
+            )
         else:
-            if not_empty_position == "left":
-                getattr(self, not_empty_position)["content"] = (
-                    getattr(self, not_empty_position)["content"] + " " * empty_space
-                )
-            elif not_empty_position == "right":
-                getattr(self, not_empty_position)["content"] = (
-                    " " * empty_space + getattr(self, not_empty_position)["content"]
-                )
-            else:
-                half_empty_space = empty_space // 2
-
-                extra_left_space = " " * half_empty_space
-                extra_right_space = (
-                    " " * (half_empty_space + 1)
-                    if empty_space % 2 != 0
-                    else " " * half_empty_space
-                )
-                getattr(self, not_empty_position)["content"] = (
-                    extra_left_space
-                    + getattr(self, not_empty_position)["content"]
-                    + extra_right_space
-                )
+            getattr(self, active_position)["content"] = (
+                extra_left_space + getattr(self, active_position)["content"] + extra_right_space
+            )
 
     def render(self) -> str:
         self.paint_content()
