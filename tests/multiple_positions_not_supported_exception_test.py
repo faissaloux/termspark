@@ -1,4 +1,6 @@
-from termspark.exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
+from termspark.exceptions.multiplePositionsNotSupported import (
+    MultiplePositionsNotSupported,
+)
 from termspark.painter.constants.fore import Fore
 
 

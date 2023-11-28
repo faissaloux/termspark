@@ -1,6 +1,9 @@
 import pytest
+
+from termspark.exceptions.multiplePositionsNotSupported import (
+    MultiplePositionsNotSupported,
+)
 from termspark.termspark import TermSpark
-from termspark.exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 
 
 class TestRaw:
