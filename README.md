@@ -136,3 +136,19 @@ You can customize width instead of the default full terminal width.
 
     TermSpark().set_width(40).print_left("LEFT", "red").print_right("RIGHT", "blue").spark()
 ```
+
+## Set content max width
+You can specify max width of content depending on position using `max_[position](max_characters)`.
+```python
+    from termspark.termspark import TermSpark
+
+    termspark = TermSpark()
+    termspark.spark_left(["LEFT", "red"])
+    termspark.spark_right(["RIGHT", "blue"])
+    termspark.max_left(2)
+    termspark.max_right(3)
+    termspark.spark()
+```
+This should show only "LE" on the left, and "RIG" on the right.
+> **Warning**
+> `max_[position]()` is only supported by sparkers.
