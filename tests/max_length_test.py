@@ -57,6 +57,31 @@ class TestMaxLength:
         assert termspark.center["highlight"][0] == "white"
         assert termspark.center["highlight"][1] == "blue"
 
+    def test_max_length_with_single_content_first_elem_equal_to_max(self):
+        termspark = TermSpark()
+        termspark.spark_center([" CENTER ", "gray", "white"])
+        termspark.max_center(8)
+
+        assert len(termspark.center["content"]) == 1
+        assert len(termspark.center["color"]) == 1
+        assert len(termspark.center["highlight"]) == 1
+        assert termspark.center["content"][0] == " CENTER "
+        assert termspark.center["color"][0] == "gray"
+        assert termspark.center["highlight"][0] == "white"
+
+    def test_max_length_with_multiple_content_first_elem_equal_to_max(self):
+        termspark = TermSpark()
+        termspark.spark_center([" CENTER| ", "gray", "white"])
+        termspark.spark_center([" RETNER ", "white", "blue"])
+        termspark.max_center(9)
+
+        assert len(termspark.center["content"]) == 1
+        assert len(termspark.center["color"]) == 1
+        assert len(termspark.center["highlight"]) == 1
+        assert termspark.center["content"][0] == " CENTER| "
+        assert termspark.center["color"][0] == "gray"
+        assert termspark.center["highlight"][0] == "white"
+
     def test_max_length_minimum_value(self):
         termspark = TermSpark()
         termspark.spark_center([" CENTER ", "gray", "white"])
