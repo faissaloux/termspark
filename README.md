@@ -152,3 +152,17 @@ You can specify max width of content depending on position using `max_[position]
 This should show only "LE" on the left, and "RIG" on the right.
 > **Warning**
 > `max_[position]()` is only supported by sparkers.
+
+## Full width
+You can enable full width by using `full_width()`.
+
+```python
+    from termspark import TermSpark
+
+    termspark = TermSpark()
+    termspark.spark_center(['Thanks for using Termspark!', 'white', 'green'])
+    termspark.full_width()
+    termspark.spark()
+```
+> **Warning**
+> `full_width()` can only be used with one position.
