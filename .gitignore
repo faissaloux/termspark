@@ -1,6 +1,7 @@
 /build
 /dist
 /.vscode
+/.mypy_cache
 /venv
 *.egg-info
 __pycache__
