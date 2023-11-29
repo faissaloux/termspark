@@ -13,21 +13,21 @@ class Painter:
     SUFFIX: str = "m"
     RESET: str = "\x1b[0m"
 
-    def position(self, position: Dict[str, Union[str, ListType[str]]]):
+    def element(self, element: Dict[str, Union[str, ListType[str]]]):
         self.content = (
-            position["content"]
-            if isinstance(position["content"], list)
-            else [position["content"]]
+            element["content"]
+            if isinstance(element["content"], list)
+            else [element["content"]]
         )
         self.color = (
-            position["color"]
-            if isinstance(position["color"], list)
-            else [position["color"]]
+            element["color"]
+            if isinstance(element["color"], list)
+            else [element["color"]]
         )
         self.highlight = (
-            position["highlight"]
-            if isinstance(position["highlight"], list)
-            else [position["highlight"]]
+            element["highlight"]
+            if isinstance(element["highlight"], list)
+            else [element["highlight"]]
         )
 
         self.color = List().snake(self.color)

@@ -166,3 +166,14 @@ You can enable full width by using `full_width()`.
 ```
 > **Warning**
 > `full_width()` can only be used with one position.
+
+## Separator
+You can add color and highlight to separator too using `set_separator(content, color, highlight)`.
+```python
+termspark = TermSpark()
+termspark.spark_left([' Author ', 'green'])
+termspark.spark_right([' Faissal Wahabali ', 'green'])
+termspark.set_separator('.', 'green')
+termspark.spark()
+```
+![](https://private-user-images.githubusercontent.com/60013703/286741604-5cf5039c-66c5-4fbc-9e4a-cb39332a2fb6.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDEyOTIzMDEsIm5iZiI6MTcwMTI5MjAwMSwicGF0aCI6Ii82MDAxMzcwMy8yODY3NDE2MDQtNWNmNTAzOWMtNjZjNS00ZmJjLTllNGEtY2IzOTMzMmEyZmI2LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzExMjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMxMTI5VDIxMDY0MVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTY4ZjlkODhhZjUyMzkwYjc3YTM4MDYxOTI1ZmY1YTEwOTFmMzg5OWEyOTIwYWY0MjhiZTAyMzg4ODZiNmMxYzImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.B5AE1L2yUgWakIKP8legAM-_DHY3EZ-ahHj2MYgoM50)

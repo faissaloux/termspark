@@ -18,7 +18,7 @@ class TestPainter:
 
     def test_attributes(self):
         position = {"content": "content", "color": "red", "highlight": ""}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.color == ["red"]
@@ -30,7 +30,7 @@ class TestPainter:
             "color": ["red", "white"],
             "highlight": ["white", "blue"],
         }
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content1", "content2"]
         assert painter.color == ["red", "white"]
@@ -42,7 +42,7 @@ class TestPainter:
             "color": ["white", ""],
             "highlight": ["", "blue"],
         }
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content1", "content2"]
         assert painter.color == ["white", ""]
@@ -50,7 +50,7 @@ class TestPainter:
 
     def test_can_add_existed_fore_color(self):
         position = {"content": "content", "color": "red", "highlight": ""}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.color == ["red"]
@@ -58,7 +58,7 @@ class TestPainter:
 
     def test_can_add_existed_multi_words_fore_color(self):
         position = {"content": "content", "color": "light red", "highlight": ""}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.color == ["light_red"]
@@ -66,7 +66,7 @@ class TestPainter:
 
     def test_return_content_when_unexisted_fore_color(self):
         position = {"content": "content", "color": "pink", "highlight": ""}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.color == ["pink"]
@@ -74,7 +74,7 @@ class TestPainter:
 
     def test_can_add_existed_highlight(self):
         position = {"content": "content", "color": None, "highlight": "blue"}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.highlight == ["blue"]
@@ -82,7 +82,7 @@ class TestPainter:
 
     def test_can_add_existed_multi_words_highlight(self):
         position = {"content": "content", "color": None, "highlight": "light red"}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.highlight == ["light_red"]
@@ -90,7 +90,7 @@ class TestPainter:
 
     def test_return_content_when_unexisted_highlight(self):
         position = {"content": "content", "color": None, "highlight": "pink"}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.highlight == ["pink"]
@@ -98,7 +98,7 @@ class TestPainter:
 
     def test_can_add_existed_both_color_and_highlight(self):
         position = {"content": "content", "color": "red", "highlight": "blue"}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.color == ["red"]
@@ -109,7 +109,7 @@ class TestPainter:
 
     def test_return_content_when_unexisted_both_color_and_highlight(self):
         position = {"content": "content", "color": "pink", "highlight": "beige"}
-        painter = Painter().position(position)
+        painter = Painter().element(position)
 
         assert painter.content == ["content"]
         assert painter.color == ["pink"]

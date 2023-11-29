@@ -19,7 +19,11 @@ class TermSpark:
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
-    separator: str = " "
+    separator: Dict[str, str] = {
+        "content": " ",
+        "color": "",
+        "highlight": "",
+    }
     line_is_set: bool = False
     is_full_width: bool = False
     printed: List[str] = []
@@ -166,10 +170,13 @@ class TermSpark:
 
         return positionContent
 
-    def set_separator(self, separator: str):
-        if len(separator) > 1:
+    def set_separator(
+        self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
+    ):
+        if len(content) > 1:
             raise ArgCharsExceededException("separator", "one")
-        self.separator = separator
+
+        self.separator = Structurer(content, color, highlight).form()
 
         return self
 
@@ -192,7 +199,9 @@ class TermSpark:
                 getattr(self, position), "painted_content"
             )
             content_length += len(painted_content)
-        self.separator_length = self.get_width() - content_length + colors_codes_length
+        self.separator["length"] = (
+            self.get_width() - content_length + colors_codes_length
+        )
 
     def calculate_colors_codes_length(self) -> int:
         colors_codes_length = 0
@@ -210,8 +219,8 @@ class TermSpark:
         return colors_codes_length - len("\x1b")
 
     def line(self, separator: Optional[str] = None):
+        self.set_separator(separator if separator else self.separator["content"])
         self.line_is_set = True
-        self.set_separator(separator if separator else self.separator)
 
         return self
 
@@ -293,7 +302,14 @@ class TermSpark:
     def render(self) -> str:
         self.paint_content()
         self.calculate_separator_length()
-        separator_mid_width = self.separator * int(self.separator_length / 2)
+        if self.mode == "color":
+            self.paint_separator()
+
+        half_separator_length = int(self.separator["length"]) // 2
+        separator_mid_width = self.separator["content"] * half_separator_length
+        separator_painted_mid_width = (
+            self.separator["painted_content"] * half_separator_length
+        )
 
         if (
             "content" in self.left
@@ -311,12 +327,14 @@ class TermSpark:
                     )
                 else:
                     center = (
-                        separator_mid_width
+                        separator_painted_mid_width
                         + self.center["painted_content"]
-                        + separator_mid_width
+                        + separator_painted_mid_width
                     )
             else:
-                center = self.separator * self.separator_length
+                center = self.separator["painted_content"] * int(
+                    self.separator["length"]
+                )
 
             if self.mode == "raw":
                 left_content = ExistenceChecker().dictionary_key(self.left, "content")
@@ -349,9 +367,15 @@ class TermSpark:
         for position in self.positions:
             pos = getattr(self, position) if getattr(self, position) else {}
             if pos:
-                pos["painted_content"] = Painter().position(pos).paint()
+                pos["painted_content"] = Painter().element(pos).paint()
 
             setattr(self, position, pos)
+
+    def paint_separator(self):
+        if "color" in self.separator or "highlight" in self.separator:
+            self.separator["painted_content"] = (
+                Painter().element(self.separator).paint()
+            )
 
     def trim(self, chars_number):
         self.positions.reverse()
