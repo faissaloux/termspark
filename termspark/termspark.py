@@ -332,7 +332,9 @@ class TermSpark:
                         + separator_painted_mid_width
                     )
             else:
-                center = self.separator["painted_content"] * int(self.separator["length"])
+                center = self.separator["painted_content"] * int(
+                    self.separator["length"]
+                )
 
             if self.mode == "raw":
                 left_content = ExistenceChecker().dictionary_key(self.left, "content")
