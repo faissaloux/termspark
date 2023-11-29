@@ -15,5 +15,5 @@ class Structurer:
             "content": self.content,
             "color": self.color,
             "highlight": self.highlight,
-            "painted_content": self.content
+            "painted_content": self.content,
         }
