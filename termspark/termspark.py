@@ -5,6 +5,7 @@ from typing import Dict, List, Optional
 from .exceptions.argCharsExceededException import ArgCharsExceededException
 from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .exceptions.minNotReachedException import MinNotReachedException
+from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .exceptions.printerArgException import PrinterArgException
 from .exceptions.printerSparkerMixException import PrinterSparkerMixException
 from .helpers.existenceChecker import ExistenceChecker
@@ -20,6 +21,7 @@ class TermSpark:
     center: Dict[str, str] = {}
     separator: str = " "
     line_is_set: bool = False
+    is_full_width: bool = False
     printed: List[str] = []
     colors: chain = chain(range(30, 37), range(90, 97))
     highlights: chain = chain(range(41, 47), range(100, 108))
@@ -176,6 +178,11 @@ class TermSpark:
 
         return self
 
+    def full_width(self):
+        self.is_full_width = True
+
+        return self
+
     def calculate_separator_length(self):
         colors_codes_length = self.calculate_colors_codes_length()
         content_length = 0
@@ -235,6 +242,53 @@ class TermSpark:
             self.width = self.get_terminal_width()
 
         return self.width
+
+    def take_full_width(self):
+        not_empty_positions = 0
+        active_position = None
+
+        for position in self.positions:
+            if "content" in getattr(self, position):
+                active_position = position
+                not_empty_positions += 1
+
+        if not_empty_positions > 1:
+            raise MultiplePositionsNotSupported()
+
+        empty_space = self.get_width() - len(
+            "".join(getattr(self, active_position)["content"])
+        )
+
+        if active_position == "left":
+            extra_left_space = ""
+            extra_right_space = " " * empty_space
+        elif active_position == "right":
+            extra_left_space = " " * empty_space
+            extra_right_space = ""
+        else:
+            half_empty_space = empty_space // 2
+
+            extra_left_space = " " * half_empty_space
+            extra_right_space = (
+                " " * (half_empty_space + 1)
+                if empty_space % 2 != 0
+                else " " * half_empty_space
+            )
+
+        if isinstance(getattr(self, active_position)["content"], list):
+            getattr(self, active_position)["content"][0] = (
+                extra_left_space + getattr(self, active_position)["content"][0]
+            )
+
+            getattr(self, active_position)["content"][-1] = (
+                getattr(self, active_position)["content"][-1] + extra_right_space
+            )
+        else:
+            getattr(self, active_position)["content"] = (
+                extra_left_space
+                + getattr(self, active_position)["content"]
+                + extra_right_space
+            )
 
     def render(self) -> str:
         self.paint_content()
@@ -312,7 +366,7 @@ class TermSpark:
                         if chars_number_left > 0:
                             if len(content) > chars_number_left:
                                 new_content.append(
-                                    content[0 : len(content) - chars_number_left]
+                                    content[0 : len(content) - chars_number_left - 1]
                                 )
                                 chars_number_left -= chars_number
                             else:
@@ -346,6 +400,8 @@ class TermSpark:
             self.trim(to_trim)
         else:
             self.mode = "color"
+            if self.is_full_width:
+                self.take_full_width()
             print(self.render(), end=end)
 
     def raw(self) -> str:
