@@ -259,22 +259,21 @@ class TermSpark:
             "".join(getattr(self, active_position)["content"])
         )
 
-        match active_position:
-            case "left":
-                extra_left_space = ""
-                extra_right_space = " " * empty_space
-            case "right":
-                extra_left_space = " " * empty_space
-                extra_right_space = ""
-            case "center":
-                half_empty_space = empty_space // 2
+        if active_position == "left":
+            extra_left_space = ""
+            extra_right_space = " " * empty_space
+        elif active_position == "right":
+            extra_left_space = " " * empty_space
+            extra_right_space = ""
+        else:
+            half_empty_space = empty_space // 2
 
-                extra_left_space = " " * half_empty_space
-                extra_right_space = (
-                    " " * (half_empty_space + 1)
-                    if empty_space % 2 != 0
-                    else " " * half_empty_space
-                )
+            extra_left_space = " " * half_empty_space
+            extra_right_space = (
+                " " * (half_empty_space + 1)
+                if empty_space % 2 != 0
+                else " " * half_empty_space
+            )
 
         if isinstance(getattr(self, active_position)["content"], list):
             getattr(self, active_position)["content"][0] = (
