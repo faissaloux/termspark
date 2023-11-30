@@ -3,10 +3,11 @@ on:
   push:
     branches:
     - main
+    tags:
+    - '*'
 
 jobs:
   docs-deploy:
-    if: contains(github.event.head_commit.message, 'release')
     name: Deploy docs
     runs-on: ubuntu-latest
     steps:
