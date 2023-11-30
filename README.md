@@ -25,7 +25,7 @@
 ```
 
 > **Note**
-> Separator can contain only one character max.
+> Separator can contain only one character.
 
 ## You can also paint your content
 
