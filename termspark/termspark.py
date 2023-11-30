@@ -2,6 +2,7 @@ import os
 from itertools import chain
 from typing import Dict, List, Optional
 
+from .exceptions.combinationException import CombinationException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .exceptions.minNotReachedException import MinNotReachedException
@@ -14,6 +15,8 @@ from .structurer.structurer import Structurer
 
 
 class TermSpark:
+    __silent: List[str] = []
+
     mode: str = "color"
     width: int = 0
     left: Dict[str, str] = {}
@@ -24,6 +27,7 @@ class TermSpark:
         "color": "",
         "highlight": "",
     }
+    separator_is_set: bool = False
     line_is_set: bool = False
     is_full_width: bool = False
     printed: List[str] = []
@@ -178,6 +182,12 @@ class TermSpark:
 
         self.separator = Structurer(content, color, highlight).form()
 
+        if "separator" not in self.__silent:
+            self.separator_is_set = True
+
+        if "separator" in self.__silent:
+            self.__silent.remove("separator")
+
         return self
 
     def set_width(self, width: int):
@@ -219,9 +229,11 @@ class TermSpark:
         return colors_codes_length - len("\x1b")
 
     def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
+        self.__silent.append("separator")
         self.set_separator(
             separator if separator else self.separator["content"], highlight=highlight
         )
+
         self.line_is_set = True
 
         return self
@@ -312,6 +324,9 @@ class TermSpark:
         separator_painted_mid_width = (
             self.separator["painted_content"] * half_separator_length
         )
+
+        if self.line_is_set and self.separator_is_set:
+            raise CombinationException("line", "separator")
 
         if (
             "content" in self.left
