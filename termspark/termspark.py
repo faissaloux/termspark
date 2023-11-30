@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 
 from .exceptions.argCharsExceededException import ArgCharsExceededException
 from .exceptions.maxLenNotSupported import MaxLenNotSupported
+from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .exceptions.printerArgException import PrinterArgException
@@ -173,8 +174,8 @@ class TermSpark:
     def set_separator(
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
     ):
-        if len(content) > 1:
-            raise ArgCharsExceededException("separator", "one")
+        if len(content) != 1:
+            raise LenNotSupportedException("separator", 1)
 
         self.separator = Structurer(content, color, highlight).form()
 

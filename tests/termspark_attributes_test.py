@@ -1,6 +1,6 @@
 import pytest
 
-from termspark.exceptions.argCharsExceededException import ArgCharsExceededException
+from termspark.exceptions.lenNotSupportedException import LenNotSupportedException
 from termspark.termspark import TermSpark
 
 
@@ -16,11 +16,19 @@ class TestTermsparkAttributes:
         assert termspark.separator["color"] == ""  # Default
         assert termspark.separator["highlight"] == ""  # Default
 
+    def test_cant_set_more_empty_char_separator(self):
+        termspark = TermSpark()
+        assert termspark.separator["content"] == " "  # Default
+
+        with pytest.raises(LenNotSupportedException):
+            termspark.set_separator("")
+        assert termspark.separator["content"] == " "  # Default
+
     def test_cant_set_more_than_one_char_separator(self):
         termspark = TermSpark()
         assert termspark.separator["content"] == " "  # Default
 
-        with pytest.raises(ArgCharsExceededException):
+        with pytest.raises(LenNotSupportedException):
             termspark.set_separator("..")
         assert termspark.separator["content"] == " "  # Default
 
