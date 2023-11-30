@@ -1,4 +1,7 @@
+import pytest
+
 from termspark.termspark import TermSpark
+from termspark.exceptions.combinationException import CombinationException
 
 
 class TestTermsparkReturn:
@@ -293,3 +296,12 @@ class TestTermsparkReturn:
         termspark = TermSpark().set_width(width).line(".")
 
         assert str(termspark) == "." * (width - len("\x1b"))
+
+    def test_cant_combine_line_with_separator(self):
+        termspark = TermSpark()
+        termspark.print_left("LEFT")
+        termspark.set_separator(".")
+        termspark.line(".")
+
+        with pytest.raises(CombinationException):
+            termspark.spark()
