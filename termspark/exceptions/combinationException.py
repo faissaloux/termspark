@@ -4,7 +4,7 @@ import termspark.termspark
 
 
 class CombinationException(Exception):
-    def __init__(self, *elements: List[str]):
+    def __init__(self, *elements: str):
         self.elements = elements
 
     def __str__(self):
