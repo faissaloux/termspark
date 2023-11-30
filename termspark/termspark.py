@@ -2,9 +2,8 @@ import os
 from itertools import chain
 from typing import Dict, List, Optional
 
-from .exceptions.argCharsExceededException import ArgCharsExceededException
-from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .exceptions.lenNotSupportedException import LenNotSupportedException
+from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .exceptions.printerArgException import PrinterArgException
