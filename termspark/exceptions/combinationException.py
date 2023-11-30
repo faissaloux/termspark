@@ -1,6 +1,7 @@
+from typing import List
+
 import termspark.termspark
 
-from typing import List
 
 class CombinationException(Exception):
     def __init__(self, *elements: List[str]):

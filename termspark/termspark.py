@@ -2,13 +2,13 @@ import os
 from itertools import chain
 from typing import Dict, List, Optional
 
+from .exceptions.combinationException import CombinationException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .exceptions.printerArgException import PrinterArgException
 from .exceptions.printerSparkerMixException import PrinterSparkerMixException
-from .exceptions.combinationException import CombinationException
 from .helpers.existenceChecker import ExistenceChecker
 from .painter.painter import Painter
 from .structurer.structurer import Structurer

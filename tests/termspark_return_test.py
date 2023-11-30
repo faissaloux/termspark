@@ -1,7 +1,7 @@
 import pytest
 
-from termspark.termspark import TermSpark
 from termspark.exceptions.combinationException import CombinationException
+from termspark.termspark import TermSpark
 
 
 class TestTermsparkReturn:
