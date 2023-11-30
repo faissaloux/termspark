@@ -64,3 +64,16 @@ class TestTermsparkAttributes:
         assert termspark.separator["content"] == "."
         assert termspark.separator["color"] == ""  # Default
         assert termspark.separator["highlight"] == ""  # Default
+
+    def test_can_set_line_with_highlight(self):
+        termspark = TermSpark()
+        assert termspark.line_is_set == False
+        assert termspark.separator["content"] == " "  # Default
+        assert termspark.separator["color"] == ""  # Default
+        assert termspark.separator["highlight"] == ""  # Default
+
+        termspark.line(highlight='green')
+        assert termspark.line_is_set == True
+        assert termspark.separator["content"] == " "  # Default
+        assert termspark.separator["color"] == ""  # Default
+        assert termspark.separator["highlight"] == "green"

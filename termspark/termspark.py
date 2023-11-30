@@ -218,8 +218,8 @@ class TermSpark:
 
         return colors_codes_length - len("\x1b")
 
-    def line(self, separator: Optional[str] = None):
-        self.set_separator(separator if separator else self.separator["content"])
+    def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
+        self.set_separator(separator if separator else self.separator["content"], highlight=highlight)
         self.line_is_set = True
 
         return self
