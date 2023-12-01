@@ -50,7 +50,7 @@ class TestRaw:
         termspark.spark()
 
         assert termspark.is_full_width == True
-        assert len(termspark.left["content"]) == termspark.get_terminal_width()
+        assert len(termspark.left["content"][0]) == termspark.get_terminal_width()
 
     def test_is_full_width_with_print_center(self):
         termspark = TermSpark().print_center("CENTER", "white", "blue")
@@ -58,7 +58,7 @@ class TestRaw:
         termspark.spark()
 
         assert termspark.is_full_width == True
-        assert len(termspark.center["content"]) == termspark.get_terminal_width()
+        assert len(termspark.center["content"][0]) == termspark.get_terminal_width()
 
     def test_is_full_width_with_print_right(self):
         termspark = TermSpark().print_right("RIGHT", "white", "blue")
@@ -66,4 +66,4 @@ class TestRaw:
         termspark.spark()
 
         assert termspark.is_full_width == True
-        assert len(termspark.right["content"]) == termspark.get_terminal_width()
+        assert len(termspark.right["content"][0]) == termspark.get_terminal_width()
