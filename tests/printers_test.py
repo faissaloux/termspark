@@ -89,6 +89,17 @@ class TestPrintersTest:
             termspark.print_center(["CENTER", "blue"])
         assert termspark.center == {}  # Default
 
+    def test__mix_printer_with_same_position_sparker(self):
+        termspark = TermSpark()
+
+        termspark.print_left("LEFT", "red").print_center("CENTER", "blue").spark_center(
+            ["Termspark", "gray", "blue"]
+        )
+
+        assert termspark.center["content"] == ["CENTER", "Termspark"]
+        assert termspark.center["color"] == ["blue", "gray"]
+        assert termspark.center["highlight"] == ["", "blue"]
+
     def test_can_mix_printer_with_different_position_sparker(self):
         termspark = TermSpark()
         termspark.print_left("LEFT", "blue").spark_right(["RIGHT", "gray", "blue"])
