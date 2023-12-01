@@ -7,10 +7,10 @@ from .exceptions.emptyException import EmptyException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
-from .exceptions.printerArgException import PrinterArgException
 from .helpers.existenceChecker import ExistenceChecker
 from .painter.painter import Painter
 from .structurer.structurer import Structurer
+from .validators.printerValidator import PrinterValidator
 
 
 class TermSpark:
@@ -45,14 +45,7 @@ class TermSpark:
     def print_left(
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
     ):
-        if any(
-            [
-                isinstance(content, list),
-                isinstance(color, list),
-                isinstance(highlight, list),
-            ]
-        ):
-            raise PrinterArgException("left")
+        PrinterValidator().validate(content, color, highlight)
 
         self.spark_left([content, color, highlight])  # type: ignore
 
@@ -61,14 +54,7 @@ class TermSpark:
     def print_right(
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
     ):
-        if any(
-            [
-                isinstance(content, list),
-                isinstance(color, list),
-                isinstance(highlight, list),
-            ]
-        ):
-            raise PrinterArgException("right")
+        PrinterValidator().validate(content, color, highlight)
 
         self.spark_right([content, color, highlight])  # type: ignore
 
@@ -77,14 +63,7 @@ class TermSpark:
     def print_center(
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
     ):
-        if any(
-            [
-                isinstance(content, list),
-                isinstance(color, list),
-                isinstance(highlight, list),
-            ]
-        ):
-            raise PrinterArgException("center")
+        PrinterValidator().validate(content, color, highlight)
 
         self.spark_center([content, color, highlight])  # type: ignore
 
