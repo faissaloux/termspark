@@ -1,6 +1,5 @@
 import pytest
 
-from termspark.exceptions.maxLenNotSupported import MaxLenNotSupported
 from termspark.exceptions.minNotReachedException import MinNotReachedException
 from termspark.termspark import TermSpark
 
@@ -18,15 +17,6 @@ class TestMaxLength:
         assert termspark.left["content"][0] == "LE"
         assert termspark.center["content"][0] == "CE"
         assert termspark.right["content"][0] == "RI"
-
-    def test_max_length_not_supported_by_print(self):
-        termspark = TermSpark()
-        termspark.spark_left(["LEFT", "red"])
-        termspark.print_right("RIGHT", "blue")
-        termspark.max_left(2)
-
-        with pytest.raises(MaxLenNotSupported):
-            termspark.max_right(2)
 
     def test_max_length_with_multiple_content_first_elem_longer_than_max(self):
         termspark = TermSpark()
