@@ -125,7 +125,7 @@ You can print raw version which is colors-code-free so you can print clean text 
 ```python
     from termspark import TermSpark
 
-    TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
+    raw = TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
 ```
 
 ## Force Width

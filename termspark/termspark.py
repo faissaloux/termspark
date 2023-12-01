@@ -25,6 +25,7 @@ class TermSpark:
         "content": " ",
         "color": "",
         "highlight": "",
+        "painted_content": " ",
     }
     separator_is_set: bool = False
     line_is_set: bool = False
@@ -40,7 +41,7 @@ class TermSpark:
     ]
 
     def __init__(self):
-        self.set_design_codes()
+        self.__set_design_codes()
 
     def print_left(
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
@@ -70,21 +71,32 @@ class TermSpark:
         return self
 
     def spark_left(self, *contents: List[str]):
-        self.spark_position("left", *contents)
+        self.__spark_position("left", *contents)
 
         return self
 
     def spark_right(self, *contents: List[str]):
-        self.spark_position("right", *contents)
+        self.__spark_position("right", *contents)
 
         return self
 
     def spark_center(self, *contents: List[str]):
-        self.spark_position("center", *contents)
+        self.__spark_position("center", *contents)
 
         return self
 
-    def max_position(self, position: str, max: int):
+    def __spark_position(self, position: str, *contents: List[str]):
+        positionContent = getattr(self, position) if getattr(self, position) else {}
+
+        if not isinstance(contents[0], list):
+            contents = (list(contents),)
+
+        for content in contents:
+            positionContent = self.__appendPositionContent(positionContent, *content)
+
+        setattr(self, position, positionContent)
+
+    def __max_position(self, position: str, max: int):
         if max < 1:
             raise MinNotReachedException("max", 1)
 
@@ -117,32 +129,21 @@ class TermSpark:
         ]
 
     def max_left(self, max: int):
-        self.max_position("left", max)
+        self.__max_position("left", max)
 
         return self
 
     def max_right(self, max: int):
-        self.max_position("right", max)
+        self.__max_position("right", max)
 
         return self
 
     def max_center(self, max: int):
-        self.max_position("center", max)
+        self.__max_position("center", max)
 
         return self
 
-    def spark_position(self, position: str, *contents: List[str]):
-        positionContent = getattr(self, position) if getattr(self, position) else {}
-
-        if isinstance(contents[0], list):
-            for content in contents:
-                positionContent = self.appendPositionContent(positionContent, *content)
-        else:
-            positionContent = self.appendPositionContent(positionContent, *contents)
-
-        setattr(self, position, positionContent)
-
-    def appendPositionContent(
+    def __appendPositionContent(
         self, positionContent: Dict[str, List[str]], *content: str
     ):
         if not positionContent:
@@ -183,7 +184,7 @@ class TermSpark:
 
         return self
 
-    def calculate_separator_length(self):
+    def __calculate_separator_length(self):
         colors_codes_length = self.calculate_colors_codes_length()
         content_length = 0
 
@@ -221,7 +222,7 @@ class TermSpark:
 
         return self
 
-    def set_design_codes(self):
+    def __set_design_codes(self):
         for color in self.colors:
             if f"[{color}m" not in self.design_codes:
                 self.design_codes.append(f"[{color}m")
@@ -249,7 +250,7 @@ class TermSpark:
 
         return self.width
 
-    def take_full_width(self):
+    def __take_full_width(self):
         not_empty_positions = 0
         active_position = None
 
@@ -290,10 +291,10 @@ class TermSpark:
         )
 
     def render(self) -> str:
-        self.paint_content()
-        self.calculate_separator_length()
+        self.__paint_content()
+        self.__calculate_separator_length()
         if self.mode == "color":
-            self.paint_separator()
+            self.__paint_separator()
 
         if self.line_is_set and self.separator_is_set:
             raise CombinationException("line", "separator")
@@ -360,7 +361,7 @@ class TermSpark:
 
         return left_content + center + right_content
 
-    def paint_content(self):
+    def __paint_content(self):
         for position in self.positions:
             pos = getattr(self, position) if getattr(self, position) else {}
             if pos:
@@ -368,13 +369,13 @@ class TermSpark:
 
             setattr(self, position, pos)
 
-    def paint_separator(self):
+    def __paint_separator(self):
         if "color" in self.separator or "highlight" in self.separator:
             self.separator["painted_content"] = (
                 Painter().element(self.separator).paint()
             )
 
-    def trim(self, chars_number):
+    def __trim(self, chars_number):
         self.positions.reverse()
         chars_number_left = chars_number
 
@@ -407,11 +408,11 @@ class TermSpark:
         to_trim = len(raw) - self.get_terminal_width() - 1
 
         if to_trim > 0:
-            self.trim(to_trim)
+            self.__trim(to_trim)
         else:
             self.mode = "color"
             if self.is_full_width:
-                self.take_full_width()
+                self.__take_full_width()
             print(self.render(), end=end)
 
     def raw(self) -> str:
