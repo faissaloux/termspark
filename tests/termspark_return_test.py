@@ -1,6 +1,7 @@
 import pytest
 
 from termspark.exceptions.combinationException import CombinationException
+from termspark.exceptions.emptyException import EmptyException
 from termspark.termspark import TermSpark
 
 
@@ -304,4 +305,17 @@ class TestTermsparkReturn:
         termspark.line(".")
 
         with pytest.raises(CombinationException):
+            termspark.spark()
+
+    def test_cant_spark_without_content(self):
+        termspark = TermSpark()
+
+        with pytest.raises(EmptyException):
+            termspark.spark()
+
+    def test_cant_spark_separator_without_content_in_line(self):
+        termspark = TermSpark()
+        termspark.set_separator(".")
+
+        with pytest.raises(EmptyException):
             termspark.spark()
