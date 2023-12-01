@@ -3,6 +3,7 @@ from itertools import chain
 from typing import Dict, List, Optional
 
 from .exceptions.combinationException import CombinationException
+from .exceptions.emptyException import EmptyException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.maxLenNotSupported import MaxLenNotSupported
 from .exceptions.minNotReachedException import MinNotReachedException
@@ -319,64 +320,68 @@ class TermSpark:
         if self.mode == "color":
             self.paint_separator()
 
+        if self.line_is_set and self.separator_is_set:
+            raise CombinationException("line", "separator")
+
+        if (
+            not any(
+                [
+                    "content" in self.left,
+                    "content" in self.right,
+                    "content" in self.center,
+                ]
+            )
+            and not self.line_is_set
+        ):
+            raise EmptyException
+
         half_separator_length = int(self.separator["length"]) // 2
         separator_mid_width = self.separator["content"] * half_separator_length
         separator_painted_mid_width = (
             self.separator["painted_content"] * half_separator_length
         )
 
-        if self.line_is_set and self.separator_is_set:
-            raise CombinationException("line", "separator")
-
-        if (
-            "content" in self.left
-            or "content" in self.right
-            or "content" in self.center
-            or self.line_is_set
-        ):
-            center_content = ExistenceChecker().dictionary_key(self.center, "content")
-            if len(center_content) > 0:
-                if self.mode == "raw":
-                    center = (
-                        separator_mid_width + self.center["content"]
-                        if isinstance(self.center["content"], str)
-                        else " ".join(center_content) + separator_mid_width
-                    )
-                else:
-                    center = (
-                        separator_painted_mid_width
-                        + self.center["painted_content"]
-                        + separator_painted_mid_width
-                    )
-            else:
-                center = self.separator["painted_content"] * int(
-                    self.separator["length"]
-                )
-
+        center_content = ExistenceChecker().dictionary_key(self.center, "content")
+        if len(center_content) > 0:
             if self.mode == "raw":
-                left_content = ExistenceChecker().dictionary_key(self.left, "content")
-                right_content = ExistenceChecker().dictionary_key(self.right, "content")
-
-                if len(left_content) > 0:
-                    left_content = (
-                        self.left["content"]
-                        if isinstance(self.left["content"], str)
-                        else " ".join(left_content)
-                    )
-
-                if len(right_content) > 0:
-                    right_content = (
-                        self.right["content"]
-                        if isinstance(self.right["content"], str)
-                        else " ".join(right_content)
-                    )
+                center = (
+                    separator_mid_width + self.center["content"]
+                    if isinstance(self.center["content"], str)
+                    else " ".join(center_content) + separator_mid_width
+                )
             else:
-                left_content = ExistenceChecker().dictionary_key(
-                    self.left, "painted_content"
+                center = (
+                    separator_painted_mid_width
+                    + self.center["painted_content"]
+                    + separator_painted_mid_width
                 )
-                right_content = ExistenceChecker().dictionary_key(
-                    self.right, "painted_content"
+        else:
+            center = self.separator["painted_content"] * int(self.separator["length"])
+
+        if self.mode == "raw":
+            left_content = ExistenceChecker().dictionary_key(self.left, "content")
+            right_content = ExistenceChecker().dictionary_key(self.right, "content")
+
+            if len(left_content) > 0:
+                left_content = (
+                    self.left["content"]
+                    if isinstance(self.left["content"], str)
+                    else " ".join(left_content)
                 )
+
+            if len(right_content) > 0:
+                right_content = (
+                    self.right["content"]
+                    if isinstance(self.right["content"], str)
+                    else " ".join(right_content)
+                )
+        else:
+            left_content = ExistenceChecker().dictionary_key(
+                self.left, "painted_content"
+            )
+            right_content = ExistenceChecker().dictionary_key(
+                self.right, "painted_content"
+            )
 
         return left_content + center + right_content
 
