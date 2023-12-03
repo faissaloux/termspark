@@ -186,3 +186,17 @@ termspark.line(highlight='green')
 termspark.spark()
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/41be7d15-4cab-4f73-a460-89c6d254db78)
+
+## Style
+You can style your text by passing it to `print() style parameter` or to `spark([]) fourth list element`.
+
+> **Note**
+> You can mix styles by separating them by commas.
+
+```python
+termspark = TermSpark()
+termspark.print_center(' Termspark ', 'green', style='underline, overline, italic')
+termspark.full_width()
+termspark.spark()
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/46f4b13d-9d06-4327-85f6-877732b49fba)
