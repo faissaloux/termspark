@@ -1,8 +1,8 @@
-from typing import Sequence
+from typing import Sequence, Union
 
 
 class List:
-    def snake(self, elements: Sequence[str | Sequence[str]]) -> Sequence[str]:
+    def snake(self, elements: Sequence[Union[str, Sequence[str]]]) -> Sequence[str]:
         snakeElements: Sequence[str] = []
 
         for index, elem in enumerate(elements):

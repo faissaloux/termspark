@@ -1,6 +1,6 @@
 import os
 from itertools import chain
-from typing import Dict, List, Optional, Sequence
+from typing import Dict, List, Optional, Sequence, Union
 
 from typing_extensions import TypedDict
 
@@ -21,7 +21,7 @@ Separator = TypedDict(
         "color": List[str],
         "highlight": List[str],
         "painted_content": List[str],
-        "style": List[str | Sequence[str]],
+        "style": List[Union[str, Sequence[str]]],
         "styled_content": List[str],
         "length": int,
     },
@@ -170,7 +170,7 @@ class TermSpark:
         return self
 
     def __appendPositionContent(
-        self, positionContent: Dict[str, List[str | Sequence[str]]], *content: str
+        self, positionContent: Dict[str, List[Union[str, Sequence[str]]]], *content: str
     ):
         if not positionContent:
             positionContent["content"] = [Structurer(*content).form()["content"]]
