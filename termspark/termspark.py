@@ -255,7 +255,7 @@ class TermSpark:
                         len(design_code) * position_content.count(design_code)
                     ) + position_content.count(design_code)
 
-        return design_codes_length - len("\x1b")
+        return design_codes_length
 
     def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
         self.__silent.append("separator")
