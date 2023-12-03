@@ -1,6 +1,8 @@
 import os
 from itertools import chain
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Sequence
+
+from typing_extensions import TypedDict
 
 from .exceptions.combinationException import CombinationException
 from .exceptions.emptyException import EmptyException
@@ -8,9 +10,23 @@ from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .helpers.existenceChecker import ExistenceChecker
-from .painter.painter import Painter
 from .structurer.structurer import Structurer
+from .styler.styler import Styler
 from .validators.printerValidator import PrinterValidator
+
+Separator = TypedDict(
+    "Separator",
+    {
+        "content": List[str],
+        "color": List[str],
+        "highlight": List[str],
+        "painted_content": List[str],
+        "style": List[str | Sequence[str]],
+        "styled_content": List[str],
+        "length": int,
+    },
+    total=False,
+)
 
 
 class TermSpark:
@@ -21,19 +37,15 @@ class TermSpark:
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
-    separator: Dict[str, str] = {
-        "content": " ",
-        "color": "",
-        "highlight": "",
-        "painted_content": " ",
-    }
+    separator: Separator = {}
     separator_is_set: bool = False
     line_is_set: bool = False
     is_full_width: bool = False
     colors: chain = chain(range(30, 37), range(90, 97))
     highlights: chain = chain(range(41, 47), range(100, 108))
-    attributes: range = range(1, 9)
+    styles: chain = chain(range(1, 6), range(7, 10), [21, 25])
     design_codes: List[str] = []
+    style_codes: List[str] = []
     positions: List[str] = [
         "left",
         "center",
@@ -42,31 +54,45 @@ class TermSpark:
 
     def __init__(self):
         self.__set_design_codes()
+        self.__silent.append("separator")
+        self.set_separator(" ")
 
     def print_left(
-        self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
+        self,
+        content: str,
+        color: Optional[str] = None,
+        highlight: Optional[str] = None,
+        style: Optional[str] = None,
     ):
-        PrinterValidator().validate(content, color, highlight)
+        PrinterValidator("left").validate(content, color, highlight, style)
 
-        self.spark_left([content, color, highlight])  # type: ignore
+        self.spark_left([content, color, highlight, style])  # type: ignore
 
         return self
 
     def print_right(
-        self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
+        self,
+        content: str,
+        color: Optional[str] = None,
+        highlight: Optional[str] = None,
+        style: Optional[str] = None,
     ):
-        PrinterValidator().validate(content, color, highlight)
+        PrinterValidator("right").validate(content, color, highlight, style)
 
-        self.spark_right([content, color, highlight])  # type: ignore
+        self.spark_right([content, color, highlight, style])  # type: ignore
 
         return self
 
     def print_center(
-        self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
+        self,
+        content: str,
+        color: Optional[str] = None,
+        highlight: Optional[str] = None,
+        style: Optional[str] = None,
     ):
-        PrinterValidator().validate(content, color, highlight)
+        PrinterValidator("center").validate(content, color, highlight, style)
 
-        self.spark_center([content, color, highlight])  # type: ignore
+        self.spark_center([content, color, highlight, style])  # type: ignore
 
         return self
 
@@ -144,18 +170,20 @@ class TermSpark:
         return self
 
     def __appendPositionContent(
-        self, positionContent: Dict[str, List[str]], *content: str
+        self, positionContent: Dict[str, List[str | Sequence[str]]], *content: str
     ):
         if not positionContent:
             positionContent["content"] = [Structurer(*content).form()["content"]]
             positionContent["color"] = [Structurer(*content).form()["color"]]
             positionContent["highlight"] = [Structurer(*content).form()["highlight"]]
+            positionContent["style"] = [Structurer(*content).form()["style"]]
         else:
             positionContent["content"].append(Structurer(*content).form()["content"])
             positionContent["color"].append(Structurer(*content).form()["color"])
             positionContent["highlight"].append(
                 Structurer(*content).form()["highlight"]
             )
+            positionContent["style"].append(Structurer(*content).form()["style"])
 
         return positionContent
 
@@ -165,7 +193,24 @@ class TermSpark:
         if len(content) != 1:
             raise LenNotSupportedException("separator", 1)
 
-        self.separator = Structurer(content, color, highlight).form()
+        self.separator["content"] = [
+            Structurer(content, color, highlight).form()["content"]
+        ]
+        self.separator["color"] = [
+            Structurer(content, color, highlight).form()["color"]
+        ]
+        self.separator["highlight"] = [
+            Structurer(content, color, highlight).form()["highlight"]
+        ]
+        self.separator["painted_content"] = [
+            Structurer(content, color, highlight).form()["painted_content"]
+        ]
+        self.separator["style"] = [
+            Structurer(content, color, highlight).form()["style"]
+        ]
+        self.separator["styled_content"] = [
+            Structurer(content, color, highlight).form()["styled_content"]
+        ]
 
         if "separator" not in self.__silent:
             self.separator_is_set = True
@@ -185,37 +230,39 @@ class TermSpark:
         return self
 
     def __calculate_separator_length(self):
-        colors_codes_length = self.calculate_colors_codes_length()
+        design_codes_length = self.calculate_design_codes_length()
         content_length = 0
 
         for position in self.positions:
-            painted_content = ExistenceChecker().dictionary_key(
-                getattr(self, position), "painted_content"
+            styled_content = ExistenceChecker().dictionary_key(
+                getattr(self, position), "styled_content"
             )
-            content_length += len(painted_content)
+            content_length += len(styled_content)
         self.separator["length"] = (
-            self.get_width() - content_length + colors_codes_length
+            self.get_width() - content_length + design_codes_length
         )
 
-    def calculate_colors_codes_length(self) -> int:
-        colors_codes_length = 0
+    def calculate_design_codes_length(self) -> int:
+        design_codes_length = 0
 
         for design_code in self.design_codes:
             for position in self.positions:
                 position_content = ExistenceChecker().dictionary_key(
-                    getattr(self, position), "painted_content"
+                    getattr(self, position), "styled_content"
                 )
                 if design_code in position_content:
-                    colors_codes_length += (
+                    design_codes_length += (
                         len(design_code) * position_content.count(design_code)
                     ) + position_content.count(design_code)
 
-        return colors_codes_length - len("\x1b")
+        return design_codes_length - len("\x1b")
 
     def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
         self.__silent.append("separator")
+
         self.set_separator(
-            separator if separator else self.separator["content"], highlight=highlight
+            separator if separator else self.separator["content"][0],
+            highlight=highlight,
         )
 
         self.line_is_set = True
@@ -229,9 +276,9 @@ class TermSpark:
         for highlight in self.highlights:
             if f"[{highlight}m" not in self.design_codes:
                 self.design_codes.append(f"[{highlight}m")
-        for attribute in self.attributes:
-            if f"[{attribute}m" not in self.design_codes:
-                self.design_codes.append(f"[{attribute}m")
+        for style in self.styles:
+            if f"[{style}m" not in self.design_codes:
+                self.design_codes.append(f"[{style}m")
 
         if f"[0m" not in self.design_codes:
             self.design_codes.append("[0m")
@@ -291,7 +338,7 @@ class TermSpark:
         )
 
     def render(self) -> str:
-        self.__paint_content()
+        self.__style_content()
         self.__calculate_separator_length()
         if self.mode == "color":
             self.__paint_separator()
@@ -314,25 +361,22 @@ class TermSpark:
         half_separator_length = int(self.separator["length"]) // 2
         separator_mid_width = self.separator["content"] * half_separator_length
         separator_painted_mid_width = (
-            self.separator["painted_content"] * half_separator_length
+            self.separator["styled_content"][0] * half_separator_length
         )
 
         center_content = ExistenceChecker().dictionary_key(self.center, "content")
         if len(center_content) > 0:
             if self.mode == "raw":
-                center = (
-                    separator_mid_width + self.center["content"]
-                    if isinstance(self.center["content"], str)
-                    else " ".join(center_content) + separator_mid_width
-                )
+                center = " ".join(center_content) + "".join(separator_mid_width)
             else:
                 center = (
                     separator_painted_mid_width
-                    + self.center["painted_content"]
+                    + self.center["styled_content"]
                     + separator_painted_mid_width
                 )
         else:
-            center = self.separator["painted_content"] * int(self.separator["length"])
+            center = self.separator["styled_content"][0] * int(self.separator["length"])
+            center = "".join(center)
 
         if self.mode == "raw":
             left_content = ExistenceChecker().dictionary_key(self.left, "content")
@@ -353,27 +397,25 @@ class TermSpark:
                 )
         else:
             left_content = ExistenceChecker().dictionary_key(
-                self.left, "painted_content"
+                self.left, "styled_content"
             )
             right_content = ExistenceChecker().dictionary_key(
-                self.right, "painted_content"
+                self.right, "styled_content"
             )
 
         return left_content + center + right_content
 
-    def __paint_content(self):
+    def __style_content(self):
         for position in self.positions:
             pos = getattr(self, position) if getattr(self, position) else {}
+
             if pos:
-                pos["painted_content"] = Painter().element(pos).paint()
+                pos["styled_content"] = Styler().element(pos).style()
 
             setattr(self, position, pos)
 
     def __paint_separator(self):
-        if "color" in self.separator or "highlight" in self.separator:
-            self.separator["painted_content"] = (
-                Painter().element(self.separator).paint()
-            )
+        self.separator["styled_content"] = [Styler().element(self.separator).style()]
 
     def __trim(self, chars_number):
         self.positions.reverse()
