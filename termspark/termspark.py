@@ -10,6 +10,7 @@ from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .helpers.existenceChecker import ExistenceChecker
+from .hyperlink.hyperlink import Hyperlink
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
 from .validators.printerValidator import PrinterValidator
@@ -34,6 +35,7 @@ class TermSpark:
 
     mode: str = "color"
     width: int = 0
+    hyperlink_trash_length: int = 0
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
@@ -118,6 +120,12 @@ class TermSpark:
             contents = (list(contents),)
 
         for content in contents:
+            hyperlink = Hyperlink()
+            hyperlink.set_content(content[0])
+            if hyperlink.exists():
+                content[0] = hyperlink.encode()
+                self.hyperlink_trash_length = hyperlink.trash_length()
+
             positionContent = self.__appendPositionContent(positionContent, *content)
 
         setattr(self, position, positionContent)
@@ -239,7 +247,10 @@ class TermSpark:
             )
             content_length += len(styled_content)
         self.separator["length"] = (
-            self.get_width() - content_length + design_codes_length
+            self.get_width()
+            - content_length
+            + design_codes_length
+            + self.hyperlink_trash_length
         )
 
     def calculate_design_codes_length(self) -> int:
@@ -438,8 +449,8 @@ class TermSpark:
         print(self.render())
 
     def spark(self, end="\n"):
-        raw = self.raw()
-        to_trim = len(raw) - self.get_terminal_width() - 1
+        self.raw()
+        to_trim = 0  # len(raw) - self.get_terminal_width() - 1
 
         if to_trim > 0:
             self.__trim(to_trim)
