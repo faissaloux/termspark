@@ -1,5 +1,7 @@
 import os
+import sys
 
 from termspark.termspark import TermSpark
 
-os.system("color")
+if sys.platform == "win32":
+    os.system("color")
