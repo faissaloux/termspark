@@ -383,18 +383,10 @@ class TermSpark:
             right_content = ExistenceChecker().dictionary_key(self.right, "content")
 
             if len(left_content) > 0:
-                left_content = (
-                    self.left["content"]
-                    if isinstance(self.left["content"], str)
-                    else " ".join(left_content)
-                )
+                left_content = " ".join(left_content)
 
             if len(right_content) > 0:
-                right_content = (
-                    self.right["content"]
-                    if isinstance(self.right["content"], str)
-                    else " ".join(right_content)
-                )
+                right_content = " ".join(right_content)
         else:
             left_content = ExistenceChecker().dictionary_key(
                 self.left, "styled_content"
