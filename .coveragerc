@@ -1,0 +1,4 @@
+[report]
+
+exclude_lines =
+  codecov-ignore
