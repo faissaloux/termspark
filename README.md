@@ -190,6 +190,18 @@ termspark.spark()
 ## Style
 You can style your text by passing it to `print() style parameter` or to `spark([]) fourth list element`.
 
+**Supported styles:**
+- bold
+- dim
+- italic
+- overline
+- underline
+- double underline
+- strike through
+- blink
+- reverse
+- hidden
+
 > **Note**
 > You can mix styles by separating them by commas.
 
