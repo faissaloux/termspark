@@ -1,5 +1,5 @@
-import colorama
+import os
 
 from termspark.termspark import TermSpark
 
-colorama.init()
+os.system("color")
