@@ -1,5 +1,7 @@
-import colorama
+import os
+import sys
 
 from termspark.termspark import TermSpark
 
-colorama.init()
+if sys.platform == "win32":  # codecov-ignore
+    os.system("color")

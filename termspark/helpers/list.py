@@ -1,9 +1,14 @@
-from typing import List as TypingList
+from typing import Sequence, Union
 
 
 class List:
-    def snake(self, list: TypingList[str]) -> TypingList[str]:
-        for index, elem in enumerate(list):
-            list[index] = elem.replace(" ", "_") if elem else elem
+    def snake(self, elements: Sequence[Union[str, Sequence[str]]]) -> Sequence[str]:
+        snakeElements: Sequence[str] = []
 
-        return list
+        for index, elem in enumerate(elements):
+            if isinstance(elem, list):
+                snakeElements.insert(index, self.snake(elem))  # type: ignore
+            else:
+                snakeElements.insert(index, elem.replace(" ", "_") if elem else elem)  # type: ignore
+
+        return snakeElements

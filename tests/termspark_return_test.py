@@ -11,7 +11,7 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         content_space = len("LEFT")
-        rest_space = terminal_width - content_space - len("\x1b")
+        rest_space = terminal_width - content_space
 
         assert str(termspark) == "LEFT" + " " * rest_space
 
@@ -20,7 +20,7 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         content_space = len("LEFT")
-        rest_space = terminal_width - content_space - len("\x1b")
+        rest_space = terminal_width - content_space
 
         assert str(termspark) == "LEFT" + "." * rest_space
 
@@ -29,7 +29,7 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         content_space = len("RIGHT")
-        rest_space = terminal_width - content_space - len("\x1b")
+        rest_space = terminal_width - content_space
 
         assert str(termspark) == " " * rest_space + "RIGHT"
 
@@ -38,7 +38,7 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         content_space = len("RIGHT")
-        rest_space = terminal_width - content_space - len("\x1b")
+        rest_space = terminal_width - content_space
 
         assert str(termspark) == "." * rest_space + "RIGHT"
 
@@ -47,7 +47,7 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         content_space = len("CENTER")
-        rest_space = terminal_width - content_space - len("\x1b")
+        rest_space = terminal_width - content_space
 
         assert str(termspark) == " " * int(rest_space / 2) + "CENTER" + " " * int(
             rest_space / 2
@@ -58,7 +58,7 @@ class TestTermsparkReturn:
 
         terminal_width = termspark.get_terminal_width()
         content_space = len("CENTER")
-        rest_space = terminal_width - content_space - len("\x1b")
+        rest_space = terminal_width - content_space
 
         assert str(termspark) == "." * int(rest_space / 2) + "CENTER" + "." * int(
             rest_space / 2
@@ -70,9 +70,7 @@ class TestTermsparkReturn:
         terminal_width = termspark.get_terminal_width()
         left_content_space = len("LEFT")
         right_content_space = len("RIGHT")
-        rest_space = (
-            terminal_width - left_content_space - right_content_space - len("\x1b")
-        )
+        rest_space = terminal_width - left_content_space - right_content_space
 
         assert str(termspark) == "LEFT" + " " * rest_space + "RIGHT"
 
@@ -84,9 +82,7 @@ class TestTermsparkReturn:
         terminal_width = termspark.get_terminal_width()
         left_content_space = len("LEFT")
         right_content_space = len("RIGHT")
-        rest_space = (
-            terminal_width - left_content_space - right_content_space - len("\x1b")
-        )
+        rest_space = terminal_width - left_content_space - right_content_space
 
         assert str(termspark) == "LEFT" + "." * rest_space + "RIGHT"
 
@@ -96,9 +92,7 @@ class TestTermsparkReturn:
         terminal_width = termspark.get_terminal_width()
         left_content_space = len("LEFT")
         center_content_space = len("CENTER")
-        rest_space = (
-            terminal_width - left_content_space - center_content_space - len("\x1b")
-        )
+        rest_space = terminal_width - left_content_space - center_content_space
 
         assert str(termspark) == "LEFT" + " " * int(
             rest_space / 2
@@ -112,9 +106,7 @@ class TestTermsparkReturn:
         terminal_width = termspark.get_terminal_width()
         left_content_space = len("LEFT")
         center_content_space = len("CENTER")
-        rest_space = (
-            terminal_width - left_content_space - center_content_space - len("\x1b")
-        )
+        rest_space = terminal_width - left_content_space - center_content_space
 
         assert str(termspark) == "LEFT" + "." * int(
             rest_space / 2
@@ -126,9 +118,7 @@ class TestTermsparkReturn:
         terminal_width = termspark.get_terminal_width()
         right_content_space = len("RIGHT")
         center_content_space = len("CENTER")
-        rest_space = (
-            terminal_width - right_content_space - center_content_space - len("\x1b")
-        )
+        rest_space = terminal_width - right_content_space - center_content_space
 
         assert (
             str(termspark)
@@ -146,9 +136,7 @@ class TestTermsparkReturn:
         terminal_width = termspark.get_terminal_width()
         right_content_space = len("RIGHT")
         center_content_space = len("CENTER")
-        rest_space = (
-            terminal_width - right_content_space - center_content_space - len("\x1b")
-        )
+        rest_space = terminal_width - right_content_space - center_content_space
 
         assert (
             str(termspark)
@@ -172,7 +160,6 @@ class TestTermsparkReturn:
             - left_content_space
             - right_content_space
             - center_content_space
-            - len("\x1b")
         )
 
         assert (
@@ -202,7 +189,6 @@ class TestTermsparkReturn:
             - left_content_space
             - right_content_space
             - center_content_space
-            - len("\x1b")
         )
 
         assert (
@@ -231,7 +217,6 @@ class TestTermsparkReturn:
             - left_content_space
             - right_content_space
             - center_content_space
-            - len("\x1b")
         )
 
         assert (
@@ -262,7 +247,6 @@ class TestTermsparkReturn:
             - left_content_space
             - right_content_space
             - center_content_space
-            - len("\x1b")
         )
 
         assert (
@@ -278,25 +262,25 @@ class TestTermsparkReturn:
         termspark = TermSpark().line()
 
         terminal_width = termspark.get_terminal_width()
-        assert str(termspark) == " " * (terminal_width - len("\x1b"))
+        assert str(termspark) == " " * terminal_width
 
     def test_customized_line(self):
         termspark = TermSpark().line(".")
 
         terminal_width = termspark.get_terminal_width()
-        assert str(termspark) == "." * (terminal_width - len("\x1b"))
+        assert str(termspark) == "." * terminal_width
 
     def test_customized_line_with_highlight(self):
         termspark = TermSpark().line(".", "green")
 
         terminal_width = termspark.get_terminal_width()
-        assert str(termspark) == "\x1b[42m.\x1b[0m" * (terminal_width - len("\x1b"))
+        assert str(termspark) == "\x1b[42m.\x1b[0m" * terminal_width
 
     def test_force_width(self):
         width = 100
         termspark = TermSpark().set_width(width).line(".")
 
-        assert str(termspark) == "." * (width - len("\x1b"))
+        assert str(termspark) == "." * width
 
     def test_cant_combine_line_with_separator(self):
         termspark = TermSpark()
