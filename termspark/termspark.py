@@ -43,7 +43,7 @@ class TermSpark:
     separator_is_set: bool = False
     line_is_set: bool = False
     is_full_width: bool = False
-    to_trim: dict[str, dict[int, str]] = {}
+    to_trim: Dict[str, Dict[int, str]] = {}
     positions: List[str] = [
         "left",
         "center",
