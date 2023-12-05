@@ -442,7 +442,7 @@ class TermSpark:
             setattr(self, position, positionContent)
 
         raw = self.raw()
-        to_trim = len(raw) - self.get_terminal_width() - 1
+        to_trim = len(raw) - self.get_width()
         if to_trim > 0:
             self.__trim(to_trim)
         else:
