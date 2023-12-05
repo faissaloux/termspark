@@ -3,7 +3,7 @@ from typing import Dict, List, Union
 
 
 class Hyperlink:
-    PLACEHOLDER_PATTERN: str = "[^\[]*?"
+    PLACEHOLDER_PATTERN: str = "[^\\[]*?"
     URL_PATTERN: str = "http[s]?://[^)]+"
     HYPERLINK_PATTERN: str = f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
 
@@ -12,7 +12,9 @@ class Hyperlink:
     RESET: str = "\x1b\\"
 
     matches: list = []
-    __hyperlink_elements: list = []
+
+    def __init__(self):
+        self.__hyperlink_elements: list = []
 
     def set_content(self, content: List[str]):
         self.content = content
@@ -62,6 +64,3 @@ class Hyperlink:
                 Hyperlink.HYPERLINK_PATTERN, encoded_hyperlink + "\\", content
             )
         }
-
-    def hyperlink_elements(self):
-        return self.__hyperlink_elements
