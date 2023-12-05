@@ -1,5 +1,5 @@
 import os
-from itertools import chain
+import re
 from typing import Dict, List, Optional, Sequence, Union
 
 from typing_extensions import TypedDict
@@ -43,11 +43,7 @@ class TermSpark:
     separator_is_set: bool = False
     line_is_set: bool = False
     is_full_width: bool = False
-    colors: chain = chain(range(30, 37), range(90, 97))
-    highlights: chain = chain(range(41, 47), range(100, 108))
-    styles: chain = chain(range(1, 6), range(7, 10), [21, 25])
-    design_codes: List[str] = []
-    style_codes: List[str] = []
+    to_trim: dict[str, dict[int, str]] = {}
     positions: List[str] = [
         "left",
         "center",
@@ -55,7 +51,6 @@ class TermSpark:
     ]
 
     def __init__(self):
-        self.__set_design_codes()
         self.__silent.append("separator")
         self.set_separator(" ")
 
@@ -120,12 +115,6 @@ class TermSpark:
             contents = (list(contents),)
 
         for content in contents:
-            hyperlink = Hyperlink()
-            hyperlink.set_content(content[0])
-            if hyperlink.exists():
-                content[0] = hyperlink.encode()
-                self.hyperlink_trash_length = hyperlink.trash_length()
-
             positionContent = self.__appendPositionContent(positionContent, *content)
 
         setattr(self, position, positionContent)
@@ -238,35 +227,16 @@ class TermSpark:
         return self
 
     def __calculate_separator_length(self):
-        design_codes_length = self.calculate_design_codes_length()
         content_length = 0
 
         for position in self.positions:
-            styled_content = ExistenceChecker().dictionary_key(
-                getattr(self, position), "styled_content"
+            content = ExistenceChecker().dictionary_key(
+                getattr(self, position), "content"
             )
-            content_length += len(styled_content)
-        self.separator["length"] = (
-            self.get_width()
-            - content_length
-            + design_codes_length
-            + self.hyperlink_trash_length
-        )
 
-    def calculate_design_codes_length(self) -> int:
-        design_codes_length = 0
+            content_length += len("".join(content))
 
-        for design_code in self.design_codes:
-            for position in self.positions:
-                position_content = ExistenceChecker().dictionary_key(
-                    getattr(self, position), "styled_content"
-                )
-                if design_code in position_content:
-                    design_codes_length += (
-                        len(design_code) * position_content.count(design_code)
-                    ) + position_content.count(design_code)
-
-        return design_codes_length
+        self.separator["length"] = self.get_width() - content_length
 
     def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
         self.__silent.append("separator")
@@ -279,20 +249,6 @@ class TermSpark:
         self.line_is_set = True
 
         return self
-
-    def __set_design_codes(self):
-        for color in self.colors:
-            if f"[{color}m" not in self.design_codes:
-                self.design_codes.append(f"[{color}m")
-        for highlight in self.highlights:
-            if f"[{highlight}m" not in self.design_codes:
-                self.design_codes.append(f"[{highlight}m")
-        for style in self.styles:
-            if f"[{style}m" not in self.design_codes:
-                self.design_codes.append(f"[{style}m")
-
-        if f"[0m" not in self.design_codes:
-            self.design_codes.append("[0m")
 
     def get_terminal_width(self) -> int:
         try:
@@ -348,8 +304,13 @@ class TermSpark:
             getattr(self, active_position)["content"][-1] + extra_right_space
         )
 
+        getattr(self, active_position)["encoded_content"] = getattr(
+            self, active_position
+        )["content"]
+
     def render(self) -> str:
-        self.__style_content()
+        if self.mode == "color":
+            self.__style_content()
         self.__calculate_separator_length()
         if self.mode == "color":
             self.__paint_separator()
@@ -376,6 +337,17 @@ class TermSpark:
         )
 
         center_content = ExistenceChecker().dictionary_key(self.center, "content")
+
+        # trim what should be trimmed
+        if self.mode != "raw" and len(self.to_trim):
+            for position in self.positions:
+                if position in self.to_trim and len(self.to_trim[position]):
+                    text_to_trim = "".join(self.to_trim[position].values())
+                    styled_content = getattr(self, position)["styled_content"]
+                    getattr(self, position)["styled_content"] = "".join(
+                        styled_content.rsplit(text_to_trim, 1)
+                    )
+
         if len(center_content) > 0:
             if self.mode == "raw":
                 center = " ".join(center_content) + "".join(separator_mid_width)
@@ -421,44 +393,76 @@ class TermSpark:
         self.separator["styled_content"] = [Styler().element(self.separator).style()]
 
     def __trim(self, chars_number):
-        self.positions.reverse()
         chars_number_left = chars_number
 
-        for position in self.positions:
-            new_content = []
+        for posIndex in range(len(self.positions) - 1, -1, -1):
+            position = self.positions[posIndex]
             if "content" in getattr(self, position).keys():
-                getattr(self, position)["content"].reverse()
-                for content in getattr(self, position)["content"]:
+                self.to_trim[position] = {}
+                position_content = getattr(self, position)["content"]
+                for content_index in range(len(position_content) - 1, -1, -1):
+                    content = position_content[content_index]
                     if chars_number_left > 0:
                         if len(content) > chars_number_left:
-                            new_content.append(
-                                content[0 : len(content) - chars_number_left - 1]
-                            )
+                            self.to_trim[position][content_index] = content[
+                                len(content) - chars_number_left :
+                            ]
                             chars_number_left -= chars_number
                         else:
+                            self.to_trim[position][content_index] = content
                             chars_number_left = chars_number_left - len(content)
-                    else:
-                        new_content.append(content)
-
-                getattr(self, position)["content"] = new_content
-                getattr(self, position)["content"].reverse()
-
-        self.positions.reverse()
-        self.mode = "color"
-
-        print(self.render())
 
     def spark(self, end="\n"):
-        self.raw()
-        to_trim = 0  # len(raw) - self.get_terminal_width() - 1
+        for position in self.positions:
+            pos = getattr(self, position)
+            positionContent = pos
+            if "content" in pos:
+                hyperlink = Hyperlink()
+                hyperlink.set_content(pos["content"].copy())
+                if hyperlink.exists():
+                    positionContent["hyperlinks"] = hyperlink.encode()
+                    replaces: Dict[str, str] = {}
+                    updated_content: List[str] = []
+                    for content in pos["content"]:
+                        replaced_content: List[str] = content
+                        hyperlinks_found = re.findall(
+                            Hyperlink.HYPERLINK_PATTERN, content
+                        )
+                        for hyperlink in hyperlinks_found:
+                            replaces[f"[{hyperlink[0]}]({hyperlink[1]})"] = hyperlink[0]
 
+                        for replace_from, replace_by in replaces.items():
+                            replaced_content = replaced_content.replace(
+                                replace_from, replace_by
+                            )
+
+                        updated_content.append(replaced_content)
+                    positionContent["content"] = updated_content
+
+            setattr(self, position, positionContent)
+
+        raw = self.raw()
+        to_trim = len(raw) - self.get_terminal_width() - 1
         if to_trim > 0:
             self.__trim(to_trim)
         else:
-            self.mode = "color"
             if self.is_full_width:
                 self.__take_full_width()
-            print(self.render(), end=end)
+
+        # Apply hyperlinks
+        for position in self.positions:
+            pos = getattr(self, position)
+            if "hyperlinks" in pos:
+                pos["encoded_content"] = pos["content"].copy()
+                for index, hyperlinks in enumerate(pos["hyperlinks"]):
+                    if isinstance(hyperlinks, dict):
+                        for placeholder, hyperlink in hyperlinks.items():
+                            pos["encoded_content"][index] = pos["encoded_content"][
+                                index
+                            ].replace(placeholder, hyperlink.strip())
+
+        self.mode = "color"
+        print(self.render(), end=end)
 
     def raw(self) -> str:
         self.mode = "raw"

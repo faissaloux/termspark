@@ -1,43 +1,67 @@
 import re
+from typing import Dict, List, Union
 
 
 class Hyperlink:
-    PLACEHOLDER_PATTERN: str = "[^]]+"
+    PLACEHOLDER_PATTERN: str = "[^\[]*?"
     URL_PATTERN: str = "http[s]?://[^)]+"
     HYPERLINK_PATTERN: str = f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
 
-    URL_PREFIX: str = "\x1b]8;;"
-    PLACEHOLDER_SUFFIX: str = "\x1b]8;;"
-    RESET: str = "\x1b;"
+    HYPERLINK_PREFIX: str = "\x1b]8;;"
+    HYPERLINK_SUFFIX: str = "\x1b]8;;"
+    RESET: str = "\x1b\\"
 
-    trash: str = ""
+    matches: list = []
+    __hyperlink_elements: list = []
 
-    def set_content(self, content: str):
+    def set_content(self, content: List[str]):
         self.content = content
 
     def exists(self) -> bool:
-        matches = re.findall(Hyperlink.HYPERLINK_PATTERN, self.content)
+        self.matches = []
+        matches_length: int = 0
 
-        self.matches = matches[0] if len(matches) else []
+        for index, content in enumerate(self.content):
+            matches = re.findall(Hyperlink.HYPERLINK_PATTERN, content)
+            if len(matches):
+                self.content[index] = f"[{matches[0][0]}]({matches[0][1]})"
 
-        return len(self.matches) > 1
+                self.matches.append(matches[0])
+            else:
+                self.matches.append([])
 
-    def encode(self) -> str:
+        for index, match in enumerate(self.matches):
+            if len(match):
+                matches_length += 1
+                self.__hyperlink_elements.append(index)
+
+        return matches_length > 0
+
+    def encode(self) -> List[Union[str, Dict[str, str]]]:
+        encoded: List[Union[str, Dict[str, str]]] = []
+        for index, content in enumerate(self.content):
+            if index in self.__hyperlink_elements:
+                encoded.append(self.__encode_single(index, content))
+            else:
+                encoded.append(content)
+
+        return encoded
+
+    def __encode_single(self, content_index: int, content: str) -> Dict[str, str]:
         encoded_hyperlink: str = (
-            Hyperlink.URL_PREFIX
-            + self.matches[1]
+            Hyperlink.HYPERLINK_PREFIX
+            + self.matches[content_index][1]
             + Hyperlink.RESET
-            + self.matches[0]
-            + Hyperlink.PLACEHOLDER_SUFFIX
-            + Hyperlink.RESET * 2
+            + self.matches[content_index][0]
+            + Hyperlink.HYPERLINK_SUFFIX
+            + Hyperlink.RESET
         )
 
-        self.trash += self.matches[1]
-        self.trash += (
-            Hyperlink.URL_PREFIX + Hyperlink.RESET * 3 + Hyperlink.PLACEHOLDER_SUFFIX
-        )
+        return {
+            self.matches[content_index][0]: re.sub(
+                Hyperlink.HYPERLINK_PATTERN, encoded_hyperlink + "\\", content
+            )
+        }
 
-        return re.sub(Hyperlink.HYPERLINK_PATTERN, encoded_hyperlink, self.content)
-
-    def trash_length(self) -> int:
-        return len(self.trash)
+    def hyperlink_elements(self):
+        return self.__hyperlink_elements
