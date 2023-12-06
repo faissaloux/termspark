@@ -340,13 +340,7 @@ class TermSpark:
 
         # trim what should be trimmed
         if self.mode != "raw" and len(self.to_trim):
-            for position in self.positions:
-                if position in self.to_trim and len(self.to_trim[position]):
-                    text_to_trim = "".join(self.to_trim[position].values())
-                    styled_content = getattr(self, position)["styled_content"]
-                    getattr(self, position)["styled_content"] = "".join(
-                        styled_content.rsplit(text_to_trim, 1)
-                    )
+            self.__trim()
 
         if len(center_content) > 0:
             if self.mode == "raw":
@@ -392,7 +386,52 @@ class TermSpark:
     def __paint_separator(self):
         self.separator["styled_content"] = [Styler().element(self.separator).style()]
 
-    def __trim(self, chars_number):
+    def __detect_hyperlinks(self) -> None:
+        for position in self.positions:
+            pos = getattr(self, position)
+            positionContent = pos
+            if "content" in pos:
+                hyperlink = Hyperlink()
+                hyperlink.set_content(pos["content"].copy())
+                if hyperlink.exists():
+                    positionContent["hyperlinks"] = hyperlink.encode()
+                    replaces: Dict[str, str] = {}
+                    updated_content: List[str] = []
+                    for content in pos["content"]:
+                        replaced_content: str = content
+                        hyperlinks_found = re.findall(
+                            Hyperlink.HYPERLINK_PATTERN, content
+                        )
+                        for hyperlink_found in hyperlinks_found:
+                            replaces[
+                                f"[{hyperlink_found[0]}]({hyperlink_found[1]})"
+                            ] = hyperlink_found[0]
+
+                        for replace_from, replace_by in replaces.items():
+                            replaced_content = replaced_content.replace(
+                                replace_from, replace_by
+                            )
+
+                        updated_content.append(replaced_content)
+                    positionContent["content"] = updated_content
+
+            setattr(self, position, positionContent)
+
+    def __apply_hyperlinks(self) -> None:
+        for position in self.positions:
+            pos = getattr(self, position)
+            if "hyperlinks" in pos:
+                pos["encoded_content"] = pos["content"].copy()
+
+                for index, hyperlinks in enumerate(pos["hyperlinks"]):
+                    if isinstance(hyperlinks, list):
+                        for content_hyperlinks in hyperlinks:
+                            for placeholder, hyperlink in content_hyperlinks.items():
+                                pos["encoded_content"][index] = pos["encoded_content"][
+                                    index
+                                ].replace(placeholder, hyperlink.strip())
+
+    def __detect_trims(self, chars_number) -> None:
         chars_number_left = chars_number
 
         for posIndex in range(len(self.positions) - 1, -1, -1):
@@ -412,56 +451,27 @@ class TermSpark:
                             self.to_trim[position][content_index] = content
                             chars_number_left = chars_number_left - len(content)
 
-    def spark(self, end="\n"):
+    def __trim(self) -> None:
         for position in self.positions:
-            pos = getattr(self, position)
-            positionContent = pos
-            if "content" in pos:
-                hyperlink = Hyperlink()
-                hyperlink.set_content(pos["content"].copy())
-                if hyperlink.exists():
-                    positionContent["hyperlinks"] = hyperlink.encode()
-                    replaces: Dict[str, str] = {}
-                    updated_content: List[str] = []
-                    for content in pos["content"]:
-                        replaced_content: List[str] = content
-                        hyperlinks_found = re.findall(
-                            Hyperlink.HYPERLINK_PATTERN, content
-                        )
-                        for hyperlink in hyperlinks_found:
-                            replaces[f"[{hyperlink[0]}]({hyperlink[1]})"] = hyperlink[0]
+            if position in self.to_trim and len(self.to_trim[position]):
+                text_to_trim = "".join(self.to_trim[position].values())
+                styled_content = getattr(self, position)["styled_content"]
+                getattr(self, position)["styled_content"] = "".join(
+                    styled_content.rsplit(text_to_trim, 1)
+                )
 
-                        for replace_from, replace_by in replaces.items():
-                            replaced_content = replaced_content.replace(
-                                replace_from, replace_by
-                            )
-
-                        updated_content.append(replaced_content)
-                    positionContent["content"] = updated_content
-
-            setattr(self, position, positionContent)
+    def spark(self, end="\n"):
+        self.__detect_hyperlinks()
 
         raw = self.raw()
         to_trim = len(raw) - self.get_width()
         if to_trim > 0:
-            self.__trim(to_trim)
+            self.__detect_trims(to_trim)
         else:
             if self.is_full_width:
                 self.__take_full_width()
 
-        # Apply hyperlinks
-        for position in self.positions:
-            pos = getattr(self, position)
-            if "hyperlinks" in pos:
-                pos["encoded_content"] = pos["content"].copy()
-
-                for index, hyperlinks in enumerate(pos["hyperlinks"]):
-                    if isinstance(hyperlinks, list):
-                        for content_hyperlinks in hyperlinks:
-                            for placeholder, hyperlink in content_hyperlinks.items():
-                                pos["encoded_content"][index] = pos["encoded_content"][
-                                    index
-                                ].replace(placeholder, hyperlink.strip())
+        self.__apply_hyperlinks()
 
         self.mode = "color"
         print(self.render(), end=end)
