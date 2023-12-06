@@ -13,6 +13,7 @@ from .helpers.existenceChecker import ExistenceChecker
 from .hyperlink.hyperlink import Hyperlink
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
+from .trimer.trimer import Trimer
 from .validators.printerValidator import PrinterValidator
 
 Separator = TypedDict(
@@ -432,30 +433,21 @@ class TermSpark:
                                 ].replace(placeholder, hyperlink.strip())
 
     def __detect_trims(self, chars_number) -> None:
-        chars_number_left = chars_number
-
         for posIndex in range(len(self.positions) - 1, -1, -1):
             position = self.positions[posIndex]
-            if "content" in getattr(self, position).keys():
-                self.to_trim[position] = {}
-                position_content = getattr(self, position)["content"]
-                for content_index in range(len(position_content) - 1, -1, -1):
-                    content = position_content[content_index]
-                    if chars_number_left > 0:
-                        if len(content) > chars_number_left:
-                            self.to_trim[position][content_index] = content[
-                                len(content) - chars_number_left :
-                            ]
-                            chars_number_left -= chars_number
-                        else:
-                            self.to_trim[position][content_index] = content
-                            chars_number_left = chars_number_left - len(content)
+            position_content = getattr(self, position)
+
+            if "content" in position_content.keys():
+                self.to_trim[position] = (
+                    Trimer().target(chars_number).analyse(position_content["content"])
+                )
 
     def __trim(self) -> None:
         for position in self.positions:
             if position in self.to_trim and len(self.to_trim[position]):
                 text_to_trim = "".join(self.to_trim[position].values())
                 styled_content = getattr(self, position)["styled_content"]
+
                 getattr(self, position)["styled_content"] = "".join(
                     styled_content.rsplit(text_to_trim, 1)
                 )
@@ -465,6 +457,7 @@ class TermSpark:
 
         raw = self.raw()
         to_trim = len(raw) - self.get_width()
+
         if to_trim > 0:
             self.__detect_trims(to_trim)
         else:
