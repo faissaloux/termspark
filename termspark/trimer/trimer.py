@@ -2,19 +2,32 @@ from typing import List
 
 
 class Trimer:
+    def __init__(self):
+        self.to_trim: dict = {}
+
     def target(self, target: int):
         self.__chars_number_left = target
 
         return self
 
-    def analyse(self, content: List[str]) -> dict:
-        to_trim: dict = {}
+    def analyse(self, content: List[str], position: str) -> dict:
+        self.to_trim[position] = {}
 
         for content_index in range(len(content) - 1, -1, -1):
             if self.__chars_number_left > 0:
-                to_trim[content_index] = self.__analyse_single(content[content_index])
+                self.to_trim[position][content_index] = self.__analyse_single(
+                    content[content_index]
+                )
 
-        return to_trim
+        return self.to_trim
+
+    def should_be_trimed(self, position: str) -> bool:
+        return position in self.to_trim and len(self.to_trim[position]) > 0
+
+    def trim(self, content: str, position: str) -> str:
+        text_to_trim = "".join(self.to_trim[position].values())
+
+        return "".join(content.rsplit(text_to_trim, 1))
 
     def __analyse_single(self, content: str) -> str:
         to_trim: str = ""

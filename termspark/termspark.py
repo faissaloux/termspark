@@ -340,7 +340,7 @@ class TermSpark:
         center_content = ExistenceChecker().dictionary_key(self.center, "content")
 
         # trim what should be trimmed
-        if self.mode != "raw" and len(self.to_trim):
+        if self.mode != "raw" and hasattr(self, "trimer"):
             self.__trim()
 
         if len(center_content) > 0:
@@ -432,24 +432,21 @@ class TermSpark:
                                     index
                                 ].replace(placeholder, hyperlink.strip())
 
-    def __detect_trims(self, chars_number) -> None:
+    def __detect_trims(self) -> None:
         for posIndex in range(len(self.positions) - 1, -1, -1):
             position = self.positions[posIndex]
             position_content = getattr(self, position)
 
             if "content" in position_content.keys():
-                self.to_trim[position] = (
-                    Trimer().target(chars_number).analyse(position_content["content"])
-                )
+                self.trimer.analyse(position_content["content"], position)
 
     def __trim(self) -> None:
         for position in self.positions:
-            if position in self.to_trim and len(self.to_trim[position]):
-                text_to_trim = "".join(self.to_trim[position].values())
+            if self.trimer.should_be_trimed(position):
                 styled_content = getattr(self, position)["styled_content"]
 
-                getattr(self, position)["styled_content"] = "".join(
-                    styled_content.rsplit(text_to_trim, 1)
+                getattr(self, position)["styled_content"] = self.trimer.trim(
+                    styled_content, position
                 )
 
     def spark(self, end="\n"):
@@ -459,7 +456,9 @@ class TermSpark:
         to_trim = len(raw) - self.get_width()
 
         if to_trim > 0:
-            self.__detect_trims(to_trim)
+            self.trimer = Trimer()
+            self.trimer.target(to_trim)
+            self.__detect_trims()
         else:
             if self.is_full_width:
                 self.__take_full_width()
