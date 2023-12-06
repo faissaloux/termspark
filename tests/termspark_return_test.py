@@ -2,6 +2,7 @@ import pytest
 
 from termspark.exceptions.combinationException import CombinationException
 from termspark.exceptions.emptyException import EmptyException
+from termspark.hyperlink.hyperlink import Hyperlink
 from termspark.termspark import TermSpark
 
 
@@ -303,3 +304,29 @@ class TestTermsparkReturn:
 
         with pytest.raises(EmptyException):
             termspark.spark()
+
+    def test_contnt_includes_hyperlink(self):
+        termspark = TermSpark()
+        termspark.print_left(" REPOSITOTY ")
+        termspark.print_right(" [@termspark](https://github.com/faissaloux/termspark) ")
+        termspark.set_separator(".")
+        termspark.spark()
+
+        terminal_width = termspark.get_terminal_width()
+        left_content_space = len(" REPOSITOTY ")
+        right_content_space = len("@termspark") + len("  ")
+        rest_space = terminal_width - left_content_space - right_content_space
+
+        assert (
+            str(termspark)
+            == " REPOSITOTY "
+            + "." * int(rest_space)
+            + " "
+            + Hyperlink.HYPERLINK_PREFIX
+            + "https://github.com/faissaloux/termspark"
+            + Hyperlink.RESET
+            + "@termspark"
+            + Hyperlink.HYPERLINK_SUFFIX
+            + Hyperlink.RESET
+            + " "
+        )
