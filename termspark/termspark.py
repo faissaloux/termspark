@@ -454,12 +454,14 @@ class TermSpark:
             pos = getattr(self, position)
             if "hyperlinks" in pos:
                 pos["encoded_content"] = pos["content"].copy()
+
                 for index, hyperlinks in enumerate(pos["hyperlinks"]):
-                    if isinstance(hyperlinks, dict):
-                        for placeholder, hyperlink in hyperlinks.items():
-                            pos["encoded_content"][index] = pos["encoded_content"][
-                                index
-                            ].replace(placeholder, hyperlink.strip())
+                    if isinstance(hyperlinks, list):
+                        for content_hyperlinks in hyperlinks:
+                            for placeholder, hyperlink in content_hyperlinks.items():
+                                pos["encoded_content"][index] = pos["encoded_content"][
+                                    index
+                                ].replace(placeholder, hyperlink.strip())
 
         self.mode = "color"
         print(self.render(), end=end)

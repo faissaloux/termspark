@@ -50,14 +50,16 @@ class TestHyperlink:
         encoded = hyperlink.encode()
 
         assert encoded == [
-            {
-                "@termspark": Hyperlink.HYPERLINK_PREFIX
-                + "https://github.com/faissaloux/termspark"
-                + Hyperlink.RESET
-                + "@termspark"
-                + Hyperlink.HYPERLINK_SUFFIX
-                + Hyperlink.RESET
-            }
+            [
+                {
+                    "@termspark": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux/termspark"
+                    + Hyperlink.RESET
+                    + "@termspark"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                }
+            ]
         ]
 
     def test_encode_multiple_elements_with_one_hyperlink(self):
@@ -72,14 +74,16 @@ class TestHyperlink:
 
         assert encoded == [
             "Termspark repository: ",
-            {
-                "@termspark": Hyperlink.HYPERLINK_PREFIX
-                + "https://github.com/faissaloux/termspark"
-                + Hyperlink.RESET
-                + "@termspark"
-                + Hyperlink.HYPERLINK_SUFFIX
-                + Hyperlink.RESET
-            },
+            [
+                {
+                    "@termspark": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux/termspark"
+                    + Hyperlink.RESET
+                    + "@termspark"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                }
+            ],
         ]
 
     def test_encode_multiple_elements_with_multiple_hyperlinks(self):
@@ -93,20 +97,67 @@ class TestHyperlink:
         encoded = hyperlink.encode()
 
         assert encoded == [
-            {
-                "@termspark": Hyperlink.HYPERLINK_PREFIX
-                + "https://github.com/faissaloux/termspark"
-                + Hyperlink.RESET
-                + "@termspark"
-                + Hyperlink.HYPERLINK_SUFFIX
-                + Hyperlink.RESET
-            },
-            {
-                "@faissaloux": Hyperlink.HYPERLINK_PREFIX
-                + "https://github.com/faissaloux"
-                + Hyperlink.RESET
-                + "@faissaloux"
-                + Hyperlink.HYPERLINK_SUFFIX
-                + Hyperlink.RESET
-            },
+            [
+                {
+                    "@termspark": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux/termspark"
+                    + Hyperlink.RESET
+                    + "@termspark"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                }
+            ],
+            [
+                {
+                    "@faissaloux": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux"
+                    + Hyperlink.RESET
+                    + "@faissaloux"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                }
+            ],
+        ]
+
+    def test_encode_multiple_elements_with_multiple_hyperlinks_in_the_same_element(
+        self,
+    ):
+        content = [
+            " [@termspark](https://github.com/faissaloux/termspark)",
+            "[@github](https://github.com/faissaloux) [@twitter](https://twitter.com/faissaloux)",
+        ]
+        hyperlink = Hyperlink()
+        hyperlink.set_content(content)
+        hyperlink.exists()
+        encoded = hyperlink.encode()
+
+        assert encoded == [
+            [
+                {
+                    "@termspark": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux/termspark"
+                    + Hyperlink.RESET
+                    + "@termspark"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                }
+            ],
+            [
+                {
+                    "@github": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux"
+                    + Hyperlink.RESET
+                    + "@github"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                },
+                {
+                    "@twitter": Hyperlink.HYPERLINK_PREFIX
+                    + "https://twitter.com/faissaloux"
+                    + Hyperlink.RESET
+                    + "@twitter"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + Hyperlink.RESET
+                },
+            ],
         ]

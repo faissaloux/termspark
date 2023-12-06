@@ -26,9 +26,11 @@ class Hyperlink:
         for index, content in enumerate(self.content):
             matches = re.findall(Hyperlink.HYPERLINK_PATTERN, content)
             if len(matches):
-                self.content[index] = f"[{matches[0][0]}]({matches[0][1]})"
+                self.content[index] = ""
+                for match in matches:
+                    self.content[index] += f"[{match[0]}]({match[1]})"
 
-                self.matches.append(matches[0])
+                self.matches.append(matches)
             else:
                 self.matches.append([])
 
@@ -39,28 +41,39 @@ class Hyperlink:
 
         return matches_length > 0
 
-    def encode(self) -> List[Union[str, Dict[str, str]]]:
-        encoded: List[Union[str, Dict[str, str]]] = []
+    def encode(self) -> List[Union[str, List[Dict[str, str]]]]:
+        encoded: List[Union[str, List[Dict[str, str]]]] = []
+
         for index, content in enumerate(self.content):
             if index in self.__hyperlink_elements:
-                encoded.append(self.__encode_single(index, content))
+                encoded.append(self.__encode_single(index))
             else:
                 encoded.append(content)
 
         return encoded
 
-    def __encode_single(self, content_index: int, content: str) -> Dict[str, str]:
-        encoded_hyperlink: str = (
-            Hyperlink.HYPERLINK_PREFIX
-            + self.matches[content_index][1]
-            + Hyperlink.RESET
-            + self.matches[content_index][0]
-            + Hyperlink.HYPERLINK_SUFFIX
-            + Hyperlink.RESET
-        )
+    def __encode_single(self, content_index: int) -> List[Dict[str, str]]:
+        encoded_hyperlinks: List[Dict[str, str]] = []
 
-        return {
-            self.matches[content_index][0]: re.sub(
-                Hyperlink.HYPERLINK_PATTERN, encoded_hyperlink + "\\", content
+        for match in self.matches[content_index]:
+            encoded_hyperlink: str = (
+                Hyperlink.HYPERLINK_PREFIX
+                + match[1]
+                + Hyperlink.RESET
+                + match[0]
+                + Hyperlink.HYPERLINK_SUFFIX
+                + Hyperlink.RESET
             )
-        }
+
+            encoded_hyperlinks.append(
+                {
+                    match[0]: re.sub(
+                        Hyperlink.HYPERLINK_PATTERN,
+                        encoded_hyperlink + "\\",
+                        f"[{match[0]}]({match[1]})",
+                        1,
+                    )
+                }
+            )
+
+        return encoded_hyperlinks
