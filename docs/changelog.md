@@ -1,19 +1,24 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.6.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.7.0...main)
+
+## [v1.7.0](https://github.com/faissaloux/termspark/compare/v1.6.0...v1.7.0) - 2023-12-07
+# ADDED
+- Support text styles ([#60](https://github.com/faissaloux/termspark/pull/60))
+- Hyperlinks support ([#59](https://github.com/faissaloux/termspark/pull/59))
 
 ## [v1.6.0](https://github.com/faissaloux/termspark/compare/v1.5.1...v1.6.0) - 2023-12-01
 # ADDED
-- Trim content that exceeds terminal width ([#45](https://github.com/faissaloux/termspark/pull/45))
-- Add ability to set max length for content ([#47](https://github.com/faissaloux/termspark/pull/47))
-- `full_width()` ([#49](https://github.com/faissaloux/termspark/pull/49))
-- py3.13 support ([#50](https://github.com/faissaloux/termspark/pull/50))
-- Paint separator ([#51](https://github.com/faissaloux/termspark/pull/51))
-- Ability to paint a line ([#52](https://github.com/faissaloux/termspark/pull/52))
 - Improve printers ([#58](https://github.com/faissaloux/termspark/pull/58))
+- Ability to paint a line ([#52](https://github.com/faissaloux/termspark/pull/52))
+- Paint separator ([#51](https://github.com/faissaloux/termspark/pull/51))
+- py3.13 support ([#50](https://github.com/faissaloux/termspark/pull/50))
+- `full_width()` ([#49](https://github.com/faissaloux/termspark/pull/49))
+- Add ability to set max length for content ([#47](https://github.com/faissaloux/termspark/pull/47))
+- Trim content that exceeds terminal width ([#45](https://github.com/faissaloux/termspark/pull/45))
 
 ## FIXED
-- Separator can accept only 1 character ([#55](https://github.com/faissaloux/termspark/pull/55))
-- Fix `separator-line` combination ([#56](https://github.com/faissaloux/termspark/pull/56))
 - Fix set separator without content in line ([#57](https://github.com/faissaloux/termspark/pull/57))
+- Fix `separator-line` combination ([#56](https://github.com/faissaloux/termspark/pull/56))
+- Separator can accept only 1 character ([#55](https://github.com/faissaloux/termspark/pull/55))
 
 ## [v1.5.1](https://github.com/faissaloux/termspark/compare/v1.5.0...v1.5.1) - 2023-11-25
 # FIXED

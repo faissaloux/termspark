@@ -1,4 +1,9 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.6.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.7.0...main)
+
+## [v1.7.0](https://github.com/faissaloux/termspark/compare/v1.6.0...v1.7.0) - 2023-12-07
+# ADDED
+- Support text styles ([#60](https://github.com/faissaloux/termspark/pull/60))
+- Hyperlinks support ([#59](https://github.com/faissaloux/termspark/pull/59))
 
 ## [v1.6.0](https://github.com/faissaloux/termspark/compare/v1.5.1...v1.6.0) - 2023-12-01
 # ADDED
