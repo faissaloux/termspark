@@ -57,20 +57,24 @@ class TestHyperlink:
 
         assert reformated == [
             " By ",
-            "[@faissaloux](https://github.com/faissaloux) ",
-            "[@termspark](https://github.com/termspark) ",
+            "[@faissaloux](https://github.com/faissaloux)",
+            " ",
+            "[@termspark](https://github.com/termspark)",
+            " ",
             " Text ",
         ]
         assert position == {
             "content": [
                 " By ",
-                "[@faissaloux](https://github.com/faissaloux) ",
-                "[@termspark](https://github.com/termspark) ",
+                "[@faissaloux](https://github.com/faissaloux)",
+                " ",
+                "[@termspark](https://github.com/termspark)",
+                " ",
                 " Text ",
             ],
-            "color": ["green", "green", "green", "red"],
-            "highlight": ["", "", "", "black"],
-            "style": ["", "", "", ""],
+            "color": ["green", "green", "green", "green", "green", "red"],
+            "highlight": ["", "", "", "", "", "black"],
+            "style": ["", "", "", "", "", ""],
         }
 
     def test_reformat_separated_hyperlinks_same_position(self):
@@ -89,18 +93,20 @@ class TestHyperlink:
 
         assert reformated == [
             " ",
-            "[@faissaloux](https://github.com/faissaloux) ",
+            "[@faissaloux](https://github.com/faissaloux)",
+            " ",
             "[@termspark](https://github.com/faissaloux/termspark)",
         ]
         assert position == {
             "content": [
                 " ",
-                "[@faissaloux](https://github.com/faissaloux) ",
+                "[@faissaloux](https://github.com/faissaloux)",
+                " ",
                 "[@termspark](https://github.com/faissaloux/termspark)",
             ],
-            "color": ["green", "green", "red"],
-            "highlight": ["", "", "black"],
-            "style": ["", "", ""],
+            "color": ["green", "green", "green", "red"],
+            "highlight": ["", "", "", "black"],
+            "style": ["", "", "", ""],
         }
 
     def test_encode_one_element(self):
@@ -129,6 +135,7 @@ class TestHyperlink:
                     + "\x1b\\"
                 }
             ],
+            [],
         ]
 
     def test_encode_multiple_elements_with_one_hyperlink(self):
@@ -161,6 +168,7 @@ class TestHyperlink:
                     + "\x1b\\"
                 }
             ],
+            [],
         ]
 
     def test_encode_multiple_elements_with_multiple_hyperlinks(self):
@@ -192,6 +200,7 @@ class TestHyperlink:
                     + "\x1b\\"
                 }
             ],
+            [],
             [
                 {
                     "@faissaloux": Hyperlink.HYPERLINK_PREFIX

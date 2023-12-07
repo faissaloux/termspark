@@ -12,7 +12,7 @@ class Hyperlink:
     RESET: str = "\x1b\\\\"
 
     def __init__(self):
-        self.__hyperlink_elements: list = []
+        self.__hyperlinks_positions: list = []
         self.matches: list = []
 
     def set_content(self, content: List[str]):
@@ -32,15 +32,11 @@ class Hyperlink:
                     hyperlink_position = new_content[index].rfind(hyperlink_markdown)
 
                     if hyperlink_position >= 0:
-                        if (
-                            new_content[index]
-                            != new_content[index][hyperlink_position:]
-                        ):
-                            new_content.insert(
-                                index + 1, new_content[index][hyperlink_position:]
-                            )
+                        hyperlink_to_insert = new_content[index][hyperlink_position:]
+                        if new_content[index] != hyperlink_to_insert:
+                            new_content.insert(index + 1, hyperlink_to_insert)
                             new_content[index] = new_content[index].replace(
-                                new_content[index][hyperlink_position:], ""
+                                hyperlink_to_insert, ""
                             )
 
                             content["color"].insert(index + 1, content["color"][index])
@@ -49,12 +45,36 @@ class Hyperlink:
                             )
                             content["style"].insert(index + 1, content["style"][index])
 
-                            self.__hyperlink_elements = [
-                                elem + 1 for elem in self.__hyperlink_elements
+                            self.__hyperlinks_positions = [
+                                elem + 1 for elem in self.__hyperlinks_positions
                             ]
-                            self.__hyperlink_elements.append(index + 1)
+                            self.__hyperlinks_positions.append(index + 1)
                         else:
-                            self.__hyperlink_elements.append(index)
+                            self.__hyperlinks_positions.append(index)
+
+                        # Isolate hyperlink from extra whitespace.
+                        for i, element in enumerate(new_content):
+                            if element == hyperlink_to_insert and " " in element:
+                                extra_white_space = " " * element.count(" ")
+                                new_content[i] = element.rstrip()
+
+                                new_content.insert(i + 1, extra_white_space)
+                                content["color"].insert(
+                                    index + 1, content["color"][index]
+                                )
+                                content["highlight"].insert(
+                                    index + 1, content["highlight"][index]
+                                )
+                                content["style"].insert(
+                                    index + 1, content["style"][index]
+                                )
+
+                                # Update hyperlinks positions.
+                                for idx, elem in enumerate(self.__hyperlinks_positions):
+                                    if elem > i:
+                                        self.__hyperlinks_positions[idx] = elem + 1
+                                    else:
+                                        self.__hyperlinks_positions[idx] = elem
 
             content["content"] = new_content
 
@@ -77,11 +97,33 @@ class Hyperlink:
 
         return detected
 
+    def placeholders(self) -> List[str]:
+        """Replaces hyperlinks in content with their placeholders."""
+
+        replaces: Dict[str, str] = {}
+        updated_content: List[str] = []
+
+        for content in self.content:
+            replaced_content: str = content
+            hyperlinks_found = re.findall(Hyperlink.HYPERLINK_PATTERN, content)
+
+            for hyperlink_found in hyperlinks_found:
+                replaces[
+                    f"[{hyperlink_found[0]}]({hyperlink_found[1]})"
+                ] = hyperlink_found[0]
+
+            for replace_from, replace_by in replaces.items():
+                replaced_content = replaced_content.replace(replace_from, replace_by)
+
+            updated_content.append(replaced_content)
+
+        return updated_content
+
     def encode(self) -> List[Union[str, List[Dict[str, str]]]]:
         encoded: List[Union[str, List[Dict[str, str]]]] = []
 
         for index in range(len(self.content)):
-            if index in self.__hyperlink_elements:
+            if index in self.__hyperlinks_positions:
                 encoded.append(self.__encode_single(index))
             else:
                 encoded.append([])

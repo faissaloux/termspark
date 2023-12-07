@@ -1,5 +1,4 @@
 import os
-import re
 from typing import Dict, List, Optional, Sequence, Union
 
 from typing_extensions import TypedDict
@@ -392,36 +391,16 @@ class TermSpark:
 
     def __detect_hyperlinks(self) -> None:
         for position in self.positions:
-            pos = getattr(self, position)
-            positionContent = pos
-            if "content" in pos:
+            positionContent = getattr(self, position)
+
+            if "content" in positionContent:
                 hyperlink = Hyperlink()
-                detected = Hyperlink.exists_in(pos["content"])
+                detected = Hyperlink.exists_in(positionContent["content"])
                 if detected:
-                    reformated = hyperlink.reformat(pos, detected)
+                    reformated = hyperlink.reformat(positionContent, detected)
                     hyperlink.set_content(reformated)
                     positionContent["hyperlinks"] = hyperlink.encode()
-
-                    replaces: Dict[str, str] = {}
-                    updated_content: List[str] = []
-                    for content in pos["content"]:
-                        replaced_content: str = content
-                        hyperlinks_found = re.findall(
-                            Hyperlink.HYPERLINK_PATTERN, content
-                        )
-
-                        for hyperlink_found in hyperlinks_found:
-                            replaces[
-                                f"[{hyperlink_found[0]}]({hyperlink_found[1]})"
-                            ] = hyperlink_found[0]
-
-                        for replace_from, replace_by in replaces.items():
-                            replaced_content = replaced_content.replace(
-                                replace_from, replace_by
-                            )
-
-                        updated_content.append(replaced_content)
-                    positionContent["content"] = updated_content
+                    positionContent["content"] = hyperlink.placeholders()
 
             setattr(self, position, positionContent)
 
