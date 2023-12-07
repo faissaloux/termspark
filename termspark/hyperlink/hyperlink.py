@@ -9,7 +9,7 @@ class Hyperlink:
 
     HYPERLINK_PREFIX: str = "\x1b]8;;"
     HYPERLINK_SUFFIX: str = "\x1b]8;;"
-    RESET: str = "\x1b\\"
+    RESET: str = "\x1b\\\\"
 
     matches: list = []
 
@@ -69,7 +69,7 @@ class Hyperlink:
                 {
                     match[0]: re.sub(
                         Hyperlink.HYPERLINK_PATTERN,
-                        encoded_hyperlink + "\\",
+                        encoded_hyperlink,
                         f"[{match[0]}]({match[1]})",
                         1,
                     )

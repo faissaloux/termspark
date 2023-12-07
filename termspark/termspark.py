@@ -315,6 +315,8 @@ class TermSpark:
         self.__calculate_separator_length()
         if self.mode == "color":
             self.__paint_separator()
+            # print(self.right)
+            # exit()
 
         if self.line_is_set and self.separator_is_set:
             raise CombinationException("line", "separator")

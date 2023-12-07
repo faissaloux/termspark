@@ -9,7 +9,7 @@ class TestHyperlink:
         )
         assert Hyperlink.HYPERLINK_PREFIX == "\x1b]8;;"
         assert Hyperlink.HYPERLINK_SUFFIX == "\x1b]8;;"
-        assert Hyperlink.RESET == "\x1b\\"
+        assert Hyperlink.RESET == "\x1b\\\\"
 
     def test_set_content(self):
         content = [" Link ", "[@faissaloux](https://github.com/faissaloux)"]
@@ -54,10 +54,10 @@ class TestHyperlink:
                 {
                     "@termspark": Hyperlink.HYPERLINK_PREFIX
                     + "https://github.com/faissaloux/termspark"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@termspark"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 }
             ]
         ]
@@ -78,10 +78,10 @@ class TestHyperlink:
                 {
                     "@termspark": Hyperlink.HYPERLINK_PREFIX
                     + "https://github.com/faissaloux/termspark"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@termspark"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 }
             ],
         ]
@@ -101,20 +101,20 @@ class TestHyperlink:
                 {
                     "@termspark": Hyperlink.HYPERLINK_PREFIX
                     + "https://github.com/faissaloux/termspark"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@termspark"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 }
             ],
             [
                 {
                     "@faissaloux": Hyperlink.HYPERLINK_PREFIX
                     + "https://github.com/faissaloux"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@faissaloux"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 }
             ],
         ]
@@ -136,28 +136,28 @@ class TestHyperlink:
                 {
                     "@termspark": Hyperlink.HYPERLINK_PREFIX
                     + "https://github.com/faissaloux/termspark"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@termspark"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 }
             ],
             [
                 {
                     "@github": Hyperlink.HYPERLINK_PREFIX
                     + "https://github.com/faissaloux"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@github"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 },
                 {
                     "@twitter": Hyperlink.HYPERLINK_PREFIX
                     + "https://twitter.com/faissaloux"
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                     + "@twitter"
                     + Hyperlink.HYPERLINK_SUFFIX
-                    + Hyperlink.RESET
+                    + "\x1b\\"
                 },
             ],
         ]

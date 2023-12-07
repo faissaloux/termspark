@@ -308,13 +308,13 @@ class TestTermsparkReturn:
     def test_contnt_includes_hyperlink(self):
         termspark = TermSpark()
         termspark.print_left(" REPOSITOTY ")
-        termspark.print_right(" [@termspark](https://github.com/faissaloux/termspark) ")
+        termspark.print_right(" [termspark](https://github.com/faissaloux/termspark) ")
         termspark.set_separator(".")
         termspark.spark()
 
         terminal_width = termspark.get_terminal_width()
         left_content_space = len(" REPOSITOTY ")
-        right_content_space = len("@termspark") + len("  ")
+        right_content_space = len("termspark") + len("  ")
         rest_space = terminal_width - left_content_space - right_content_space
 
         assert (
@@ -324,9 +324,9 @@ class TestTermsparkReturn:
             + " "
             + Hyperlink.HYPERLINK_PREFIX
             + "https://github.com/faissaloux/termspark"
-            + Hyperlink.RESET
-            + "@termspark"
+            + "\x1b\\"
+            + "termspark"
             + Hyperlink.HYPERLINK_SUFFIX
-            + Hyperlink.RESET
+            + "\x1b\\"
             + " "
         )
