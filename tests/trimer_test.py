@@ -44,4 +44,4 @@ class TestTrimer:
         trimer.target(6)
         trimer.analyse(content, "left")
 
-        assert trimer.trim(" *  Termspark ", "left") == " *  Term"
+        assert trimer.trim(content, "left") == [" *  ", " Term"]

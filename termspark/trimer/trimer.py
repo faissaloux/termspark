@@ -24,10 +24,11 @@ class Trimer:
     def should_be_trimed(self, position: str) -> bool:
         return position in self.to_trim and len(self.to_trim[position]) > 0
 
-    def trim(self, content: str, position: str) -> str:
-        text_to_trim = "".join(self.to_trim[position].values())
+    def trim(self, content: List[str], position: str) -> List[str]:
+        for index, to_trim in self.to_trim[position].items():
+            content[index] = "".join(content[index].rsplit(to_trim, 1))
 
-        return "".join(content.rsplit(text_to_trim, 1))
+        return content
 
     def __analyse_single(self, content: str) -> str:
         to_trim: str = ""

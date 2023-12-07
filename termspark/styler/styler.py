@@ -23,7 +23,8 @@ class Styler:
     PATTERN = "[COLOR][HIGHLIGHT][STYLE][CONTENT][RESET]"
     RESET: str = "\x1b[0m"
 
-    styled: str = ""
+    def __init__(self):
+        self.styled: ListType[str] = []
 
     def element(self, element: Element):
         self.content = (
@@ -41,19 +42,20 @@ class Styler:
 
         return self
 
-    def style(self) -> str:
+    def style(self) -> ListType[str]:
         for index, content in enumerate(self.content):
-            self.styled = self.styled + self.PATTERN
-            self.styled = self.styled.replace(
+            self.styled.append(self.PATTERN)
+
+            self.styled[-1] = self.styled[-1].replace(
                 "[COLOR]", Painter().paint_color(self.content_color[index])
             )
-            self.styled = self.styled.replace(
+            self.styled[-1] = self.styled[-1].replace(
                 "[HIGHLIGHT]", Painter().paint_highlight(self.content_highlight[index])
             )
-            self.styled = self.styled.replace(
+            self.styled[-1] = self.styled[-1].replace(
                 "[STYLE]", TextStyler().style(self.content_style[index])
             )
-            self.styled = self.styled.replace("[CONTENT]", content)
+            self.styled[-1] = self.styled[-1].replace("[CONTENT]", content)
 
             if any(
                 [
@@ -62,8 +64,8 @@ class Styler:
                     len(self.content_style[index]),
                 ]
             ):
-                self.styled = self.styled.replace("[RESET]", self.RESET)
+                self.styled[-1] = self.styled[-1].replace("[RESET]", self.RESET)
             else:
-                self.styled = self.styled.replace("[RESET]", "")
+                self.styled[-1] = self.styled[-1].replace("[RESET]", "")
 
         return self.styled

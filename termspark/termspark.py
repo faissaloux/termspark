@@ -315,8 +315,6 @@ class TermSpark:
         self.__calculate_separator_length()
         if self.mode == "color":
             self.__paint_separator()
-            # print(self.right)
-            # exit()
 
         if self.line_is_set and self.separator_is_set:
             raise CombinationException("line", "separator")
@@ -351,7 +349,7 @@ class TermSpark:
             else:
                 center = (
                     separator_painted_mid_width
-                    + self.center["styled_content"]
+                    + "".join(self.center["styled_content"])
                     + separator_painted_mid_width
                 )
         else:
@@ -363,17 +361,20 @@ class TermSpark:
             right_content = ExistenceChecker().dictionary_key(self.right, "content")
 
             if len(left_content) > 0:
-                left_content = " ".join(left_content)
+                left_content = "".join(left_content)
 
             if len(right_content) > 0:
-                right_content = " ".join(right_content)
+                right_content = "".join(right_content)
         else:
             left_content = ExistenceChecker().dictionary_key(
                 self.left, "styled_content"
             )
+            left_content = "".join(left_content)
+
             right_content = ExistenceChecker().dictionary_key(
                 self.right, "styled_content"
             )
+            right_content = "".join(right_content)
 
         return left_content + center + right_content
 
@@ -387,7 +388,7 @@ class TermSpark:
             setattr(self, position, pos)
 
     def __paint_separator(self):
-        self.separator["styled_content"] = [Styler().element(self.separator).style()]
+        self.separator["styled_content"] = Styler().element(self.separator).style()
 
     def __detect_hyperlinks(self) -> None:
         for position in self.positions:
