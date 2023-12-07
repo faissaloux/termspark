@@ -396,9 +396,12 @@ class TermSpark:
             positionContent = pos
             if "content" in pos:
                 hyperlink = Hyperlink()
-                hyperlink.set_content(pos["content"].copy())
-                if hyperlink.exists():
+                detected = Hyperlink.exists_in(pos["content"])
+                if detected:
+                    reformated = hyperlink.reformat(pos, detected)
+                    hyperlink.set_content(reformated)
                     positionContent["hyperlinks"] = hyperlink.encode()
+
                     replaces: Dict[str, str] = {}
                     updated_content: List[str] = []
                     for content in pos["content"]:
@@ -406,6 +409,7 @@ class TermSpark:
                         hyperlinks_found = re.findall(
                             Hyperlink.HYPERLINK_PATTERN, content
                         )
+
                         for hyperlink_found in hyperlinks_found:
                             replaces[
                                 f"[{hyperlink_found[0]}]({hyperlink_found[1]})"

@@ -19,36 +19,63 @@ class Hyperlink:
     def set_content(self, content: List[str]):
         self.content = content
 
-    def exists(self) -> bool:
-        self.matches = []
-        matches_length: int = 0
+    def reformat(
+        self, content: Dict[str, list], detected: Dict[int, list]
+    ) -> List[str]:
+        for index in range(len(content["content"])):
+            new_content = content["content"].copy()
+            step = index
 
-        for index, content in enumerate(self.content):
-            matches = re.findall(Hyperlink.HYPERLINK_PATTERN, content)
+            # Isolate hyperlinks from texts.
+            if index in detected:
+                for hyperlink_index in range(len(detected[index]) - 1, -1, -1):
+                    hyperlink = detected[index][hyperlink_index]
+                    hyperlink_markdown = f"[{hyperlink[0]}]({hyperlink[1]})"
+                    hyperlink_position = new_content[index].rfind(hyperlink_markdown)
+
+                    new_content.insert(
+                        index + 1, new_content[index][hyperlink_position:]
+                    )
+                    new_content[index] = new_content[index].replace(
+                        new_content[index][hyperlink_position:], ""
+                    )
+
+                    content["color"].insert(index + 1, content["color"][index])
+                    content["highlight"].insert(index + 1, content["highlight"][index])
+                    content["style"].insert(index + 1, content["style"][index])
+
+                    self.__hyperlink_elements.append(step + 1)
+                    step += 1
+
+            content["content"] = new_content
+
+        for index, element in enumerate(new_content):
+            matches = re.findall(self.HYPERLINK_PATTERN, element)
             if len(matches):
-                self.content[index] = ""
-                for match in matches:
-                    self.content[index] += f"[{match[0]}]({match[1]})"
-
                 self.matches.append(matches)
             else:
                 self.matches.append([])
 
-        for index, match in enumerate(self.matches):
-            if len(match):
-                matches_length += 1
-                self.__hyperlink_elements.append(index)
+        return content["content"]
 
-        return matches_length > 0
+    @staticmethod
+    def exists_in(content: List[str]) -> Dict[int, list]:
+        detected: Dict[int, list] = {}
+
+        for index, element in enumerate(content):
+            if hyperlink := re.findall(Hyperlink.HYPERLINK_PATTERN, element):
+                detected[index] = hyperlink
+
+        return detected
 
     def encode(self) -> List[Union[str, List[Dict[str, str]]]]:
         encoded: List[Union[str, List[Dict[str, str]]]] = []
 
-        for index, content in enumerate(self.content):
+        for index in range(len(self.content)):
             if index in self.__hyperlink_elements:
                 encoded.append(self.__encode_single(index))
             else:
-                encoded.append(content)
+                encoded.append([])
 
         return encoded
 
@@ -57,18 +84,18 @@ class Hyperlink:
 
         for match in self.matches[content_index]:
             encoded_hyperlink: str = (
-                Hyperlink.HYPERLINK_PREFIX
+                self.HYPERLINK_PREFIX
                 + match[1]
-                + Hyperlink.RESET
+                + self.RESET
                 + match[0]
-                + Hyperlink.HYPERLINK_SUFFIX
-                + Hyperlink.RESET
+                + self.HYPERLINK_SUFFIX
+                + self.RESET
             )
 
             encoded_hyperlinks.append(
                 {
                     match[0]: re.sub(
-                        Hyperlink.HYPERLINK_PATTERN,
+                        self.HYPERLINK_PATTERN,
                         encoded_hyperlink,
                         f"[{match[0]}]({match[1]})",
                         1,

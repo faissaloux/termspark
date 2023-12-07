@@ -18,29 +18,28 @@ class TestHyperlink:
 
         assert hyperlink.content == content
 
-    def test_exists_no_hyperlink(self):
+    def test_exists_with_no_hyperlink(self):
         content = [" Link "]
-        hyperlink = Hyperlink()
-        hyperlink.set_content(content)
 
-        assert hyperlink.exists() == False
+        assert Hyperlink.exists_in(content) == {}
 
-    def test_exists_one_hyperlink(self):
+    def test_exists_with_one_hyperlink(self):
         content = [" Link ", "[@faissaloux](https://github.com/faissaloux)"]
-        hyperlink = Hyperlink()
-        hyperlink.set_content(content)
 
-        assert hyperlink.exists() == True
+        assert Hyperlink.exists_in(content) == {
+            1: [("@faissaloux", "https://github.com/faissaloux")]
+        }
 
-    def test_exists_multiple_hyperlinks(self):
+    def test_exists_with_multiple_hyperlinks(self):
         content = [
             " [@termspark](https://github.com/faissaloux/termspark) ",
             "[@faissaloux](https://github.com/faissaloux)",
         ]
-        hyperlink = Hyperlink()
-        hyperlink.set_content(content)
 
-        assert hyperlink.exists() == True
+        assert Hyperlink.exists_in(content) == {
+            0: [("@termspark", "https://github.com/faissaloux/termspark")],
+            1: [("@faissaloux", "https://github.com/faissaloux")],
+        }
 
     def test_encode_one_element(self):
         content = [" [@termspark](https://github.com/faissaloux/termspark) "]
@@ -73,7 +72,7 @@ class TestHyperlink:
         encoded = hyperlink.encode()
 
         assert encoded == [
-            "Termspark repository: ",
+            [],
             [
                 {
                     "@termspark": Hyperlink.HYPERLINK_PREFIX
