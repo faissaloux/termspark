@@ -41,34 +41,80 @@ class TestHyperlink:
             1: [("@faissaloux", "https://github.com/faissaloux")],
         }
 
+    def test_reformat(self):
+        position = {
+            "content": [
+                " By [@faissaloux](https://github.com/faissaloux) [@termspark](https://github.com/termspark) ",
+                " Text ",
+            ],
+            "color": ["green", "red"],
+            "highlight": ["", "black"],
+            "style": ["", ""],
+        }
+
+        detected = Hyperlink.exists_in(position["content"])
+        reformated = Hyperlink().reformat(position, detected)
+
+        assert reformated == [
+            " By ",
+            "[@faissaloux](https://github.com/faissaloux) ",
+            "[@termspark](https://github.com/termspark) ",
+            " Text ",
+        ]
+        assert position == {
+            "content": [
+                " By ",
+                "[@faissaloux](https://github.com/faissaloux) ",
+                "[@termspark](https://github.com/termspark) ",
+                " Text ",
+            ],
+            "color": ["green", "green", "green", "red"],
+            "highlight": ["", "", "", "black"],
+            "style": ["", "", "", ""],
+        }
+
+    def test_reformat_separated_hyperlinks_same_position(self):
+        position = {
+            "content": [
+                " [@faissaloux](https://github.com/faissaloux) ",
+                "[@termspark](https://github.com/faissaloux/termspark)",
+            ],
+            "color": ["green", "red"],
+            "highlight": ["", "black"],
+            "style": ["", ""],
+        }
+
+        detected = Hyperlink.exists_in(position["content"])
+        reformated = Hyperlink().reformat(position, detected)
+
+        assert reformated == [
+            " ",
+            "[@faissaloux](https://github.com/faissaloux) ",
+            "[@termspark](https://github.com/faissaloux/termspark)",
+        ]
+        assert position == {
+            "content": [
+                " ",
+                "[@faissaloux](https://github.com/faissaloux) ",
+                "[@termspark](https://github.com/faissaloux/termspark)",
+            ],
+            "color": ["green", "green", "red"],
+            "highlight": ["", "", "black"],
+            "style": ["", "", ""],
+        }
+
     def test_encode_one_element(self):
-        content = [" [@termspark](https://github.com/faissaloux/termspark) "]
-        hyperlink = Hyperlink()
-        hyperlink.set_content(content)
-        hyperlink.exists()
-        encoded = hyperlink.encode()
+        position = {
+            "content": [" [@termspark](https://github.com/faissaloux/termspark) "],
+            "color": ["green"],
+            "highlight": [""],
+            "style": [""],
+        }
 
-        assert encoded == [
-            [
-                {
-                    "@termspark": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux/termspark"
-                    + "\x1b\\"
-                    + "@termspark"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                }
-            ]
-        ]
-
-    def test_encode_multiple_elements_with_one_hyperlink(self):
-        content = [
-            "Termspark repository: ",
-            " [@termspark](https://github.com/faissaloux/termspark) ",
-        ]
         hyperlink = Hyperlink()
-        hyperlink.set_content(content)
-        hyperlink.exists()
+        detected = Hyperlink.exists_in(position["content"])
+        reformated = hyperlink.reformat(position, detected)
+        hyperlink.set_content(reformated)
         encoded = hyperlink.encode()
 
         assert encoded == [
@@ -85,17 +131,57 @@ class TestHyperlink:
             ],
         ]
 
-    def test_encode_multiple_elements_with_multiple_hyperlinks(self):
-        content = [
-            " [@termspark](https://github.com/faissaloux/termspark) ",
-            "[@faissaloux](https://github.com/faissaloux)",
-        ]
+    def test_encode_multiple_elements_with_one_hyperlink(self):
+        position = {
+            "content": [
+                "Termspark repository: ",
+                " [@termspark](https://github.com/faissaloux/termspark) ",
+            ],
+            "color": ["green", ""],
+            "highlight": ["", ""],
+            "style": ["", ""],
+        }
+
         hyperlink = Hyperlink()
-        hyperlink.set_content(content)
-        hyperlink.exists()
+        detected = Hyperlink.exists_in(position["content"])
+        reformated = hyperlink.reformat(position, detected)
+        hyperlink.set_content(reformated)
         encoded = hyperlink.encode()
 
         assert encoded == [
+            [],
+            [],
+            [
+                {
+                    "@termspark": Hyperlink.HYPERLINK_PREFIX
+                    + "https://github.com/faissaloux/termspark"
+                    + "\x1b\\"
+                    + "@termspark"
+                    + Hyperlink.HYPERLINK_SUFFIX
+                    + "\x1b\\"
+                }
+            ],
+        ]
+
+    def test_encode_multiple_elements_with_multiple_hyperlinks(self):
+        position = {
+            "content": [
+                " [@termspark](https://github.com/faissaloux/termspark) ",
+                "[@faissaloux](https://github.com/faissaloux)",
+            ],
+            "color": ["green", ""],
+            "highlight": ["", ""],
+            "style": ["", ""],
+        }
+
+        hyperlink = Hyperlink()
+        detected = Hyperlink.exists_in(position["content"])
+        reformated = hyperlink.reformat(position, detected)
+        hyperlink.set_content(reformated)
+        encoded = hyperlink.encode()
+
+        assert encoded == [
+            [],
             [
                 {
                     "@termspark": Hyperlink.HYPERLINK_PREFIX
@@ -115,48 +201,5 @@ class TestHyperlink:
                     + Hyperlink.HYPERLINK_SUFFIX
                     + "\x1b\\"
                 }
-            ],
-        ]
-
-    def test_encode_multiple_elements_with_multiple_hyperlinks_in_the_same_element(
-        self,
-    ):
-        content = [
-            " [@termspark](https://github.com/faissaloux/termspark)",
-            "[@github](https://github.com/faissaloux) [@twitter](https://twitter.com/faissaloux)",
-        ]
-        hyperlink = Hyperlink()
-        hyperlink.set_content(content)
-        hyperlink.exists()
-        encoded = hyperlink.encode()
-
-        assert encoded == [
-            [
-                {
-                    "@termspark": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux/termspark"
-                    + "\x1b\\"
-                    + "@termspark"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                }
-            ],
-            [
-                {
-                    "@github": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux"
-                    + "\x1b\\"
-                    + "@github"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                },
-                {
-                    "@twitter": Hyperlink.HYPERLINK_PREFIX
-                    + "https://twitter.com/faissaloux"
-                    + "\x1b\\"
-                    + "@twitter"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                },
             ],
         ]

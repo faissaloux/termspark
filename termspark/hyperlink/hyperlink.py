@@ -11,10 +11,9 @@ class Hyperlink:
     HYPERLINK_SUFFIX: str = "\x1b]8;;"
     RESET: str = "\x1b\\\\"
 
-    matches: list = []
-
     def __init__(self):
         self.__hyperlink_elements: list = []
+        self.matches: list = []
 
     def set_content(self, content: List[str]):
         self.content = content
@@ -22,9 +21,8 @@ class Hyperlink:
     def reformat(
         self, content: Dict[str, list], detected: Dict[int, list]
     ) -> List[str]:
-        for index in range(len(content["content"])):
+        for index in range(len(content["content"]) - 1, -1, -1):
             new_content = content["content"].copy()
-            step = index
 
             # Isolate hyperlinks from texts.
             if index in detected:
@@ -33,19 +31,30 @@ class Hyperlink:
                     hyperlink_markdown = f"[{hyperlink[0]}]({hyperlink[1]})"
                     hyperlink_position = new_content[index].rfind(hyperlink_markdown)
 
-                    new_content.insert(
-                        index + 1, new_content[index][hyperlink_position:]
-                    )
-                    new_content[index] = new_content[index].replace(
-                        new_content[index][hyperlink_position:], ""
-                    )
+                    if hyperlink_position >= 0:
+                        if (
+                            new_content[index]
+                            != new_content[index][hyperlink_position:]
+                        ):
+                            new_content.insert(
+                                index + 1, new_content[index][hyperlink_position:]
+                            )
+                            new_content[index] = new_content[index].replace(
+                                new_content[index][hyperlink_position:], ""
+                            )
 
-                    content["color"].insert(index + 1, content["color"][index])
-                    content["highlight"].insert(index + 1, content["highlight"][index])
-                    content["style"].insert(index + 1, content["style"][index])
+                            content["color"].insert(index + 1, content["color"][index])
+                            content["highlight"].insert(
+                                index + 1, content["highlight"][index]
+                            )
+                            content["style"].insert(index + 1, content["style"][index])
 
-                    self.__hyperlink_elements.append(step + 1)
-                    step += 1
+                            self.__hyperlink_elements = [
+                                elem + 1 for elem in self.__hyperlink_elements
+                            ]
+                            self.__hyperlink_elements.append(index + 1)
+                        else:
+                            self.__hyperlink_elements.append(index)
 
             content["content"] = new_content
 
