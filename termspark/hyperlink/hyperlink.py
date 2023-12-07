@@ -71,10 +71,9 @@ class Hyperlink:
 
                                 # Update hyperlinks positions.
                                 for idx, elem in enumerate(self.__hyperlinks_positions):
-                                    if elem > i:
-                                        self.__hyperlinks_positions[idx] = elem + 1
-                                    else:
-                                        self.__hyperlinks_positions[idx] = elem
+                                    self.__hyperlinks_positions[idx] = (
+                                        elem + 1 if elem > i else elem
+                                    )
 
             content["content"] = new_content
 
@@ -123,10 +122,11 @@ class Hyperlink:
         encoded: List[Union[str, List[Dict[str, str]]]] = []
 
         for index in range(len(self.content)):
-            if index in self.__hyperlinks_positions:
-                encoded.append(self.__encode_single(index))
-            else:
-                encoded.append([])
+            encoded.append(
+                self.__encode_single(index)
+                if index in self.__hyperlinks_positions
+                else []
+            )
 
         return encoded
 

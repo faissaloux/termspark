@@ -338,7 +338,7 @@ class TermSpark:
 
         center_content = ExistenceChecker().dictionary_key(self.center, "content")
 
-        # trim what should be trimmed
+        # Trim what should be trimmed.
         if self.mode != "raw" and hasattr(self, "trimer"):
             self.__trim()
 
