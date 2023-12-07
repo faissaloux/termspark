@@ -212,3 +212,14 @@ termspark.full_width()
 termspark.spark()
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/46f4b13d-9d06-4327-85f6-877732b49fba)
+
+## Hyperlinks
+You can insert hyperlink using Markdown `[TEXT](LINK)`.
+```python
+termspark = TermSpark()
+termspark.spark_left([" Author ", "green"])
+termspark.spark_right([" [@faissaloux](https://github.com/faissaloux) ", "green"])
+termspark.set_separator(".", "green")
+termspark.spark()
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/ce829c1a-f14e-419c-80d0-aa202e5608dc)
