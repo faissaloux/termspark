@@ -132,15 +132,11 @@ class TermSpark:
 
             if len(sentence) < chars_number:
                 new_content.append(sentence)
-                chars_number -= len(sentence)
-            elif len(sentence) == chars_number:
-                new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
-                breakIndex = index + 1
             else:
                 new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
                 breakIndex = index + 1
+
+            chars_number -= len(sentence)
 
         getattr(self, position)["content"] = new_content
         getattr(self, position)["color"] = getattr(self, position)["color"][
@@ -168,18 +164,18 @@ class TermSpark:
     def __appendPositionContent(
         self, positionContent: Dict[str, List[Union[str, Sequence[str]]]], *content: str
     ):
+        structured_data = Structurer(*content).form()
+
         if not positionContent:
-            positionContent["content"] = [Structurer(*content).form()["content"]]
-            positionContent["color"] = [Structurer(*content).form()["color"]]
-            positionContent["highlight"] = [Structurer(*content).form()["highlight"]]
-            positionContent["style"] = [Structurer(*content).form()["style"]]
+            positionContent["content"] = [structured_data["content"]]
+            positionContent["color"] = [structured_data["color"]]
+            positionContent["highlight"] = [structured_data["highlight"]]
+            positionContent["style"] = [structured_data["style"]]
         else:
-            positionContent["content"].append(Structurer(*content).form()["content"])
-            positionContent["color"].append(Structurer(*content).form()["color"])
-            positionContent["highlight"].append(
-                Structurer(*content).form()["highlight"]
-            )
-            positionContent["style"].append(Structurer(*content).form()["style"])
+            positionContent["content"].append(structured_data["content"])
+            positionContent["color"].append(structured_data["color"])
+            positionContent["highlight"].append(structured_data["highlight"])
+            positionContent["style"].append(structured_data["style"])
 
         return positionContent
 
@@ -189,24 +185,14 @@ class TermSpark:
         if len(content) != 1:
             raise LenNotSupportedException("separator", 1)
 
-        self.separator["content"] = [
-            Structurer(content, color, highlight).form()["content"]
-        ]
-        self.separator["color"] = [
-            Structurer(content, color, highlight).form()["color"]
-        ]
-        self.separator["highlight"] = [
-            Structurer(content, color, highlight).form()["highlight"]
-        ]
-        self.separator["painted_content"] = [
-            Structurer(content, color, highlight).form()["painted_content"]
-        ]
-        self.separator["style"] = [
-            Structurer(content, color, highlight).form()["style"]
-        ]
-        self.separator["styled_content"] = [
-            Structurer(content, color, highlight).form()["styled_content"]
-        ]
+        structured_data = Structurer(content, color, highlight).form()
+
+        self.separator["content"] = [structured_data["content"]]
+        self.separator["color"] = [structured_data["color"]]
+        self.separator["highlight"] = [structured_data["highlight"]]
+        self.separator["painted_content"] = [structured_data["painted_content"]]
+        self.separator["style"] = [structured_data["style"]]
+        self.separator["styled_content"] = [structured_data["styled_content"]]
 
         if "separator" not in self.__silent:
             self.separator_is_set = True
