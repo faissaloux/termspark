@@ -238,11 +238,11 @@ class TermSpark:
 
         self.separator["length"] = self.get_width() - content_length
 
-    def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
+    def line(self, pattern: Optional[str] = None, highlight: Optional[str] = None):
         self.__silent.append("separator")
 
         self.set_separator(
-            separator if separator else self.separator["content"][0],
+            pattern if pattern else self.separator["content"][0],
             highlight=highlight,
         )
 
