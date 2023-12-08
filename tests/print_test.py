@@ -1,12 +1,16 @@
+import pytest
 from mock import patch  # type: ignore
 
 from termspark import print
+from termspark.exceptions.positionNotSupportedException import (
+    PositionNotSupportedException,
+)
 
 
 class TestPrint:
     @patch("termspark.termspark.TermSpark.spark")
     @patch("termspark.termspark.TermSpark.spark_left")
-    def test_print_calls_spark_left(self, spark_left, spark):
+    def test_print_calls_spark_left_as_default(self, spark_left, spark):
         print("Termspark")
 
         spark_left.assert_called_once_with(["Termspark", None, None, None])
@@ -37,3 +41,17 @@ class TestPrint:
             ["Termspark", "white", "blue", "italic, bold"]
         )
         spark.assert_called_once_with()
+
+    @patch("termspark.termspark.TermSpark.spark")
+    @patch("termspark.termspark.TermSpark.spark_right")
+    def test_print_with_position(self, spark_right, spark):
+        print("Termspark", "white", "blue", "italic, bold", position="right")
+
+        spark_right.assert_called_once_with(
+            ["Termspark", "white", "blue", "italic, bold"]
+        )
+        spark.assert_called_once_with()
+
+    def test_print_raise_exception_on_unsupported_position(self):
+        with pytest.raises(PositionNotSupportedException):
+            print("Termspark", "white", "blue", "italic, bold", position="unsupported")
