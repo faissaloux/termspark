@@ -55,3 +55,22 @@ class TestPrint:
     def test_print_raise_exception_on_unsupported_position(self):
         with pytest.raises(PositionNotSupportedException):
             print("Termspark", "white", "blue", "italic, bold", position="unsupported")
+
+    @patch("termspark.termspark.TermSpark.spark")
+    @patch("termspark.termspark.TermSpark.spark_right")
+    @patch("termspark.termspark.TermSpark.full_width")
+    def test_print_with_full_width(self, full_width, spark_right, spark):
+        print(
+            "Termspark",
+            "white",
+            "blue",
+            "italic, bold",
+            position="right",
+            full_width=True,
+        )
+
+        full_width.assert_called_once_with()
+        spark_right.assert_called_once_with(
+            ["Termspark", "white", "blue", "italic, bold"]
+        )
+        spark.assert_called_once_with()

@@ -17,6 +17,7 @@ def print(
     highlight: Optional[str] = None,
     style: Optional[str] = None,
     position: str = "left",
+    full_width: bool = False,
 ) -> None:
     if content is None:
         content = ""
@@ -25,6 +26,9 @@ def print(
 
     if not hasattr(termspark, f"spark_{position}"):
         raise PositionNotSupportedException(position)
+
+    if full_width:
+        termspark.full_width()
 
     spark = getattr(termspark, f"spark_{position}")
 
