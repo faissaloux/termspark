@@ -1,4 +1,23 @@
 # Usage
+
+### `print()`, but more!
+Import Termspark's print and take advantage of all its features, [colors](#you-can-also-paint-your-content), [highlights](#you-can-also-paint-your-content), [styles](#style), [hyperlinks](#hyperlinks) and more ...
+
+```python
+from termspark import print
+
+print(" Termspark ", "white", "blue", "italic")
+print(" [@termspark](https://github.com/termspark) ", "black", "white", "italic, bold")
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/2fcdf8c7-dca6-4bb7-9557-e307173c5ab2)
+
+You can choose from `["left", "center", "right"]` to specify where to print by passing it as position parameter:
+`print(" Termspark ", position="center")`.
+
+You can enable the Full Width using full_width parameter:
+`print(" Termspark ", highlight="blue", full_width=True)`.
+
+## More control
 ```python
     from termspark import TermSpark
 
@@ -18,7 +37,7 @@
 > **Note**
 > Separator can contain only one character.
 
-## You can also paint your content
+### You can also paint your content
 
 **Supported colors:**
 - black
@@ -70,7 +89,7 @@
     TermSpark().print_center('CENTER', 'white', 'light blue').spark()
 ```
 
-## You can use different styles on same position
+### You can use different styles on same position
 ```python
     from termspark import TermSpark
 
@@ -80,13 +99,13 @@
 ```
 `You know you can use them all together 😉`
 
-## Lines are too long to write a termspark line! 😑
+### Lines are too long to write a termspark line! 😑
 ```python
     from termspark import TermSpark
 
     TermSpark().spark_left([' * ', 'gray', 'white'], [' Info ', 'white', 'blue']).spark_center([' * ', 'gray', 'white'], [' Warning ', 'white', 'yellow']).spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red']).spark()
 ```
-### You can separate them by calling each function in a line 🤤
+#### You can separate them by calling each function in a line 🤤
 ```python
     from termspark import TermSpark
 
@@ -96,7 +115,7 @@
     termspark.spark_right([' * ', 'gray', 'white'], [' Error ', 'white', 'red'])
     termspark.spark()
 ```
-### Still too long 🙄 Got you 🤩
+#### Still too long 🙄 Got you 🤩
 ```python
     from termspark import TermSpark
 
@@ -110,7 +129,7 @@
     termspark.spark()
 ```
 
-## Raw
+### Raw
 You can print raw version which is colors-code-free so you can print clean text into files for example.
 
 ```python
@@ -119,7 +138,7 @@ You can print raw version which is colors-code-free so you can print clean text 
     raw = TermSpark().print_left('LEFT').print_right('RIGHT').set_separator('.').raw()
 ```
 
-## Force Width
+### Force Width
 You can customize width instead of the default full terminal width.
 
 ```python
@@ -128,7 +147,7 @@ You can customize width instead of the default full terminal width.
     TermSpark().set_width(40).print_left("LEFT", "red").print_right("RIGHT", "blue").spark()
 ```
 
-## Set content max width
+### Set content max width
 You can specify max width of content depending on position using `max_[position](max_characters)`.
 ```python
     from termspark import TermSpark
@@ -144,7 +163,7 @@ This should show only "LE" on the left, and "RIG" on the right.
 > **Warning**
 > `max_[position]()` is only supported by sparkers.
 
-## Full width
+### Full width
 You can enable full width by using `full_width()`.
 
 ```python
@@ -158,7 +177,7 @@ You can enable full width by using `full_width()`.
 > **Warning**
 > `full_width()` can only be used with one position.
 
-## Separator
+### Separator
 You can add color and highlight to separator too using `set_separator(content, color, highlight)`.
 ```python
 termspark = TermSpark()
@@ -169,7 +188,7 @@ termspark.spark()
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/5cf5039c-66c5-4fbc-9e4a-cb39332a2fb6)
 
-## Line
+### Line
 You can add highlight a line by using `line(highlight=highlight)`.
 ```python
 termspark = TermSpark()
@@ -178,7 +197,7 @@ termspark.spark()
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/41be7d15-4cab-4f73-a460-89c6d254db78)
 
-## Style
+### Style
 You can style your text by passing it to `print() style parameter` or to `spark([]) fourth list element`.
 
 **Supported styles:**
@@ -204,7 +223,7 @@ termspark.spark()
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/46f4b13d-9d06-4327-85f6-877732b49fba)
 
-## Hyperlinks
+### Hyperlinks
 You can insert hyperlink using Markdown `[TEXT](LINK)`.
 ```python
 termspark = TermSpark()
