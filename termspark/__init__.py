@@ -13,11 +13,10 @@ def print(
     color: Optional[str] = None,
     highlight: Optional[str] = None,
     style: Optional[str] = None,
-    end: str = "\n",
 ) -> None:
     if content is None:
         content = ""
 
     termspark = TermSpark()
-    termspark.print_left(content, color, highlight, style)
-    termspark.spark(end)
+    termspark.spark_left([content, color, highlight, style])  # type: ignore
+    termspark.spark()
