@@ -34,3 +34,9 @@ def print(
 
     spark([content, color, highlight, style])  # type: ignore
     termspark.spark()
+
+
+def line(pattern: Optional[str] = None, highlight: Optional[str] = None) -> None:
+    termspark = TermSpark()
+    termspark.line(pattern, highlight)
+    termspark.spark()

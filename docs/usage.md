@@ -17,6 +17,19 @@ You can choose from `["left", "center", "right"]` to specify where to print by p
 You can enable the Full Width using full_width parameter:
 `print(" Termspark ", highlight="blue", full_width=True)`.
 
+### `line()`
+To print empty line use `line()`, you can leave it empty or fill it with a repeated character, you can specify its color too.
+
+```python
+from termspark import line
+
+line(".", "blue")
+line(highlight="green")
+line()
+line("-")
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/210a5778-e7c8-4031-a49f-6f09f41dc23e)
+
 ## More control
 ```python
     from termspark import TermSpark
