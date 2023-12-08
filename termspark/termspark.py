@@ -8,7 +8,6 @@ from .exceptions.emptyException import EmptyException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
-from .helpers.existenceChecker import ExistenceChecker
 from .hyperlink.hyperlink import EncodedHyperlink, Hyperlink
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
@@ -230,9 +229,7 @@ class TermSpark:
         content_length = 0
 
         for position in self.positions:
-            content = ExistenceChecker().dictionary_key(
-                getattr(self, position), "content"
-            )
+            content = getattr(self, position).get("content", "")
 
             content_length += len("".join(content))
 
@@ -332,7 +329,7 @@ class TermSpark:
             self.separator["styled_content"][0] * half_separator_length
         )
 
-        center_content = ExistenceChecker().dictionary_key(self.center, "content")
+        center_content = self.center.get("content", "")
 
         # Trim what should be trimmed.
         if self.mode != "raw" and hasattr(self, "trimer"):
@@ -352,8 +349,8 @@ class TermSpark:
             center = "".join(center)
 
         if self.mode == "raw":
-            left_content = ExistenceChecker().dictionary_key(self.left, "content")
-            right_content = ExistenceChecker().dictionary_key(self.right, "content")
+            left_content = self.left.get("content", "")
+            right_content = self.right.get("content", "")
 
             if len(left_content) > 0:
                 left_content = "".join(left_content)
@@ -361,14 +358,10 @@ class TermSpark:
             if len(right_content) > 0:
                 right_content = "".join(right_content)
         else:
-            left_content = ExistenceChecker().dictionary_key(
-                self.left, "styled_content"
-            )
+            left_content = self.left.get("styled_content", "")
             left_content = "".join(left_content)
 
-            right_content = ExistenceChecker().dictionary_key(
-                self.right, "styled_content"
-            )
+            right_content = self.right.get("styled_content", "")
             right_content = "".join(right_content)
 
         return left_content + center + right_content
