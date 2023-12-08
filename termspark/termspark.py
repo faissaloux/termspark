@@ -9,7 +9,7 @@ from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .helpers.existenceChecker import ExistenceChecker
-from .hyperlink.hyperlink import Hyperlink
+from .hyperlink.hyperlink import EncodedHyperlink, Hyperlink
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
 from .trimer.trimer import Trimer
@@ -304,10 +304,6 @@ class TermSpark:
             getattr(self, active_position)["content"][-1] + extra_right_space
         )
 
-        getattr(self, active_position)["encoded_content"] = getattr(
-            self, active_position
-        )["content"]
-
     def render(self) -> str:
         if self.mode == "color":
             self.__style_content()
@@ -408,15 +404,25 @@ class TermSpark:
         for position in self.positions:
             pos = getattr(self, position)
             if "hyperlinks" in pos:
-                pos["encoded_content"] = pos["content"].copy()
+                pos["encoded_content"] = self.__apply_hyperlinks_to_content(
+                    pos["content"], pos["hyperlinks"]
+                )
 
-                for index, hyperlinks in enumerate(pos["hyperlinks"]):
-                    if isinstance(hyperlinks, list):
-                        for content_hyperlinks in hyperlinks:
-                            for placeholder, hyperlink in content_hyperlinks.items():
-                                pos["encoded_content"][index] = pos["encoded_content"][
-                                    index
-                                ].replace(placeholder, hyperlink.strip())
+    def __apply_hyperlinks_to_content(
+        self, content: List[str], hyperlinks: List[List[EncodedHyperlink]]
+    ) -> List[str]:
+        encoded: List[str] = content.copy()
+
+        for hyperlink in hyperlinks:
+            if len(hyperlink):
+                the_hyperlink: EncodedHyperlink = hyperlink[0]
+                index: int = the_hyperlink["index"]
+
+                encoded[index] = content[index].replace(
+                    the_hyperlink["placeholder"], the_hyperlink["hyperlink"]
+                )
+
+        return encoded
 
     def __detect_trims(self) -> None:
         for posIndex in range(len(self.positions) - 1, -1, -1):

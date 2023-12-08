@@ -1,5 +1,15 @@
 import re
-from typing import Dict, List, Union
+from typing import Dict, List, TypedDict
+
+EncodedHyperlink = TypedDict(
+    "EncodedHyperlink",
+    {
+        "index": int,
+        "placeholder": str,
+        "hyperlink": str,
+    },
+    total=False,
+)
 
 
 class Hyperlink:
@@ -118,39 +128,41 @@ class Hyperlink:
 
         return updated_content
 
-    def encode(self) -> List[Union[str, List[Dict[str, str]]]]:
-        encoded: List[Union[str, List[Dict[str, str]]]] = []
+    def encode(self) -> List[List[EncodedHyperlink]]:
+        encoded: List[List[EncodedHyperlink]] = []
 
         for index in range(len(self.content)):
-            encoded.append(
-                self.__encode_single(index)
-                if index in self.__hyperlinks_positions
-                else []
-            )
+            if index in self.__hyperlinks_positions:
+                encoded.append(self.__encode_single(index))
 
         return encoded
 
-    def __encode_single(self, content_index: int) -> List[Dict[str, str]]:
-        encoded_hyperlinks: List[Dict[str, str]] = []
+    def __encode_single(self, content_index: int) -> List[EncodedHyperlink]:
+        encoded_hyperlinks: List[EncodedHyperlink] = []
 
         for match in self.matches[content_index]:
+            placeholder: str = match[0]
+            link: str = match[1]
+
             encoded_hyperlink: str = (
                 self.HYPERLINK_PREFIX
-                + match[1]
+                + link
                 + self.RESET
-                + match[0]
+                + placeholder
                 + self.HYPERLINK_SUFFIX
                 + self.RESET
             )
 
             encoded_hyperlinks.append(
                 {
-                    match[0]: re.sub(
+                    "index": content_index,
+                    "placeholder": placeholder,
+                    "hyperlink": re.sub(
                         self.HYPERLINK_PATTERN,
                         encoded_hyperlink,
-                        f"[{match[0]}]({match[1]})",
+                        f"[{placeholder}]({link})",
                         1,
-                    )
+                    ),
                 }
             )
 
