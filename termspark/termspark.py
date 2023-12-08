@@ -390,9 +390,9 @@ class TermSpark:
             positionContent = getattr(self, position)
 
             if "content" in positionContent:
-                hyperlink = Hyperlink()
                 detected = Hyperlink.exists_in(positionContent["content"])
                 if detected:
+                    hyperlink = Hyperlink()
                     reformated = hyperlink.reformat(positionContent, detected)
                     hyperlink.set_content(reformated)
                     positionContent["hyperlinks"] = hyperlink.encode()
@@ -409,18 +409,16 @@ class TermSpark:
                 )
 
     def __apply_hyperlinks_to_content(
-        self, content: List[str], hyperlinks: List[List[EncodedHyperlink]]
+        self, content: List[str], hyperlinks: List[EncodedHyperlink]
     ) -> List[str]:
         encoded: List[str] = content.copy()
 
         for hyperlink in hyperlinks:
-            if len(hyperlink):
-                the_hyperlink: EncodedHyperlink = hyperlink[0]
-                index: int = the_hyperlink["index"]
+            index: int = hyperlink["index"]
 
-                encoded[index] = content[index].replace(
-                    the_hyperlink["placeholder"], the_hyperlink["hyperlink"]
-                )
+            encoded[index] = content[index].replace(
+                hyperlink["placeholder"], hyperlink["hyperlink"]
+            )
 
         return encoded
 

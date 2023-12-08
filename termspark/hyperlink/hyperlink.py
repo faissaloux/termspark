@@ -11,6 +11,16 @@ EncodedHyperlink = TypedDict(
     total=False,
 )
 
+HyperlinkMatch = TypedDict(
+    "HyperlinkMatch",
+    {
+        "index": int,
+        "placeholder": str,
+        "link": str,
+    },
+    total=False,
+)
+
 
 class Hyperlink:
     PLACEHOLDER_PATTERN: str = "[^\\[]*?"
@@ -23,7 +33,7 @@ class Hyperlink:
 
     def __init__(self):
         self.__hyperlinks_positions: list = []
-        self.matches: list = []
+        self.matches: List[HyperlinkMatch] = []
 
     def set_content(self, content: List[str]):
         self.content = content
@@ -49,11 +59,7 @@ class Hyperlink:
                                 hyperlink_to_insert, ""
                             )
 
-                            content["color"].insert(index + 1, content["color"][index])
-                            content["highlight"].insert(
-                                index + 1, content["highlight"][index]
-                            )
-                            content["style"].insert(index + 1, content["style"][index])
+                            self.__copy_attributes(content, index, 1)
 
                             self.__hyperlinks_positions = [
                                 elem + 1 for elem in self.__hyperlinks_positions
@@ -69,15 +75,7 @@ class Hyperlink:
                                 new_content[i] = element.rstrip()
 
                                 new_content.insert(i + 1, extra_white_space)
-                                content["color"].insert(
-                                    index + 1, content["color"][index]
-                                )
-                                content["highlight"].insert(
-                                    index + 1, content["highlight"][index]
-                                )
-                                content["style"].insert(
-                                    index + 1, content["style"][index]
-                                )
+                                self.__copy_attributes(content, index, 1)
 
                                 # Update hyperlinks positions.
                                 for idx, elem in enumerate(self.__hyperlinks_positions):
@@ -90,9 +88,14 @@ class Hyperlink:
         for index, element in enumerate(new_content):
             matches = re.findall(self.HYPERLINK_PATTERN, element)
             if len(matches):
-                self.matches.append(matches)
-            else:
-                self.matches.append([])
+                match = matches[0]
+                self.matches.append(
+                    {
+                        "index": index,
+                        "placeholder": match[0],
+                        "link": match[1],
+                    }
+                )
 
         return content["content"]
 
@@ -105,6 +108,16 @@ class Hyperlink:
                 detected[index] = hyperlink
 
         return detected
+
+    def __copy_attributes(
+        self,
+        content: Dict[str, list],
+        index: int,
+        step: int,
+        attributes: List[str] = ["color", "highlight", "style"],
+    ) -> None:
+        for attribute in attributes:
+            content[attribute].insert(index + step, content[attribute][index])
 
     def placeholders(self) -> List[str]:
         """Replaces hyperlinks in content with their placeholders."""
@@ -128,8 +141,8 @@ class Hyperlink:
 
         return updated_content
 
-    def encode(self) -> List[List[EncodedHyperlink]]:
-        encoded: List[List[EncodedHyperlink]] = []
+    def encode(self) -> List[EncodedHyperlink]:
+        encoded: List[EncodedHyperlink] = []
 
         for index in range(len(self.content)):
             if index in self.__hyperlinks_positions:
@@ -137,33 +150,29 @@ class Hyperlink:
 
         return encoded
 
-    def __encode_single(self, content_index: int) -> List[EncodedHyperlink]:
-        encoded_hyperlinks: List[EncodedHyperlink] = []
+    def __encode_single(self, content_index: int) -> EncodedHyperlink:
+        match: HyperlinkMatch = list(
+            filter(lambda match: match["index"] == content_index, self.matches)
+        )[0]
+        placeholder: str = match["placeholder"]
+        link: str = match["link"]
 
-        for match in self.matches[content_index]:
-            placeholder: str = match[0]
-            link: str = match[1]
+        encoded_hyperlink: str = (
+            self.HYPERLINK_PREFIX
+            + link
+            + self.RESET
+            + placeholder
+            + self.HYPERLINK_SUFFIX
+            + self.RESET
+        )
 
-            encoded_hyperlink: str = (
-                self.HYPERLINK_PREFIX
-                + link
-                + self.RESET
-                + placeholder
-                + self.HYPERLINK_SUFFIX
-                + self.RESET
-            )
-
-            encoded_hyperlinks.append(
-                {
-                    "index": content_index,
-                    "placeholder": placeholder,
-                    "hyperlink": re.sub(
-                        self.HYPERLINK_PATTERN,
-                        encoded_hyperlink,
-                        f"[{placeholder}]({link})",
-                        1,
-                    ),
-                }
-            )
-
-        return encoded_hyperlinks
+        return {
+            "index": content_index,
+            "placeholder": placeholder,
+            "hyperlink": re.sub(
+                self.HYPERLINK_PATTERN,
+                encoded_hyperlink,
+                f"[{placeholder}]({link})",
+                1,
+            ),
+        }
