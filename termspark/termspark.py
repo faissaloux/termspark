@@ -288,12 +288,6 @@ class TermSpark:
         )
 
     def render(self) -> str:
-        if self.mode == "color":
-            self.__style_content()
-        self.__calculate_separator_length()
-        if self.mode == "color":
-            self.__paint_separator()
-
         if self.line_is_set and self.separator_is_set:
             raise CombinationException("line", "separator")
 
@@ -308,6 +302,12 @@ class TermSpark:
             and not self.line_is_set
         ):
             raise EmptyException
+
+        if self.mode == "color":
+            self.__style_content()
+            self.__paint_separator()
+
+        self.__calculate_separator_length()
 
         half_separator_length = int(self.separator["length"]) // 2
         separator_mid_width = self.separator["content"] * half_separator_length
@@ -428,9 +428,8 @@ class TermSpark:
             self.trimer = Trimer()
             self.trimer.target(to_trim)
             self.__detect_trims()
-        else:
-            if self.is_full_width:
-                self.__take_full_width()
+        elif self.is_full_width:
+            self.__take_full_width()
 
         self.__apply_hyperlinks()
 
