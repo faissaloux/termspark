@@ -1,4 +1,13 @@
-from typing import List, NotRequired, Sequence, TypedDict, Union
+from __future__ import annotations
+
+from typing import (  # NotRequired can be moved here on Python >= 3.11.
+    List,
+    Sequence,
+    TypedDict,
+    Union,
+)
+
+from typing_extensions import NotRequired  # For Python <3.11.
 
 from termspark.structurer.structurer import Form
 from termspark.styler.styler import Styler
