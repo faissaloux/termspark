@@ -51,6 +51,11 @@ class Line:
     def get_content(self) -> str:
         return self._content[0]
 
+    def get_raw_content(self) -> PositionedContent:
+        return {
+            "full": self._content[0],
+        }
+
     def get_styled_content(self) -> PositionedContent:
         return {
             "full": self._styled_content[0],

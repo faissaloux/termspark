@@ -263,7 +263,11 @@ class TermSpark:
             raise EmptyException
 
         if hasattr(self, "line_separator"):
+            if self.mode == "raw":
+                return self.line_separator.get_raw_content()["full"] * self.get_width()
+
             self.line_separator.style()
+
             return self.line_separator.get_styled_content()["full"] * self.get_width()
 
         if not hasattr(self, "separator"):

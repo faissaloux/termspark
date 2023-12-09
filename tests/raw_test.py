@@ -53,3 +53,14 @@ class TestRaw:
             + "." * (separator_length // 2)
             + " RIGHT "
         )
+
+    def test_raw_line(self):
+        termspark = TermSpark()
+        termspark.line(".", "blue")
+        raw = termspark.raw()
+
+        width = termspark.get_width()
+
+        assert termspark.mode == "raw"
+        assert len(raw) == width
+        assert raw == "." * width
