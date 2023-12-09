@@ -19,12 +19,9 @@ from .validators.printerValidator import PrinterValidator
 class TermSpark:
     mode: str = "color"
     width: int = 0
-    hyperlink_trash_length: int = 0
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
-    separator_is_set: bool = False
-    line_is_set: bool = False
     is_full_width: bool = False
     to_trim: Dict[str, Dict[int, str]] = {}
     positions: List[str] = [
@@ -267,7 +264,7 @@ class TermSpark:
 
         if hasattr(self, "line_separator"):
             self.line_separator.style()
-            return self.line_separator.get_styled_content() * self.get_width()
+            return self.line_separator.get_styled_content()["full"] * self.get_width()
 
         if not hasattr(self, "separator"):
             self.set_separator(" ")
@@ -277,17 +274,10 @@ class TermSpark:
             self.separator.style()
 
         self.__calculate_separator_length()
+
         separator_length = self.separator.get_length()
-
-        separator_mid_width = self.separator.get_content() * separator_length["full"]
-
-        left_separator_painted_mid_width = (
-            self.separator.get_styled_content() * separator_length["left"]
-        )
-
-        right_separator_painted_mid_width = (
-            self.separator.get_styled_content() * separator_length["right"]
-        )
+        styled_separator = self.separator.get_styled_content()
+        separator_mid_length = self.separator.get_content() * separator_length["right"]
 
         center_content = self.center.get("content", "")
 
@@ -297,15 +287,15 @@ class TermSpark:
 
         if len(center_content) > 0:
             if self.mode == "raw":
-                center = " ".join(center_content) + "".join(separator_mid_width)
+                center = " ".join(center_content) + "".join(separator_mid_length)
             else:
                 center = (
-                    left_separator_painted_mid_width
+                    styled_separator["left"]
                     + "".join(self.center["styled_content"])
-                    + right_separator_painted_mid_width
+                    + styled_separator["right"]
                 )
         else:
-            center = self.separator.get_styled_content() * separator_length["full"]
+            center = styled_separator["full"]
             center = "".join(center)
 
         if self.mode == "raw":

@@ -15,9 +15,14 @@ class TestSeparator:
         }
 
         separator = Separator(data)
+        length = separator.get_length()
 
         assert separator.get_content() == "."
-        assert separator.get_styled_content() == "."
+        assert separator.get_styled_content() == {
+            "full": "." * length["full"],
+            "left": "." * length["left"],
+            "right": "." * length["right"],
+        }
 
     def test_can_set_length(self):
         data = {
@@ -108,5 +113,10 @@ class TestSeparator:
 
         separator = Separator(data)
         separator.style()
+        length = separator.get_length()
 
-        assert separator.get_styled_content() == "\x1b[44m.\x1b[0m"
+        assert separator.get_styled_content() == {
+            "full": "\x1b[44m.\x1b[0m" * length["full"],
+            "left": "\x1b[44m.\x1b[0m" * length["left"],
+            "right": "\x1b[44m.\x1b[0m" * length["right"],
+        }
