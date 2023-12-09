@@ -3,8 +3,8 @@ from typing import List, NotRequired, Sequence, TypedDict, Union
 from termspark.structurer.structurer import Form
 from termspark.styler.styler import Styler
 
-StyledContent = TypedDict(
-    "StyledContent",
+PositionedContent = TypedDict(
+    "PositionedContent",
     {
         "full": str,
         "right": NotRequired[str],
@@ -42,7 +42,7 @@ class Line:
     def get_content(self) -> str:
         return self._content[0]
 
-    def get_styled_content(self) -> StyledContent:
+    def get_styled_content(self) -> PositionedContent:
         return {
             "full": self._styled_content[0],
         }

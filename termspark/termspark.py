@@ -275,10 +275,7 @@ class TermSpark:
 
         self.__calculate_separator_length()
 
-        separator_length = self.separator.get_length()
         styled_separator = self.separator.get_styled_content()
-        separator_mid_length = self.separator.get_content() * separator_length["right"]
-
         center_content = self.center.get("content", "")
 
         # Trim what should be trimmed.
@@ -287,7 +284,12 @@ class TermSpark:
 
         if len(center_content) > 0:
             if self.mode == "raw":
-                center = " ".join(center_content) + "".join(separator_mid_length)
+                raw_separator = self.separator.get_raw_content()
+                center = (
+                    raw_separator["left"]
+                    + "".join(center_content)
+                    + raw_separator["right"]
+                )
             else:
                 center = (
                     styled_separator["left"]
