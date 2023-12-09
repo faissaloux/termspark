@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 
 from typing_extensions import TypedDict
 
@@ -23,11 +23,13 @@ class Structurer:
         highlight: Optional[str] = None,
         style: Optional[str] = None,
     ):
-        self.content = content
-        self.color = color if color else ""
-        self.highlight = highlight if highlight else ""
-        self.style = list(map(str.strip, style.split(","))) if style else ""
-        self.painted_content = self.content
+        self.content: str = content
+        self.color: str = color if color else ""
+        self.highlight: str = highlight if highlight else ""
+        self.style: Union[str, Sequence[str]] = (
+            list(map(str.strip, style.split(","))) if style else ""
+        )
+        self.painted_content: str = self.content
 
     def form(self) -> Form:
         return {

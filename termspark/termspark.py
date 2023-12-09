@@ -1,32 +1,17 @@
 import os
 from typing import Dict, List, Optional, Sequence, Union
 
-from typing_extensions import TypedDict
-
 from .exceptions.combinationException import CombinationException
 from .exceptions.emptyException import EmptyException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
 from .exceptions.minNotReachedException import MinNotReachedException
 from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
 from .hyperlink.hyperlink import EncodedHyperlink, Hyperlink
+from .separator.separator import Separator
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
 from .trimer.trimer import Trimer
 from .validators.printerValidator import PrinterValidator
-
-Separator = TypedDict(
-    "Separator",
-    {
-        "content": List[str],
-        "color": List[str],
-        "highlight": List[str],
-        "painted_content": List[str],
-        "style": List[Union[str, Sequence[str]]],
-        "styled_content": List[str],
-        "length": int,
-    },
-    total=False,
-)
 
 
 class TermSpark:
@@ -38,7 +23,6 @@ class TermSpark:
     left: Dict[str, str] = {}
     right: Dict[str, str] = {}
     center: Dict[str, str] = {}
-    separator: Separator = {}
     separator_is_set: bool = False
     line_is_set: bool = False
     is_full_width: bool = False
@@ -186,13 +170,7 @@ class TermSpark:
             raise LenNotSupportedException("separator", 1)
 
         structured_data = Structurer(content, color, highlight).form()
-
-        self.separator["content"] = [structured_data["content"]]
-        self.separator["color"] = [structured_data["color"]]
-        self.separator["highlight"] = [structured_data["highlight"]]
-        self.separator["painted_content"] = [structured_data["painted_content"]]
-        self.separator["style"] = [structured_data["style"]]
-        self.separator["styled_content"] = [structured_data["styled_content"]]
+        self.separator = Separator(structured_data)
 
         if "separator" not in self.__silent:
             self.separator_is_set = True
@@ -219,13 +197,13 @@ class TermSpark:
 
             content_length += len("".join(content))
 
-        self.separator["length"] = self.get_width() - content_length
+        self.separator.set_length(self.get_width() - content_length)
 
     def line(self, pattern: Optional[str] = None, highlight: Optional[str] = None):
         self.__silent.append("separator")
 
         self.set_separator(
-            pattern if pattern else self.separator["content"][0],
+            pattern if pattern else self.separator.get_content(),
             highlight=highlight,
         )
 
@@ -305,14 +283,14 @@ class TermSpark:
 
         if self.mode == "color":
             self.__style_content()
-            self.__paint_separator()
+            self.separator.style()
 
         self.__calculate_separator_length()
 
-        half_separator_length = int(self.separator["length"]) // 2
-        separator_mid_width = self.separator["content"] * half_separator_length
+        half_separator_length = int(self.separator.get_length()) // 2
+        separator_mid_width = self.separator.get_content() * half_separator_length
         separator_painted_mid_width = (
-            self.separator["styled_content"][0] * half_separator_length
+            self.separator.get_styled_content() * half_separator_length
         )
 
         center_content = self.center.get("content", "")
@@ -331,7 +309,9 @@ class TermSpark:
                     + separator_painted_mid_width
                 )
         else:
-            center = self.separator["styled_content"][0] * int(self.separator["length"])
+            center = self.separator.get_styled_content() * int(
+                self.separator.get_length()
+            )
             center = "".join(center)
 
         if self.mode == "raw":
@@ -360,9 +340,6 @@ class TermSpark:
                 pos["styled_content"] = Styler().element(pos).style()
 
             setattr(self, position, pos)
-
-    def __paint_separator(self):
-        self.separator["styled_content"] = Styler().element(self.separator).style()
 
     def __detect_hyperlinks(self) -> None:
         for position in self.positions:
