@@ -30,9 +30,32 @@ class TestSeparator:
         }
 
         separator = Separator(data)
-        separator.set_length(6)
+        separator.set_length(24)
 
-        assert separator.get_length() == 6
+        assert separator.get_length() == {
+            "full": 24,
+            "left": 12,
+            "right": 12,
+        }
+
+    def test_can_set_odd_length(self):
+        data = {
+            "content": ".",
+            "color": "",
+            "highlight": "",
+            "style": "",
+            "painted_content": ".",
+            "styled_content": ".",
+        }
+
+        separator = Separator(data)
+        separator.set_length(25)
+
+        assert separator.get_length() == {
+            "full": 25,
+            "left": 13,
+            "right": 12,
+        }
 
     @patch("termspark.styler.styler.Styler.element")
     def test_style_call_styler_element(self, styler_element):

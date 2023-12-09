@@ -277,20 +277,16 @@ class TermSpark:
             self.separator.style()
 
         self.__calculate_separator_length()
+        separator_length = self.separator.get_length()
 
-        half_separator_length = self.separator.get_length() // 2
-        separator_mid_width = self.separator.get_content() * half_separator_length
-        half_left_separator_length = half_separator_length
-
-        if self.separator.get_length() % 2 != 0:
-            half_left_separator_length += 1
+        separator_mid_width = self.separator.get_content() * separator_length["full"]
 
         left_separator_painted_mid_width = (
-            self.separator.get_styled_content() * half_left_separator_length
+            self.separator.get_styled_content() * separator_length["left"]
         )
 
         right_separator_painted_mid_width = (
-            self.separator.get_styled_content() * half_separator_length
+            self.separator.get_styled_content() * separator_length["right"]
         )
 
         center_content = self.center.get("content", "")
@@ -309,7 +305,7 @@ class TermSpark:
                     + right_separator_painted_mid_width
                 )
         else:
-            center = self.separator.get_styled_content() * self.separator.get_length()
+            center = self.separator.get_styled_content() * separator_length["full"]
             center = "".join(center)
 
         if self.mode == "raw":
