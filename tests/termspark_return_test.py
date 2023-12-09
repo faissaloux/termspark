@@ -14,6 +14,7 @@ class TestTermsparkReturn:
         content_space = len("LEFT")
         rest_space = terminal_width - content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "LEFT" + " " * rest_space
 
     def test_print_left_with_separator(self):
@@ -23,6 +24,7 @@ class TestTermsparkReturn:
         content_space = len("LEFT")
         rest_space = terminal_width - content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "LEFT" + "." * rest_space
 
     def test_print_right(self):
@@ -32,6 +34,7 @@ class TestTermsparkReturn:
         content_space = len("RIGHT")
         rest_space = terminal_width - content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == " " * rest_space + "RIGHT"
 
     def test_print_right_with_separator(self):
@@ -41,6 +44,7 @@ class TestTermsparkReturn:
         content_space = len("RIGHT")
         rest_space = terminal_width - content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "." * rest_space + "RIGHT"
 
     def test_print_center(self):
@@ -50,6 +54,7 @@ class TestTermsparkReturn:
         content_space = len("CENTER")
         rest_space = terminal_width - content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == " " * int(rest_space / 2) + "CENTER" + " " * int(
             rest_space / 2
         )
@@ -61,6 +66,7 @@ class TestTermsparkReturn:
         content_space = len("CENTER")
         rest_space = terminal_width - content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "." * int(rest_space / 2) + "CENTER" + "." * int(
             rest_space / 2
         )
@@ -73,6 +79,7 @@ class TestTermsparkReturn:
         right_content_space = len("RIGHT")
         rest_space = terminal_width - left_content_space - right_content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "LEFT" + " " * rest_space + "RIGHT"
 
     def test_combine_left_with_right_with_separator(self):
@@ -85,6 +92,7 @@ class TestTermsparkReturn:
         right_content_space = len("RIGHT")
         rest_space = terminal_width - left_content_space - right_content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "LEFT" + "." * rest_space + "RIGHT"
 
     def test_combine_left_with_center(self):
@@ -95,6 +103,7 @@ class TestTermsparkReturn:
         center_content_space = len("CENTER")
         rest_space = terminal_width - left_content_space - center_content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "LEFT" + " " * int(
             rest_space / 2
         ) + "CENTER" + " " * int(rest_space / 2)
@@ -109,45 +118,80 @@ class TestTermsparkReturn:
         center_content_space = len("CENTER")
         rest_space = terminal_width - left_content_space - center_content_space
 
+        assert terminal_width == len(str(termspark))
         assert str(termspark) == "LEFT" + "." * int(
             rest_space / 2
         ) + "CENTER" + "." * int(rest_space / 2)
 
     def test_combine_right_with_center(self):
-        termspark = TermSpark().print_right("RIGHT").print_center("CENTER")
+        termspark = TermSpark().print_right(" RIGHT ").print_center(" TERMSPARK ")
 
         terminal_width = termspark.get_terminal_width()
-        right_content_space = len("RIGHT")
-        center_content_space = len("CENTER")
+        right_content_space = len(" RIGHT ")
+        center_content_space = len(" TERMSPARK ")
         rest_space = terminal_width - right_content_space - center_content_space
 
+        assert terminal_width == len(str(termspark))
         assert (
             str(termspark)
             == " " * int(rest_space / 2)
-            + "CENTER"
+            + " TERMSPARK "
             + " " * int(rest_space / 2)
-            + "RIGHT"
+            + " RIGHT "
         )
 
     def test_combine_right_with_center_with_separator(self):
         termspark = (
-            TermSpark().print_right("RIGHT").print_center("CENTER").set_separator(".")
+            TermSpark()
+            .print_right(" RIGHT ")
+            .print_center(" TERMSPARK ")
+            .set_separator(".")
+        )
+
+        terminal_width = termspark.get_terminal_width()
+        right_content_space = len(" RIGHT ")
+        center_content_space = len(" TERMSPARK ")
+        rest_space = terminal_width - right_content_space - center_content_space
+
+        assert terminal_width == len(str(termspark))
+        assert (
+            str(termspark)
+            == "." * int(rest_space / 2)
+            + " TERMSPARK "
+            + "." * int(rest_space / 2)
+            + " RIGHT "
+        )
+
+    def test_combine_all(self):
+        termspark = (
+            TermSpark()
+            .print_left("LEFT")
+            .print_right("RIGHT")
+            .print_center("TERMSPARK")
         )
 
         terminal_width = termspark.get_terminal_width()
         right_content_space = len("RIGHT")
-        center_content_space = len("CENTER")
-        rest_space = terminal_width - right_content_space - center_content_space
+        center_content_space = len("TERMSPARK")
+        left_content_space = len("LEFT")
+        rest_space = (
+            terminal_width
+            - left_content_space
+            - right_content_space
+            - center_content_space
+        )
 
+        assert terminal_width == len(str(termspark))
         assert (
             str(termspark)
-            == "." * int(rest_space / 2)
-            + "CENTER"
-            + "." * int(rest_space / 2)
+            == "LEFT"
+            + " " * int(rest_space / 2)
+            + "TERMSPARK"
+            + " " * int(rest_space / 2)
             + "RIGHT"
         )
 
-    def test_combine_all(self):
+    def test_combine_all_with_odd_separator_length(self):
         termspark = (
             TermSpark().print_left("LEFT").print_right("RIGHT").print_center("CENTER")
         )
@@ -163,10 +207,12 @@ class TestTermsparkReturn:
             - center_content_space
         )
 
+        assert rest_space % 2 != 0
+        assert terminal_width == len(str(termspark))
         assert (
             str(termspark)
             == "LEFT"
-            + " " * int(rest_space / 2)
+            + " " * int(rest_space / 2 + 1)
             + "CENTER"
             + " " * int(rest_space / 2)
             + "RIGHT"
@@ -177,13 +223,13 @@ class TestTermsparkReturn:
             TermSpark()
             .print_left("LEFT")
             .print_right("RIGHT")
-            .print_center("CENTER")
+            .print_center("TERMSPARK")
             .set_separator(".")
         )
 
         terminal_width = termspark.get_terminal_width()
         right_content_space = len("RIGHT")
-        center_content_space = len("CENTER")
+        center_content_space = len("TERMSPARK")
         left_content_space = len("LEFT")
         rest_space = (
             terminal_width
@@ -192,11 +238,12 @@ class TestTermsparkReturn:
             - center_content_space
         )
 
+        assert terminal_width == len(str(termspark))
         assert (
             str(termspark)
             == "LEFT"
             + "." * int(rest_space / 2)
-            + "CENTER"
+            + "TERMSPARK"
             + "." * int(rest_space / 2)
             + "RIGHT"
         )
@@ -205,13 +252,13 @@ class TestTermsparkReturn:
         termspark = TermSpark()
         termspark.print_left("LEFT")
         termspark.print_right("RIGHT")
-        termspark.print_center("CENTER")
+        termspark.print_center("TERMSPARK")
         termspark.set_separator(".")
         termspark.spark()
 
         terminal_width = termspark.get_terminal_width()
         right_content_space = len("RIGHT")
-        center_content_space = len("CENTER")
+        center_content_space = len("TERMSPARK")
         left_content_space = len("LEFT")
         rest_space = (
             terminal_width
@@ -220,11 +267,12 @@ class TestTermsparkReturn:
             - center_content_space
         )
 
+        assert terminal_width == len(str(termspark))
         assert (
             str(termspark)
             == "LEFT"
             + "." * int(rest_space / 2)
-            + "CENTER"
+            + "TERMSPARK"
             + "." * int(rest_space / 2)
             + "RIGHT"
         )
@@ -235,13 +283,13 @@ class TestTermsparkReturn:
         termspark.spark_left("LEFT")
         termspark.spark_right("*")
         termspark.spark_right(["RIGHT"])
-        termspark.spark_center("CENTER")
+        termspark.spark_center("TERMSPARK")
         termspark.set_separator(".")
         termspark.spark()
 
         terminal_width = termspark.get_terminal_width()
         right_content_space = len("RIGHT") + len("*")
-        center_content_space = len("CENTER")
+        center_content_space = len("TERMSPARK")
         left_content_space = len("LEFT") + len("*")
         rest_space = (
             terminal_width
@@ -250,11 +298,12 @@ class TestTermsparkReturn:
             - center_content_space
         )
 
+        assert terminal_width == len(str(termspark))
         assert (
             str(termspark)
             == "*LEFT"
             + "." * int(rest_space / 2)
-            + "CENTER"
+            + "TERMSPARK"
             + "." * int(rest_space / 2)
             + "*RIGHT"
         )

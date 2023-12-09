@@ -1,6 +1,8 @@
 import os
 from typing import Dict, List, Optional, Sequence, Union
 
+from termspark.line.line import Line
+
 from .exceptions.combinationException import CombinationException
 from .exceptions.emptyException import EmptyException
 from .exceptions.lenNotSupportedException import LenNotSupportedException
@@ -15,8 +17,6 @@ from .validators.printerValidator import PrinterValidator
 
 
 class TermSpark:
-    __silent: List[str] = []
-
     mode: str = "color"
     width: int = 0
     hyperlink_trash_length: int = 0
@@ -32,10 +32,6 @@ class TermSpark:
         "center",
         "right",
     ]
-
-    def __init__(self):
-        self.__silent.append("separator")
-        self.set_separator(" ")
 
     def print_left(
         self,
@@ -172,10 +168,13 @@ class TermSpark:
         structured_data = Structurer(content, color, highlight).form()
         self.separator = Separator(structured_data)
 
-        if "separator" not in self.__silent:
-            self.separator_is_set = True
-        else:
-            self.__silent.remove("separator")
+        return self
+
+    def line(self, pattern: Optional[str] = None, highlight: Optional[str] = None):
+        pattern = pattern if pattern else " "
+
+        structured_data = Structurer(pattern, highlight=highlight).form()
+        self.line_separator = Line(structured_data)
 
         return self
 
@@ -198,18 +197,6 @@ class TermSpark:
             content_length += len("".join(content))
 
         self.separator.set_length(self.get_width() - content_length)
-
-    def line(self, pattern: Optional[str] = None, highlight: Optional[str] = None):
-        self.__silent.append("separator")
-
-        self.set_separator(
-            pattern if pattern else self.separator.get_content(),
-            highlight=highlight,
-        )
-
-        self.line_is_set = True
-
-        return self
 
     def get_terminal_width(self) -> int:
         try:
@@ -266,20 +253,24 @@ class TermSpark:
         )
 
     def render(self) -> str:
-        if self.line_is_set and self.separator_is_set:
+        if hasattr(self, "separator") and hasattr(self, "line_separator"):
             raise CombinationException("line", "separator")
 
-        if (
-            not any(
-                [
-                    "content" in self.left,
-                    "content" in self.right,
-                    "content" in self.center,
-                ]
-            )
-            and not self.line_is_set
-        ):
+        if not any(
+            [
+                "content" in self.left,
+                "content" in self.right,
+                "content" in self.center,
+            ]
+        ) and not hasattr(self, "line_separator"):
             raise EmptyException
+
+        if hasattr(self, "line_separator"):
+            self.line_separator.style()
+            return self.line_separator.get_styled_content() * self.get_width()
+
+        if not hasattr(self, "separator"):
+            self.set_separator(" ")
 
         if self.mode == "color":
             self.__style_content()
@@ -287,9 +278,18 @@ class TermSpark:
 
         self.__calculate_separator_length()
 
-        half_separator_length = int(self.separator.get_length()) // 2
+        half_separator_length = self.separator.get_length() // 2
         separator_mid_width = self.separator.get_content() * half_separator_length
-        separator_painted_mid_width = (
+        half_left_separator_length = half_separator_length
+
+        if self.separator.get_length() % 2 != 0:
+            half_left_separator_length += 1
+
+        left_separator_painted_mid_width = (
+            self.separator.get_styled_content() * half_left_separator_length
+        )
+
+        right_separator_painted_mid_width = (
             self.separator.get_styled_content() * half_separator_length
         )
 
@@ -304,14 +304,12 @@ class TermSpark:
                 center = " ".join(center_content) + "".join(separator_mid_width)
             else:
                 center = (
-                    separator_painted_mid_width
+                    left_separator_painted_mid_width
                     + "".join(self.center["styled_content"])
-                    + separator_painted_mid_width
+                    + right_separator_painted_mid_width
                 )
         else:
-            center = self.separator.get_styled_content() * int(
-                self.separator.get_length()
-            )
+            center = self.separator.get_styled_content() * self.separator.get_length()
             center = "".join(center)
 
         if self.mode == "raw":
@@ -398,8 +396,8 @@ class TermSpark:
     def spark(self, end="\n"):
         self.__detect_hyperlinks()
 
-        raw = self.raw()
-        to_trim = len(raw) - self.get_width()
+        raw: str = self.raw()
+        to_trim: int = len(raw) - self.get_width()
 
         if to_trim > 0:
             self.trimer = Trimer()

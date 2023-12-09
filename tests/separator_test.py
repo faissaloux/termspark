@@ -54,8 +54,6 @@ class TestSeparator:
                 "color": ["white"],
                 "highlight": ["blue"],
                 "style": [""],
-                "painted_content": ["."],
-                "styled_content": ["."],
             }
         )
 
