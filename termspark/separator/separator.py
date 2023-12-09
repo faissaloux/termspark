@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-from termspark.line.line import Line, StyledContent
+from termspark.line.line import Line, PositionedContent
 from termspark.structurer.structurer import Form
 
 Length = TypedDict(
@@ -38,7 +38,14 @@ class Separator(Line):
     def get_length(self) -> Length:
         return self.__length
 
-    def get_styled_content(self) -> StyledContent:
+    def get_raw_content(self) -> PositionedContent:
+        return {
+            "full": self._content[0] * self.__length["full"],
+            "left": self._content[0] * self.__length["left"],
+            "right": self._content[0] * self.__length["right"],
+        }
+
+    def get_styled_content(self) -> PositionedContent:
         return {
             "full": self._styled_content[0] * self.__length["full"],
             "left": self._styled_content[0] * self.__length["left"],
