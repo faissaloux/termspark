@@ -10,7 +10,6 @@ class TestSeparator:
             "color": "",
             "highlight": "",
             "style": "",
-            "painted_content": ".",
             "styled_content": ".",
         }
 
@@ -30,7 +29,6 @@ class TestSeparator:
             "color": "",
             "highlight": "",
             "style": "",
-            "painted_content": ".",
             "styled_content": ".",
         }
 
@@ -49,7 +47,6 @@ class TestSeparator:
             "color": "",
             "highlight": "",
             "style": "",
-            "painted_content": ".",
             "styled_content": ".",
         }
 
@@ -69,7 +66,6 @@ class TestSeparator:
             "color": "white",
             "highlight": "blue",
             "style": "",
-            "painted_content": ".",
             "styled_content": ".",
         }
 
@@ -92,7 +88,6 @@ class TestSeparator:
             "color": "white",
             "highlight": "blue",
             "style": "",
-            "painted_content": ".",
             "styled_content": ".",
         }
 
@@ -107,7 +102,6 @@ class TestSeparator:
             "color": "white",
             "highlight": "blue",
             "style": "",
-            "painted_content": ".",
             "styled_content": ".",
         }
 

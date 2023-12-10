@@ -25,7 +25,6 @@ class TestTermspark:
                 "color": "",
                 "highlight": "",
                 "style": "",
-                "painted_content": ".",
                 "styled_content": ".",
             }
         )
@@ -41,7 +40,6 @@ class TestTermspark:
                 "color": "white",
                 "highlight": "",
                 "style": "",
-                "painted_content": ".",
                 "styled_content": ".",
             }
         )
@@ -57,7 +55,6 @@ class TestTermspark:
                 "color": "white",
                 "highlight": "blue",
                 "style": "",
-                "painted_content": ".",
                 "styled_content": ".",
             }
         )

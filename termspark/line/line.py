@@ -26,7 +26,6 @@ class Line:
     _content: List[str]
     __color: List[str]
     __highlight: List[str]
-    __painted_content: List[str]
     __style: List[Union[str, Sequence[str]]]
     _styled_content: List[str]
 
@@ -34,7 +33,6 @@ class Line:
         self._content = [data["content"]]
         self.__color = [data["color"]]
         self.__highlight = [data["highlight"]]
-        self.__painted_content = [data["painted_content"]]
         self.__style = [data["style"]]
         self._styled_content = [data["styled_content"]]
 

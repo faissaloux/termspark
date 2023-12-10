@@ -9,7 +9,6 @@ Form = TypedDict(
         "color": str,
         "highlight": str,
         "style": Sequence[str],
-        "painted_content": str,
         "styled_content": str,
     },
 )
@@ -29,7 +28,6 @@ class Structurer:
         self.style: Union[str, Sequence[str]] = (
             list(map(str.strip, style.split(","))) if style else ""
         )
-        self.painted_content: str = self.content
 
     def form(self) -> Form:
         return {
@@ -37,6 +35,5 @@ class Structurer:
             "color": self.color,
             "highlight": self.highlight,
             "style": self.style,
-            "painted_content": self.content,
             "styled_content": self.content,
         }

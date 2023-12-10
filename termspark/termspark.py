@@ -144,15 +144,14 @@ class TermSpark:
         structured_data = Structurer(*content).form()
 
         if not positionContent:
-            positionContent["content"] = [structured_data["content"]]
-            positionContent["color"] = [structured_data["color"]]
-            positionContent["highlight"] = [structured_data["highlight"]]
-            positionContent["style"] = [structured_data["style"]]
-        else:
-            positionContent["content"].append(structured_data["content"])
-            positionContent["color"].append(structured_data["color"])
-            positionContent["highlight"].append(structured_data["highlight"])
-            positionContent["style"].append(structured_data["style"])
+            positionContent = {
+                key: [] for key in ["content", "color", "highlight", "style"]
+            }
+
+        for elem in positionContent:
+            positionContent[elem].append(
+                structured_data[elem]  # type:ignore[literal-required]
+            )
 
         return positionContent
 

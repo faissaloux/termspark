@@ -24,16 +24,17 @@ class Separator(Line):
         super().__init__(data)
 
     def set_length(self, length: int) -> None:
-        self.__length["full"] = length
-
         half_separator_length = length // 2
         half_left_separator_length = half_separator_length
 
         if length % 2 != 0:
             half_left_separator_length += 1
 
-        self.__length["right"] = half_separator_length
-        self.__length["left"] = half_left_separator_length
+        self.__length = {
+            "full": length,
+            "left": half_left_separator_length,
+            "right": half_separator_length,
+        }
 
     def get_length(self) -> Length:
         return self.__length
