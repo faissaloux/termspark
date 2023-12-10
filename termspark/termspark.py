@@ -3,17 +3,19 @@ from typing import Dict, Final, List, Optional, Sequence, Union
 
 from termspark.line.line import Line
 
-from .exceptions.combinationException import CombinationException
-from .exceptions.emptyException import EmptyException
-from .exceptions.lenNotSupportedException import LenNotSupportedException
-from .exceptions.minNotReachedException import MinNotReachedException
-from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
+from .exceptions.combination_error import CombinationError
+from .exceptions.empty_error import EmptyError
+from .exceptions.len_not_supported_error import LenNotSupportedError
+from .exceptions.min_not_reached_error import MinNotReachedError
+from .exceptions.multiple_positions_not_supported_error import (
+    MultiplePositionsNotSupportedError,
+)
 from .hyperlink.hyperlink import EncodedHyperlink, Hyperlink
 from .separator.separator import Separator
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
 from .trimer.trimer import Trimer
-from .validators.printerValidator import PrinterValidator
+from .validators.printer_validator import PrinterValidator
 
 
 class TermSpark:
@@ -98,7 +100,7 @@ class TermSpark:
 
     def __max_position(self, position: str, max: int):
         if max < 1:
-            raise MinNotReachedException("max", 1)
+            raise MinNotReachedError("max", 1)
 
         chars_number = max
         new_content = []
@@ -160,7 +162,7 @@ class TermSpark:
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
     ):
         if len(content) != 1:
-            raise LenNotSupportedException("separator", 1)
+            raise LenNotSupportedError("separator", 1)
 
         structured_data = Structurer(content, color, highlight).form()
         self.separator = Separator(structured_data)
@@ -219,7 +221,7 @@ class TermSpark:
                 not_empty_positions += 1
 
         if not_empty_positions > 1:
-            raise MultiplePositionsNotSupported()
+            raise MultiplePositionsNotSupportedError()
 
         empty_space = self.get_width() - len(
             "".join(getattr(self, active_position)["content"])
@@ -251,7 +253,7 @@ class TermSpark:
 
     def render(self) -> str:
         if hasattr(self, "separator") and hasattr(self, "line_separator"):
-            raise CombinationException("line", "separator")
+            raise CombinationError("line", "separator")
 
         if not any(
             [
@@ -260,7 +262,7 @@ class TermSpark:
                 "content" in self.center,
             ]
         ) and not hasattr(self, "line_separator"):
-            raise EmptyException
+            raise EmptyError
 
         if hasattr(self, "line_separator"):
             if self.mode == "raw":

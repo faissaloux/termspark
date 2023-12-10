@@ -1,10 +1,11 @@
 import termspark.termspark
 
 
-class MultiplePositionsNotSupported(Exception):
+class EmptyError(Exception):
     def __str__(self):
         message = termspark.TermSpark().print_left(
-            f"full_width() can only be used with one position!", "red"
+            "can't be empty! Set a line or fill content.",
+            "red",
         )
 
         return str(message)

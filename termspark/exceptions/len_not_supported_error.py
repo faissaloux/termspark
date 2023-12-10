@@ -1,7 +1,7 @@
 import termspark.termspark
 
 
-class LenNotSupportedException(Exception):
+class LenNotSupportedError(Exception):
     def __init__(self, var: str, length: int):
         self.var = var
         self.length = length

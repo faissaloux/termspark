@@ -1,7 +1,7 @@
 import termspark.termspark
 
 
-class PositionNotSupportedException(Exception):
+class PositionNotSupportedError(Exception):
     def __init__(self, position: str):
         self.position = position
 

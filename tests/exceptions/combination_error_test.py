@@ -1,14 +1,14 @@
-from termspark.exceptions.combinationException import CombinationException
+from termspark.exceptions.combination_error import CombinationError
 from termspark.painter.constants.fore import Fore
 
 
-class TestCombinationException:
+class TestCombinationError:
     def test_exception_attributes(self):
-        exception = CombinationException("line", "separator")
+        exception = CombinationError("line", "separator")
         assert exception.elements == ("line", "separator")
 
     def test_exception_dynamic_message(self):
-        exception = CombinationException("line", "separator")
+        exception = CombinationError("line", "separator")
         assert all(
             word in str(exception)
             for word in [

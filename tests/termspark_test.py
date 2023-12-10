@@ -1,17 +1,17 @@
 import pytest
 from mock import patch  # type: ignore
 
-from termspark.exceptions.lenNotSupportedException import LenNotSupportedException
+from termspark.exceptions.len_not_supported_error import LenNotSupportedError
 from termspark.termspark import TermSpark
 
 
 class TestTermspark:
     def test_cant_set_more_empty_char_separator(self):
-        with pytest.raises(LenNotSupportedException):
+        with pytest.raises(LenNotSupportedError):
             TermSpark().set_separator("")
 
     def test_cant_set_more_than_one_char_separator(self):
-        with pytest.raises(LenNotSupportedException):
+        with pytest.raises(LenNotSupportedError):
             TermSpark().set_separator("..")
 
     @patch("termspark.separator.separator.Separator.__init__")

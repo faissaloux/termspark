@@ -1,7 +1,7 @@
 import pytest
 
-from termspark.exceptions.combinationException import CombinationException
-from termspark.exceptions.emptyException import EmptyException
+from termspark.exceptions.combination_error import CombinationError
+from termspark.exceptions.empty_error import EmptyError
 from termspark.hyperlink.hyperlink import Hyperlink
 from termspark.termspark import TermSpark
 
@@ -338,20 +338,20 @@ class TestTermsparkReturn:
         termspark.set_separator(".")
         termspark.line(".")
 
-        with pytest.raises(CombinationException):
+        with pytest.raises(CombinationError):
             termspark.spark()
 
     def test_cant_spark_without_content(self):
         termspark = TermSpark()
 
-        with pytest.raises(EmptyException):
+        with pytest.raises(EmptyError):
             termspark.spark()
 
     def test_cant_spark_separator_without_content_in_line(self):
         termspark = TermSpark()
         termspark.set_separator(".")
 
-        with pytest.raises(EmptyException):
+        with pytest.raises(EmptyError):
             termspark.spark()
 
     def test_contnt_includes_hyperlink(self):

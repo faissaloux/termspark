@@ -2,9 +2,7 @@ import pytest
 from mock import patch  # type: ignore
 
 from termspark import print
-from termspark.exceptions.positionNotSupportedException import (
-    PositionNotSupportedException,
-)
+from termspark.exceptions.position_not_supported_error import PositionNotSupportedError
 
 
 class TestPrint:
@@ -53,7 +51,7 @@ class TestPrint:
         spark.assert_called_once_with()
 
     def test_print_raise_exception_on_unsupported_position(self):
-        with pytest.raises(PositionNotSupportedException):
+        with pytest.raises(PositionNotSupportedError):
             print("Termspark", "white", "blue", "italic, bold", position="unsupported")
 
     @patch("termspark.termspark.TermSpark.spark")

@@ -1,7 +1,7 @@
 import pytest
 
-from termspark.exceptions.multiplePositionsNotSupported import (
-    MultiplePositionsNotSupported,
+from termspark.exceptions.multiple_positions_not_supported_error import (
+    MultiplePositionsNotSupportedError,
 )
 from termspark.termspark import TermSpark
 
@@ -17,7 +17,7 @@ class TestRaw:
         termspark = TermSpark().spark_left("LEFT", "red").spark_right("RIGHT", "blue")
         termspark.full_width()
 
-        with pytest.raises(MultiplePositionsNotSupported):
+        with pytest.raises(MultiplePositionsNotSupportedError):
             termspark.spark()
 
     def test_is_full_width_with_spark_left(self):

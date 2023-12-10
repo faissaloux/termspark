@@ -1,6 +1,6 @@
 import pytest
 
-from termspark.exceptions.minNotReachedException import MinNotReachedException
+from termspark.exceptions.min_not_reached_error import MinNotReachedError
 from termspark.termspark import TermSpark
 
 
@@ -76,5 +76,5 @@ class TestMaxLength:
         termspark = TermSpark()
         termspark.spark_center([" CENTER ", "gray", "white"])
 
-        with pytest.raises(MinNotReachedException):
+        with pytest.raises(MinNotReachedError):
             termspark.max_center(0)

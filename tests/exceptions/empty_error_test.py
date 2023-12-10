@@ -1,10 +1,10 @@
-from termspark.exceptions.emptyException import EmptyException
+from termspark.exceptions.empty_error import EmptyError
 from termspark.painter.constants.fore import Fore
 
 
-class TestEmptyException:
+class TestEmptyError:
     def test_exception_message(self):
-        exception = EmptyException()
+        exception = EmptyError()
         assert all(
             word in str(exception)
             for word in [

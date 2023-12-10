@@ -1,6 +1,6 @@
 from typing import Final
 
-from ..exceptions.printerArgException import PrinterArgException
+from ..exceptions.printer_arg_error import PrinterArgError
 
 
 class PrinterValidator:
@@ -16,4 +16,4 @@ class PrinterValidator:
                 isinstance(style, list),
             ]
         ):
-            raise PrinterArgException(self.position)
+            raise PrinterArgError(self.position)
