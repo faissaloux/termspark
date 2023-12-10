@@ -16,7 +16,7 @@ Import Termspark's print and take advantage of all its features, [colors](#you-c
 from termspark import print
 
 print(" Termspark ", "white", "blue", "italic")
-print(" [@termspark](https://github.com/termspark) ", "black", "white", "italic, bold")
+print(" [@termspark](https://github.com/faissaloux/termspark) ", "black", "white", "italic, bold")
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/2fcdf8c7-dca6-4bb7-9557-e307173c5ab2)
 
