@@ -38,3 +38,16 @@ def line(pattern: Optional[str] = None, highlight: Optional[str] = None) -> None
     termspark = TermSpark()
     termspark.line(pattern, highlight)
     termspark.spark()
+
+
+def input(
+    prompt: Optional[str] = None,
+    color: Optional[str] = None,
+    highlight: Optional[str] = None,
+    style: Optional[str] = None,
+    position: str = "left",
+    full_width: bool = False,
+) -> str:
+    print(prompt, color, highlight, style, position, full_width)
+
+    return sys.stdin.readline()
