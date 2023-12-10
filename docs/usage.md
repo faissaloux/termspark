@@ -17,6 +17,47 @@ You can choose from `["left", "center", "right"]` to specify where to print by p
 You can enable the Full Width using full_width parameter:
 `print(" Termspark ", highlight="blue", full_width=True)`.
 
+### `input()`
+
+input with colors, highlights, styles, and hyperlinks.
+
+With `input(position=)` you can specify position where to put your input text `["left", "center", "right"]`.
+With `input(full_width=)` you can enable full width `True | False`.
+
+```python
+from termspark import input
+
+name = input(" What's your name? ", "white", "blue", "italic", "center", True)
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/8077eb19-07b5-4f32-b1bb-b00be7860eba)
+
+
+#### Input Type
+You can specify the input type by passing it to the `type=` parameter.
+
+For a calculation example, to pass the input value into a calculation you don't need to convert it to `int`  anymore, you just need to set it from `type` argument 🥳 .
+```python
+from termspark import input
+
+birthyear = input(" Your year birth? ", "white", "blue", type=int)
+print(f"Your age is: {2023 - birthyear}")
+```
+
+#### Input Callback
+the `input()` supports callback too.
+
+If you need to pass the input value into some function before returning the result, you need to pass it into the `callback=` argument.
+
+```python
+from termspark import input
+
+def age_calc(birthyear, currentyear=2023):
+    return currentyear - birthyear
+
+age = input(" Your year birth? ", "white", "blue", type=int, callback=age_calc)
+print(f"Your age is: {age}")
+```
+
 ### `line()`
 To print empty line use `line()`, you can leave it empty or fill it with a repeated character, you can specify its color too.
 
