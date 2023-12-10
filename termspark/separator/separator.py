@@ -1,5 +1,7 @@
 from typing import TypedDict
 
+from typing_extensions import override
+
 from termspark.line.line import Line, PositionedContent
 from termspark.structurer.structurer import Form
 
@@ -39,6 +41,7 @@ class Separator(Line):
     def get_length(self) -> Length:
         return self.__length
 
+    @override
     def get_raw_content(self) -> PositionedContent:
         return {
             "full": self._content[0] * self.__length["full"],
@@ -46,6 +49,7 @@ class Separator(Line):
             "right": self._content[0] * self.__length["right"],
         }
 
+    @override
     def get_styled_content(self) -> PositionedContent:
         return {
             "full": self._styled_content[0] * self.__length["full"],

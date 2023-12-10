@@ -1,9 +1,11 @@
+from typing import Final
+
 from ..exceptions.printerArgException import PrinterArgException
 
 
 class PrinterValidator:
     def __init__(self, position: str):
-        self.position = position
+        self.position: Final[str] = position
 
     def validate(self, content, color, highlight, style):
         if any(

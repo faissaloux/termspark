@@ -1,3 +1,4 @@
+from typing import Final
 from typing import List as ListType
 from typing import Sequence
 
@@ -20,8 +21,8 @@ Element = TypedDict(
 
 
 class Styler:
-    PATTERN = "[COLOR][HIGHLIGHT][STYLE][CONTENT][RESET]"
-    RESET: str = "\x1b[0m"
+    PATTERN: Final[str] = "[COLOR][HIGHLIGHT][STYLE][CONTENT][RESET]"
+    RESET: Final[str] = "\x1b[0m"
 
     def __init__(self):
         self.styled: ListType[str] = []

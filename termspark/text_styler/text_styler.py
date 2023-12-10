@@ -1,11 +1,11 @@
-from typing import Sequence
+from typing import Final, Sequence
 
 from .constants.style import Style
 
 
 class TextStyler:
-    PREFIX: str = "\x1b["
-    SUFFIX: str = "m"
+    PREFIX: Final[str] = "\x1b["
+    SUFFIX: Final[str] = "m"
 
     def style(self, styles: Sequence[str]) -> str:
         code: str = ""

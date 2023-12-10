@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Optional, Sequence, Union
+from typing import Dict, Final, List, Optional, Sequence, Union
 
 from termspark.line.line import Line
 
@@ -17,6 +17,12 @@ from .validators.printerValidator import PrinterValidator
 
 
 class TermSpark:
+    POSITIONS: Final[List[str]] = [
+        "left",
+        "center",
+        "right",
+    ]
+
     mode: str = "color"
     width: int = 0
     left: Dict[str, str] = {}
@@ -24,11 +30,6 @@ class TermSpark:
     center: Dict[str, str] = {}
     is_full_width: bool = False
     to_trim: Dict[str, Dict[int, str]] = {}
-    positions: List[str] = [
-        "left",
-        "center",
-        "right",
-    ]
 
     def print_left(
         self,
@@ -187,7 +188,7 @@ class TermSpark:
     def __calculate_separator_length(self):
         content_length = 0
 
-        for position in self.positions:
+        for position in self.POSITIONS:
             content = getattr(self, position).get("content", "")
 
             content_length += len("".join(content))
@@ -212,7 +213,7 @@ class TermSpark:
         not_empty_positions = 0
         active_position = None
 
-        for position in self.positions:
+        for position in self.POSITIONS:
             if "content" in getattr(self, position):
                 active_position = position
                 not_empty_positions += 1
@@ -322,7 +323,7 @@ class TermSpark:
         return left_content + center + right_content
 
     def __style_content(self):
-        for position in self.positions:
+        for position in self.POSITIONS:
             pos = getattr(self, position) if getattr(self, position) else {}
 
             if pos:
@@ -331,7 +332,7 @@ class TermSpark:
             setattr(self, position, pos)
 
     def __detect_hyperlinks(self) -> None:
-        for position in self.positions:
+        for position in self.POSITIONS:
             positionContent = getattr(self, position)
 
             if "content" in positionContent:
@@ -346,7 +347,7 @@ class TermSpark:
             setattr(self, position, positionContent)
 
     def __apply_hyperlinks(self) -> None:
-        for position in self.positions:
+        for position in self.POSITIONS:
             pos = getattr(self, position)
             if "hyperlinks" in pos:
                 pos["encoded_content"] = self.__apply_hyperlinks_to_content(
@@ -368,15 +369,15 @@ class TermSpark:
         return encoded
 
     def __detect_trims(self) -> None:
-        for posIndex in range(len(self.positions) - 1, -1, -1):
-            position = self.positions[posIndex]
+        for posIndex in range(len(self.POSITIONS) - 1, -1, -1):
+            position = self.POSITIONS[posIndex]
             position_content = getattr(self, position)
 
             if "content" in position_content.keys():
                 self.trimer.analyse(position_content["content"], position)
 
     def __trim(self) -> None:
-        for position in self.positions:
+        for position in self.POSITIONS:
             if self.trimer.should_be_trimed(position):
                 styled_content = getattr(self, position)["styled_content"]
 

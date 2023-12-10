@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import (  # NotRequired can be moved here on Python >= 3.11.
+    Final,
     List,
     Sequence,
     TypedDict,
@@ -23,11 +24,11 @@ PositionedContent = TypedDict(
 
 
 class Line:
-    _content: List[str]
-    __color: List[str]
-    __highlight: List[str]
-    __style: List[Union[str, Sequence[str]]]
-    _styled_content: List[str]
+    _content: Final[List[str]]
+    __color: Final[List[str]]
+    __highlight: Final[List[str]]
+    __style: Final[List[Union[str, Sequence[str]]]]
+    _styled_content: Final[List[str]]
 
     def __init__(self, data: Form):
         self._content = [data["content"]]

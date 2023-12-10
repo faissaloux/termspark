@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List, TypedDict
+from typing import Dict, Final, List, TypedDict
 
 EncodedHyperlink = TypedDict(
     "EncodedHyperlink",
@@ -23,13 +23,15 @@ HyperlinkMatch = TypedDict(
 
 
 class Hyperlink:
-    PLACEHOLDER_PATTERN: str = "[^\\[]*?"
-    URL_PATTERN: str = "http[s]?://[^)]+"
-    HYPERLINK_PATTERN: str = f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
+    PLACEHOLDER_PATTERN: Final[str] = "[^\\[]*?"
+    URL_PATTERN: Final[str] = "http[s]?://[^)]+"
+    HYPERLINK_PATTERN: Final[
+        str
+    ] = f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
 
-    HYPERLINK_PREFIX: str = "\x1b]8;;"
-    HYPERLINK_SUFFIX: str = "\x1b]8;;"
-    RESET: str = "\x1b\\\\"
+    HYPERLINK_PREFIX: Final[str] = "\x1b]8;;"
+    HYPERLINK_SUFFIX: Final[str] = "\x1b]8;;"
+    RESET: Final[str] = "\x1b\\\\"
 
     def __init__(self):
         self.__hyperlinks_positions: list = []

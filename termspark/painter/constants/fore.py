@@ -1,16 +1,19 @@
+from typing import Final
+
+
 class Fore:
-    BLACK: int = 30
-    RED: int = 31
-    GREEN: int = 32
-    YELLOW: int = 33
-    BLUE: int = 34
-    MAGENTA: int = 35
-    CYAN: int = 36
-    GRAY: int = 90
-    GREY: int = 90
-    LIGHT_RED: int = 91
-    LIGHT_GREEN: int = 92
-    LIGHT_YELLOW: int = 93
-    LIGHT_BLUE: int = 94
-    LIGHT_MAGENTA: int = 95
-    LIGHT_CYAN: int = 96
+    BLACK: Final[int] = 30
+    RED: Final[int] = 31
+    GREEN: Final[int] = 32
+    YELLOW: Final[int] = 33
+    BLUE: Final[int] = 34
+    MAGENTA: Final[int] = 35
+    CYAN: Final[int] = 36
+    GRAY: Final[int] = 90
+    GREY: Final[int] = 90
+    LIGHT_RED: Final[int] = 91
+    LIGHT_GREEN: Final[int] = 92
+    LIGHT_YELLOW: Final[int] = 93
+    LIGHT_BLUE: Final[int] = 94
+    LIGHT_MAGENTA: Final[int] = 95
+    LIGHT_CYAN: Final[int] = 96
