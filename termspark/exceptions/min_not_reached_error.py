@@ -1,7 +1,7 @@
 import termspark.termspark
 
 
-class MinNotReachedException(Exception):
+class MinNotReachedError(Exception):
     def __init__(self, var: str, min: int):
         self.var = var
         self.min = min

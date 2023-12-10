@@ -1,7 +1,7 @@
 import termspark.termspark
 
 
-class CombinationException(Exception):
+class CombinationError(Exception):
     def __init__(self, *elements: str):
         self.elements = elements
 

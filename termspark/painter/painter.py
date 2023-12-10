@@ -1,11 +1,13 @@
+from typing import Final
+
 from .constants.fore import Fore
 from .constants.highlight import Highlight
 
 
 class Painter:
-    PREFIX: str = "\x1b["
-    SUFFIX: str = "m"
-    RESET: str = "\x1b[0m"
+    PREFIX: Final[str] = "\x1b["
+    SUFFIX: Final[str] = "m"
+    RESET: Final[str] = "\x1b[0m"
 
     def __paint(self, color: str, type) -> str:
         if color and hasattr(type, color.upper()):

@@ -1,7 +1,7 @@
 import termspark.termspark
 
 
-class PrinterArgException(Exception):
+class PrinterArgError(Exception):
     def __init__(self, position: str):
         self.position = position
 

@@ -2,9 +2,7 @@ import os
 import sys
 from typing import Optional
 
-from termspark.exceptions.positionNotSupportedException import (
-    PositionNotSupportedException,
-)
+from termspark.exceptions.position_not_supported_error import PositionNotSupportedError
 from termspark.termspark import TermSpark
 
 if sys.platform == "win32":  # codecov-ignore
@@ -25,7 +23,7 @@ def print(
     termspark = TermSpark()
 
     if not hasattr(termspark, f"spark_{position}"):
-        raise PositionNotSupportedException(position)
+        raise PositionNotSupportedError(position)
 
     if full_width:
         termspark.full_width()

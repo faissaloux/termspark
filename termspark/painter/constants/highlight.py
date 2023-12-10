@@ -1,16 +1,19 @@
+from typing import Final
+
+
 class Highlight:
-    RED: int = 41
-    GREEN: int = 42
-    YELLOW: int = 43
-    BLUE: int = 44
-    MAGENTA: int = 45
-    CYAN: int = 46
-    GRAY: int = 100
-    GREY: int = 100
-    LIGHT_RED: int = 101
-    LIGHT_GREEN: int = 102
-    LIGHT_YELLOW: int = 103
-    LIGHT_BLUE: int = 104
-    LIGHT_MAGENTA: int = 105
-    LIGHT_CYAN: int = 106
-    WHITE: int = 107
+    RED: Final[int] = 41
+    GREEN: Final[int] = 42
+    YELLOW: Final[int] = 43
+    BLUE: Final[int] = 44
+    MAGENTA: Final[int] = 45
+    CYAN: Final[int] = 46
+    GRAY: Final[int] = 100
+    GREY: Final[int] = 100
+    LIGHT_RED: Final[int] = 101
+    LIGHT_GREEN: Final[int] = 102
+    LIGHT_YELLOW: Final[int] = 103
+    LIGHT_BLUE: Final[int] = 104
+    LIGHT_MAGENTA: Final[int] = 105
+    LIGHT_CYAN: Final[int] = 106
+    WHITE: Final[int] = 107

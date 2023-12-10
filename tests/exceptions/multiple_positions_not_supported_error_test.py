@@ -1,12 +1,12 @@
-from termspark.exceptions.multiplePositionsNotSupported import (
-    MultiplePositionsNotSupported,
+from termspark.exceptions.multiple_positions_not_supported_error import (
+    MultiplePositionsNotSupportedError,
 )
 from termspark.painter.constants.fore import Fore
 
 
-class TestMultiplePositionsNotSupportedException:
+class TestMultiplePositionsNotSupportedError:
     def test_exception_message(self):
-        exception = MultiplePositionsNotSupported()
+        exception = MultiplePositionsNotSupportedError()
         assert all(
             word in str(exception)
             for word in [

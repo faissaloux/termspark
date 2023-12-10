@@ -1,6 +1,6 @@
 import pytest
 
-from termspark.exceptions.printerArgException import PrinterArgException
+from termspark.exceptions.printer_arg_error import PrinterArgError
 from termspark.termspark import TermSpark
 
 
@@ -71,21 +71,21 @@ class TestPrintersTest:
     def test_raise_exception_when_passing_list_to_print_left(self):
         termspark = TermSpark()
 
-        with pytest.raises(PrinterArgException):
+        with pytest.raises(PrinterArgError):
             termspark.print_left(["LEFT", "red"])
         assert termspark.left == {}  # Default
 
     def test_raise_exception_when_passing_list_to_print_right(self):
         termspark = TermSpark()
 
-        with pytest.raises(PrinterArgException):
+        with pytest.raises(PrinterArgError):
             termspark.print_right(["RIGHT", "blue"])
         assert termspark.right == {}  # Default
 
     def test_raise_exception_when_passing_list_to_print_center(self):
         termspark = TermSpark()
 
-        with pytest.raises(PrinterArgException):
+        with pytest.raises(PrinterArgError):
             termspark.print_center(["CENTER", "blue"])
         assert termspark.center == {}  # Default
 

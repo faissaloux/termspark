@@ -1,15 +1,15 @@
-from termspark.exceptions.printerArgException import PrinterArgException
+from termspark.exceptions.printer_arg_error import PrinterArgError
 from termspark.painter.constants.fore import Fore
 from termspark.painter.constants.highlight import Highlight
 
 
-class TestPrinterArgException:
+class TestPrinterArgError:
     def test_exception_attributes(self):
-        exception = PrinterArgException("left")
+        exception = PrinterArgError("left")
         assert exception.position == "left"
 
     def test_exception_dynamic_message(self):
-        left_exception = PrinterArgException("left")
+        left_exception = PrinterArgError("left")
         assert all(
             word in str(left_exception)
             for word in [
@@ -22,7 +22,7 @@ class TestPrinterArgException:
             ]
         )
 
-        center_exception = PrinterArgException("center")
+        center_exception = PrinterArgError("center")
         assert all(
             word in str(center_exception)
             for word in [
@@ -35,7 +35,7 @@ class TestPrinterArgException:
             ]
         )
 
-        right_exception = PrinterArgException("right")
+        right_exception = PrinterArgError("right")
         assert all(
             word in str(right_exception)
             for word in [

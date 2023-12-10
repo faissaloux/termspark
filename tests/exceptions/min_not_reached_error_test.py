@@ -1,15 +1,15 @@
-from termspark.exceptions.minNotReachedException import MinNotReachedException
+from termspark.exceptions.min_not_reached_error import MinNotReachedError
 from termspark.painter.constants.fore import Fore
 
 
-class TestMinNotReachedException:
+class TestMinNotReachedError:
     def test_exception_attributes(self):
-        exception = MinNotReachedException("max", 1)
+        exception = MinNotReachedError("max", 1)
         assert exception.var == "max"
         assert exception.min == 1
 
     def test_exception_dynamic_message(self):
-        exception = MinNotReachedException("max", 1)
+        exception = MinNotReachedError("max", 1)
         assert all(
             word in str(exception)
             for word in [

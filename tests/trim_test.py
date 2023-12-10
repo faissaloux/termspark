@@ -10,7 +10,11 @@ class TestTrim:
         termspark = termspark.print_left("A" * 8).print_right(text, "red")
         termspark.spark()
 
-        assert len(text) > len(termspark.left["content"][0])
+        assert (
+            termspark.left["styled_content"][0].count("A")
+            + termspark.right["styled_content"][0].count("A")
+            == termspark.get_width()
+        )
 
     def test_trim_when_text_exceeds_terminal_width_on_list(self):
         termspark = TermSpark()
@@ -22,4 +26,8 @@ class TestTrim:
         )
         termspark.spark()
 
-        assert len(text) > len(termspark.left["content"][0])
+        assert (
+            termspark.left["styled_content"][0].count("A")
+            + termspark.right["styled_content"][0].count("A")
+            == termspark.get_width()
+        )

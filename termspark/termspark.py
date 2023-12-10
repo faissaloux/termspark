@@ -1,58 +1,37 @@
 import os
-from typing import Dict, List, Optional, Sequence, Union
+from typing import Dict, Final, List, Optional, Sequence, Union
 
-from typing_extensions import TypedDict
+from termspark.line.line import Line
 
-from .exceptions.combinationException import CombinationException
-from .exceptions.emptyException import EmptyException
-from .exceptions.lenNotSupportedException import LenNotSupportedException
-from .exceptions.minNotReachedException import MinNotReachedException
-from .exceptions.multiplePositionsNotSupported import MultiplePositionsNotSupported
-from .helpers.existenceChecker import ExistenceChecker
-from .hyperlink.hyperlink import Hyperlink
+from .exceptions.combination_error import CombinationError
+from .exceptions.empty_error import EmptyError
+from .exceptions.len_not_supported_error import LenNotSupportedError
+from .exceptions.min_not_reached_error import MinNotReachedError
+from .exceptions.multiple_positions_not_supported_error import (
+    MultiplePositionsNotSupportedError,
+)
+from .hyperlink.hyperlink import EncodedHyperlink, Hyperlink
+from .separator.separator import Separator
 from .structurer.structurer import Structurer
 from .styler.styler import Styler
 from .trimer.trimer import Trimer
-from .validators.printerValidator import PrinterValidator
-
-Separator = TypedDict(
-    "Separator",
-    {
-        "content": List[str],
-        "color": List[str],
-        "highlight": List[str],
-        "painted_content": List[str],
-        "style": List[Union[str, Sequence[str]]],
-        "styled_content": List[str],
-        "length": int,
-    },
-    total=False,
-)
+from .validators.printer_validator import PrinterValidator
 
 
 class TermSpark:
-    __silent: List[str] = []
-
-    mode: str = "color"
-    width: int = 0
-    hyperlink_trash_length: int = 0
-    left: Dict[str, str] = {}
-    right: Dict[str, str] = {}
-    center: Dict[str, str] = {}
-    separator: Separator = {}
-    separator_is_set: bool = False
-    line_is_set: bool = False
-    is_full_width: bool = False
-    to_trim: Dict[str, Dict[int, str]] = {}
-    positions: List[str] = [
+    POSITIONS: Final[List[str]] = [
         "left",
         "center",
         "right",
     ]
 
-    def __init__(self):
-        self.__silent.append("separator")
-        self.set_separator(" ")
+    mode: str = "color"
+    width: int = 0
+    left: Dict[str, str] = {}
+    right: Dict[str, str] = {}
+    center: Dict[str, str] = {}
+    is_full_width: bool = False
+    to_trim: Dict[str, Dict[int, str]] = {}
 
     def print_left(
         self,
@@ -121,7 +100,7 @@ class TermSpark:
 
     def __max_position(self, position: str, max: int):
         if max < 1:
-            raise MinNotReachedException("max", 1)
+            raise MinNotReachedError("max", 1)
 
         chars_number = max
         new_content = []
@@ -133,15 +112,11 @@ class TermSpark:
 
             if len(sentence) < chars_number:
                 new_content.append(sentence)
-                chars_number -= len(sentence)
-            elif len(sentence) == chars_number:
-                new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
-                breakIndex = index + 1
             else:
                 new_content.append(sentence[0:chars_number])
-                chars_number -= len(sentence)
                 breakIndex = index + 1
+
+            chars_number -= len(sentence)
 
         getattr(self, position)["content"] = new_content
         getattr(self, position)["color"] = getattr(self, position)["color"][
@@ -169,18 +144,17 @@ class TermSpark:
     def __appendPositionContent(
         self, positionContent: Dict[str, List[Union[str, Sequence[str]]]], *content: str
     ):
+        structured_data = Structurer(*content).form()
+
         if not positionContent:
-            positionContent["content"] = [Structurer(*content).form()["content"]]
-            positionContent["color"] = [Structurer(*content).form()["color"]]
-            positionContent["highlight"] = [Structurer(*content).form()["highlight"]]
-            positionContent["style"] = [Structurer(*content).form()["style"]]
-        else:
-            positionContent["content"].append(Structurer(*content).form()["content"])
-            positionContent["color"].append(Structurer(*content).form()["color"])
-            positionContent["highlight"].append(
-                Structurer(*content).form()["highlight"]
+            positionContent = {
+                key: [] for key in ["content", "color", "highlight", "style"]
+            }
+
+        for elem in positionContent:
+            positionContent[elem].append(
+                structured_data[elem]  # type:ignore[literal-required]
             )
-            positionContent["style"].append(Structurer(*content).form()["style"])
 
         return positionContent
 
@@ -188,31 +162,18 @@ class TermSpark:
         self, content: str, color: Optional[str] = None, highlight: Optional[str] = None
     ):
         if len(content) != 1:
-            raise LenNotSupportedException("separator", 1)
+            raise LenNotSupportedError("separator", 1)
 
-        self.separator["content"] = [
-            Structurer(content, color, highlight).form()["content"]
-        ]
-        self.separator["color"] = [
-            Structurer(content, color, highlight).form()["color"]
-        ]
-        self.separator["highlight"] = [
-            Structurer(content, color, highlight).form()["highlight"]
-        ]
-        self.separator["painted_content"] = [
-            Structurer(content, color, highlight).form()["painted_content"]
-        ]
-        self.separator["style"] = [
-            Structurer(content, color, highlight).form()["style"]
-        ]
-        self.separator["styled_content"] = [
-            Structurer(content, color, highlight).form()["styled_content"]
-        ]
+        structured_data = Structurer(content, color, highlight).form()
+        self.separator = Separator(structured_data)
 
-        if "separator" not in self.__silent:
-            self.separator_is_set = True
-        else:
-            self.__silent.remove("separator")
+        return self
+
+    def line(self, pattern: Optional[str] = None, highlight: Optional[str] = None):
+        pattern = pattern if pattern else " "
+
+        structured_data = Structurer(pattern, highlight=highlight).form()
+        self.line_separator = Line(structured_data)
 
         return self
 
@@ -229,26 +190,12 @@ class TermSpark:
     def __calculate_separator_length(self):
         content_length = 0
 
-        for position in self.positions:
-            content = ExistenceChecker().dictionary_key(
-                getattr(self, position), "content"
-            )
+        for position in self.POSITIONS:
+            content = getattr(self, position).get("content", "")
 
             content_length += len("".join(content))
 
-        self.separator["length"] = self.get_width() - content_length
-
-    def line(self, separator: Optional[str] = None, highlight: Optional[str] = None):
-        self.__silent.append("separator")
-
-        self.set_separator(
-            separator if separator else self.separator["content"][0],
-            highlight=highlight,
-        )
-
-        self.line_is_set = True
-
-        return self
+        self.separator.set_length(self.get_width() - content_length)
 
     def get_terminal_width(self) -> int:
         try:
@@ -268,13 +215,13 @@ class TermSpark:
         not_empty_positions = 0
         active_position = None
 
-        for position in self.positions:
+        for position in self.POSITIONS:
             if "content" in getattr(self, position):
                 active_position = position
                 not_empty_positions += 1
 
         if not_empty_positions > 1:
-            raise MultiplePositionsNotSupported()
+            raise MultiplePositionsNotSupportedError()
 
         empty_space = self.get_width() - len(
             "".join(getattr(self, active_position)["content"])
@@ -304,81 +251,69 @@ class TermSpark:
             getattr(self, active_position)["content"][-1] + extra_right_space
         )
 
-        getattr(self, active_position)["encoded_content"] = getattr(
-            self, active_position
-        )["content"]
-
     def render(self) -> str:
+        if hasattr(self, "separator") and hasattr(self, "line_separator"):
+            raise CombinationError("line", "separator")
+
+        if not any(
+            [
+                "content" in self.left,
+                "content" in self.right,
+                "content" in self.center,
+            ]
+        ) and not hasattr(self, "line_separator"):
+            raise EmptyError
+
+        if hasattr(self, "line_separator"):
+            if self.mode == "raw":
+                return self.line_separator.get_raw_content()["full"] * self.get_width()
+
+            self.line_separator.style()
+
+            return self.line_separator.get_styled_content()["full"] * self.get_width()
+
+        if not hasattr(self, "separator"):
+            self.set_separator(" ")
+
         if self.mode == "color":
             self.__style_content()
+            self.separator.style()
+
         self.__calculate_separator_length()
-        if self.mode == "color":
-            self.__paint_separator()
-
-        if self.line_is_set and self.separator_is_set:
-            raise CombinationException("line", "separator")
-
-        if (
-            not any(
-                [
-                    "content" in self.left,
-                    "content" in self.right,
-                    "content" in self.center,
-                ]
-            )
-            and not self.line_is_set
-        ):
-            raise EmptyException
-
-        half_separator_length = int(self.separator["length"]) // 2
-        separator_mid_width = self.separator["content"] * half_separator_length
-        separator_painted_mid_width = (
-            self.separator["styled_content"][0] * half_separator_length
-        )
-
-        center_content = ExistenceChecker().dictionary_key(self.center, "content")
 
         # Trim what should be trimmed.
         if self.mode != "raw" and hasattr(self, "trimer"):
             self.__trim()
 
+        styled_separator = self.separator.get_styled_content()
+        center_content = self.center.get("content", "")
+
         if len(center_content) > 0:
             if self.mode == "raw":
-                center = " ".join(center_content) + "".join(separator_mid_width)
+                raw_separator = self.separator.get_raw_content()
+                center = (
+                    raw_separator["left"]
+                    + "".join(center_content)
+                    + raw_separator["right"]
+                )
             else:
                 center = (
-                    separator_painted_mid_width
+                    styled_separator["left"]
                     + "".join(self.center["styled_content"])
-                    + separator_painted_mid_width
+                    + styled_separator["right"]
                 )
         else:
-            center = self.separator["styled_content"][0] * int(self.separator["length"])
-            center = "".join(center)
+            center = styled_separator["full"]
 
-        if self.mode == "raw":
-            left_content = ExistenceChecker().dictionary_key(self.left, "content")
-            right_content = ExistenceChecker().dictionary_key(self.right, "content")
+        content_type = "content" if self.mode == "raw" else "styled_content"
 
-            if len(left_content) > 0:
-                left_content = "".join(left_content)
+        left_content = self.left.get(content_type, "")
+        right_content = self.right.get(content_type, "")
 
-            if len(right_content) > 0:
-                right_content = "".join(right_content)
-        else:
-            left_content = ExistenceChecker().dictionary_key(
-                self.left, "styled_content"
-            )
-            left_content = "".join(left_content)
-
-            right_content = ExistenceChecker().dictionary_key(
-                self.right, "styled_content"
-            )
-            right_content = "".join(right_content)
-
-        return left_content + center + right_content
+        return "".join(left_content) + center + "".join(right_content)
 
     def __style_content(self):
-        for position in self.positions:
+        for position in self.POSITIONS:
             pos = getattr(self, position) if getattr(self, position) else {}
 
             if pos:
@@ -386,17 +321,14 @@ class TermSpark:
 
             setattr(self, position, pos)
 
-    def __paint_separator(self):
-        self.separator["styled_content"] = Styler().element(self.separator).style()
-
     def __detect_hyperlinks(self) -> None:
-        for position in self.positions:
+        for position in self.POSITIONS:
             positionContent = getattr(self, position)
 
             if "content" in positionContent:
-                hyperlink = Hyperlink()
                 detected = Hyperlink.exists_in(positionContent["content"])
                 if detected:
+                    hyperlink = Hyperlink()
                     reformated = hyperlink.reformat(positionContent, detected)
                     hyperlink.set_content(reformated)
                     positionContent["hyperlinks"] = hyperlink.encode()
@@ -405,29 +337,37 @@ class TermSpark:
             setattr(self, position, positionContent)
 
     def __apply_hyperlinks(self) -> None:
-        for position in self.positions:
+        for position in self.POSITIONS:
             pos = getattr(self, position)
             if "hyperlinks" in pos:
-                pos["encoded_content"] = pos["content"].copy()
+                pos["encoded_content"] = self.__apply_hyperlinks_to_content(
+                    pos["content"], pos["hyperlinks"]
+                )
 
-                for index, hyperlinks in enumerate(pos["hyperlinks"]):
-                    if isinstance(hyperlinks, list):
-                        for content_hyperlinks in hyperlinks:
-                            for placeholder, hyperlink in content_hyperlinks.items():
-                                pos["encoded_content"][index] = pos["encoded_content"][
-                                    index
-                                ].replace(placeholder, hyperlink.strip())
+    def __apply_hyperlinks_to_content(
+        self, content: List[str], hyperlinks: List[EncodedHyperlink]
+    ) -> List[str]:
+        encoded: List[str] = content.copy()
+
+        for hyperlink in hyperlinks:
+            index: int = hyperlink["index"]
+
+            encoded[index] = content[index].replace(
+                hyperlink["placeholder"], hyperlink["hyperlink"]
+            )
+
+        return encoded
 
     def __detect_trims(self) -> None:
-        for posIndex in range(len(self.positions) - 1, -1, -1):
-            position = self.positions[posIndex]
+        for posIndex in range(len(self.POSITIONS) - 1, -1, -1):
+            position = self.POSITIONS[posIndex]
             position_content = getattr(self, position)
 
             if "content" in position_content.keys():
                 self.trimer.analyse(position_content["content"], position)
 
     def __trim(self) -> None:
-        for position in self.positions:
+        for position in self.POSITIONS:
             if self.trimer.should_be_trimed(position):
                 styled_content = getattr(self, position)["styled_content"]
 
@@ -438,16 +378,15 @@ class TermSpark:
     def spark(self, end="\n"):
         self.__detect_hyperlinks()
 
-        raw = self.raw()
-        to_trim = len(raw) - self.get_width()
+        raw: str = self.raw()
+        to_trim: int = len(raw) - self.get_width()
 
         if to_trim > 0:
             self.trimer = Trimer()
             self.trimer.target(to_trim)
             self.__detect_trims()
-        else:
-            if self.is_full_width:
-                self.__take_full_width()
+        elif self.is_full_width:
+            self.__take_full_width()
 
         self.__apply_hyperlinks()
 

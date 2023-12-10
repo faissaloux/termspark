@@ -124,18 +124,16 @@ class TestHyperlink:
         encoded = hyperlink.encode()
 
         assert encoded == [
-            [],
-            [
-                {
-                    "@termspark": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux/termspark"
-                    + "\x1b\\"
-                    + "@termspark"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                }
-            ],
-            [],
+            {
+                "index": 1,
+                "placeholder": "@termspark",
+                "hyperlink": Hyperlink.HYPERLINK_PREFIX
+                + "https://github.com/faissaloux/termspark"
+                + "\x1b\\"
+                + "@termspark"
+                + Hyperlink.HYPERLINK_SUFFIX
+                + "\x1b\\",
+            }
         ]
 
     def test_encode_multiple_elements_with_one_hyperlink(self):
@@ -156,19 +154,16 @@ class TestHyperlink:
         encoded = hyperlink.encode()
 
         assert encoded == [
-            [],
-            [],
-            [
-                {
-                    "@termspark": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux/termspark"
-                    + "\x1b\\"
-                    + "@termspark"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                }
-            ],
-            [],
+            {
+                "index": 2,
+                "placeholder": "@termspark",
+                "hyperlink": Hyperlink.HYPERLINK_PREFIX
+                + "https://github.com/faissaloux/termspark"
+                + "\x1b\\"
+                + "@termspark"
+                + Hyperlink.HYPERLINK_SUFFIX
+                + "\x1b\\",
+            }
         ]
 
     def test_encode_multiple_elements_with_multiple_hyperlinks(self):
@@ -189,26 +184,24 @@ class TestHyperlink:
         encoded = hyperlink.encode()
 
         assert encoded == [
-            [],
-            [
-                {
-                    "@termspark": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux/termspark"
-                    + "\x1b\\"
-                    + "@termspark"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                }
-            ],
-            [],
-            [
-                {
-                    "@faissaloux": Hyperlink.HYPERLINK_PREFIX
-                    + "https://github.com/faissaloux"
-                    + "\x1b\\"
-                    + "@faissaloux"
-                    + Hyperlink.HYPERLINK_SUFFIX
-                    + "\x1b\\"
-                }
-            ],
+            {
+                "index": 1,
+                "placeholder": "@termspark",
+                "hyperlink": Hyperlink.HYPERLINK_PREFIX
+                + "https://github.com/faissaloux/termspark"
+                + "\x1b\\"
+                + "@termspark"
+                + Hyperlink.HYPERLINK_SUFFIX
+                + "\x1b\\",
+            },
+            {
+                "index": 3,
+                "placeholder": "@faissaloux",
+                "hyperlink": Hyperlink.HYPERLINK_PREFIX
+                + "https://github.com/faissaloux"
+                + "\x1b\\"
+                + "@faissaloux"
+                + Hyperlink.HYPERLINK_SUFFIX
+                + "\x1b\\",
+            },
         ]
