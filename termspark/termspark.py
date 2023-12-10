@@ -279,12 +279,12 @@ class TermSpark:
 
         self.__calculate_separator_length()
 
-        styled_separator = self.separator.get_styled_content()
-        center_content = self.center.get("content", "")
-
         # Trim what should be trimmed.
         if self.mode != "raw" and hasattr(self, "trimer"):
             self.__trim()
+
+        styled_separator = self.separator.get_styled_content()
+        center_content = self.center.get("content", "")
 
         if len(center_content) > 0:
             if self.mode == "raw":
@@ -302,25 +302,13 @@ class TermSpark:
                 )
         else:
             center = styled_separator["full"]
-            center = "".join(center)
 
-        if self.mode == "raw":
-            left_content = self.left.get("content", "")
-            right_content = self.right.get("content", "")
+        content_type = "content" if self.mode == "raw" else "styled_content"
 
-            if len(left_content) > 0:
-                left_content = "".join(left_content)
+        left_content = self.left.get(content_type, "")
+        right_content = self.right.get(content_type, "")
 
-            if len(right_content) > 0:
-                right_content = "".join(right_content)
-        else:
-            left_content = self.left.get("styled_content", "")
-            left_content = "".join(left_content)
-
-            right_content = self.right.get("styled_content", "")
-            right_content = "".join(right_content)
-
-        return left_content + center + right_content
+        return "".join(left_content) + center + "".join(right_content)
 
     def __style_content(self):
         for position in self.POSITIONS:
