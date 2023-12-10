@@ -1,7 +1,10 @@
 import os
 import sys
-from typing import Optional
+import types
+from builtins import type as builtinType
+from typing import Callable, Optional
 
+from termspark.exceptions.parameter_type_error import ParameterTypeError
 from termspark.exceptions.position_not_supported_error import PositionNotSupportedError
 from termspark.termspark import TermSpark
 
@@ -47,7 +50,19 @@ def input(
     style: Optional[str] = None,
     position: str = "left",
     full_width: bool = False,
-) -> str:
+    type: builtinType = str,
+    callback: Callable = lambda prompt: prompt,
+):
+    if builtinType(type) != builtinType:
+        raise ParameterTypeError("print", "type", builtinType(type), builtinType)
+
+    if builtinType(callback) != types.FunctionType:
+        raise ParameterTypeError(
+            "print", "callback", builtinType(type), types.FunctionType
+        )
+
     print(prompt, color, highlight, style, position, full_width)
 
-    return sys.stdin.readline()
+    scaned = type(sys.stdin.readline().rstrip("\n"))
+
+    return callback(scaned)

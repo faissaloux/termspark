@@ -1,6 +1,8 @@
+import pytest
 from mock import patch  # type: ignore
 
 from termspark import input
+from termspark.exceptions.parameter_type_error import ParameterTypeError
 
 
 class TestInput:
@@ -75,3 +77,13 @@ class TestInput:
             " Enter your name: ", None, "blue", None, "center", True
         )
         readline.assert_called_once_with()
+
+    def test_cant_set_type_to_input_callback(self):
+        with pytest.raises(ParameterTypeError):
+            input(
+                " Enter your age: ", highlight="blue", position="center", callback=int
+            )
+
+    def test_cant_set_not_type_function_to_input_type(self):
+        with pytest.raises(ParameterTypeError):
+            input(" Enter your age: ", highlight="blue", position="center", type=len)
