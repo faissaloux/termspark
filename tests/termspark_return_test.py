@@ -379,3 +379,12 @@ class TestTermsparkReturn:
             + "\x1b\\"
             + " "
         )
+
+    def test_spark_supports_function_call(self):
+        termspark = TermSpark().print_left(len("TERMSPARK")).set_separator(".")
+
+        terminal_width = termspark.get_terminal_width()
+        content_space = len("9")
+        rest_space = terminal_width - content_space
+
+        assert str(termspark) == "9" + "." * rest_space
