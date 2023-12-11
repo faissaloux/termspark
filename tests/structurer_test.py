@@ -38,3 +38,8 @@ class TestStructurer:
         assert structurer.get("highlight") == "yellow"
         assert structurer.get("style") == ["bold", "underline"]
         assert structurer.get("styled_content") == "content"
+
+    def test_structure_returns_string_content(self):
+        structurer = Structurer(24).form()
+
+        assert structurer.get("content") == "24"

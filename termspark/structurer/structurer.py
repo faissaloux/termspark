@@ -31,7 +31,7 @@ class Structurer:
 
     def form(self) -> Form:
         return {
-            "content": self.content,
+            "content": str(self.content),
             "color": self.color,
             "highlight": self.highlight,
             "style": self.style,
