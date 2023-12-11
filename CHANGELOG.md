@@ -1,12 +1,23 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.7.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.8.0...main)
+
+## [v1.8.0](https://github.com/faissaloux/termspark/compare/v1.7.0...v1.8.0) - 2023-12-11
+### ADDED
+- `input()` ([#69](https://github.com/faissaloux/termspark/pull/69))
+- `line()` ([#64](https://github.com/faissaloux/termspark/pull/64))
+- `print()` ([#62](https://github.com/faissaloux/termspark/pull/62))
+
+### FIXED
+- Fix can't print function call ([#70](https://github.com/faissaloux/termspark/pull/70))
+- Fix raw line ([#67](https://github.com/faissaloux/termspark/pull/67))
+- Fix raw center position ([#66](https://github.com/faissaloux/termspark/pull/66))
 
 ## [v1.7.0](https://github.com/faissaloux/termspark/compare/v1.6.0...v1.7.0) - 2023-12-07
-# ADDED
+### ADDED
 - Support text styles ([#60](https://github.com/faissaloux/termspark/pull/60))
 - Hyperlinks support ([#59](https://github.com/faissaloux/termspark/pull/59))
 
 ## [v1.6.0](https://github.com/faissaloux/termspark/compare/v1.5.1...v1.6.0) - 2023-12-01
-# ADDED
+### ADDED
 - Improve printers ([#58](https://github.com/faissaloux/termspark/pull/58))
 - Ability to paint a line ([#52](https://github.com/faissaloux/termspark/pull/52))
 - Paint separator ([#51](https://github.com/faissaloux/termspark/pull/51))
@@ -15,21 +26,21 @@
 - Add ability to set max length for content ([#47](https://github.com/faissaloux/termspark/pull/47))
 - Trim content that exceeds terminal width ([#45](https://github.com/faissaloux/termspark/pull/45))
 
-## FIXED
+### FIXED
 - Fix set separator without content in line ([#57](https://github.com/faissaloux/termspark/pull/57))
 - Fix `separator-line` combination ([#56](https://github.com/faissaloux/termspark/pull/56))
 - Separator can accept only 1 character ([#55](https://github.com/faissaloux/termspark/pull/55))
 
 ## [v1.5.1](https://github.com/faissaloux/termspark/compare/v1.5.0...v1.5.1) - 2023-11-25
-# FIXED
+### FIXED
 - Fix center multiple content in raw mode ([#44](https://github.com/faissaloux/termspark/pull/44))
 
 ## [v1.5.0](https://github.com/faissaloux/termspark/compare/v1.4.1...v1.5.0) - 2023-10-10
-# ADDED
+### ADDED
 - py3.12 support ([#40](https://github.com/faissaloux/termspark/pull/40))
 
 ## [v1.4.1](https://github.com/faissaloux/termspark/compare/v1.4.0...v1.4.1) - 2023-09-18
-# FIXED
+### FIXED
 - Fix raw not working with spark methods ([#37](https://github.com/faissaloux/termspark/pull/37))
 
 ## [v1.4.0](https://github.com/faissaloux/termspark/compare/v1.3.0...v1.4.0) - 2023-09-16
