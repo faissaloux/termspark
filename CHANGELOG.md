@@ -1,4 +1,9 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.8.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.8.1...main)
+
+
+## [v1.8.1](https://github.com/faissaloux/termspark/compare/v1.8.0...v1.8.1) - 2023-12-11
+### FIXED
+- Fix module not found and typing-extensions not installed ([#72](https://github.com/faissaloux/termspark/pull/72))
 
 ## [v1.8.0](https://github.com/faissaloux/termspark/compare/v1.7.0...v1.8.0) - 2023-12-11
 ### ADDED
