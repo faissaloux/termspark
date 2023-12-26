@@ -13,7 +13,7 @@ class TestInput:
     ):
         input()
 
-        print.assert_called_once_with(None, None, None, None, "left", False)
+        print.assert_called_once_with(None, None, None, None, "left", None, False)
         readline.assert_called_once_with()
 
     @patch("sys.stdin.readline")
@@ -22,7 +22,7 @@ class TestInput:
         input(" Enter your name: ")
 
         print.assert_called_once_with(
-            " Enter your name: ", None, None, None, "left", False
+            " Enter your name: ", None, None, None, "left", None, False
         )
         readline.assert_called_once_with()
 
@@ -32,7 +32,7 @@ class TestInput:
         input(" Enter your name: ", "blue")
 
         print.assert_called_once_with(
-            " Enter your name: ", "blue", None, None, "left", False
+            " Enter your name: ", "blue", None, None, "left", None, False
         )
         readline.assert_called_once_with()
 
@@ -42,7 +42,7 @@ class TestInput:
         input(" Enter your name: ", "white", "blue")
 
         print.assert_called_once_with(
-            " Enter your name: ", "white", "blue", None, "left", False
+            " Enter your name: ", "white", "blue", None, "left", None, False
         )
         readline.assert_called_once_with()
 
@@ -52,7 +52,7 @@ class TestInput:
         input(" Enter your name: ", "white", "blue", "italic, bold")
 
         print.assert_called_once_with(
-            " Enter your name: ", "white", "blue", "italic, bold", "left", False
+            " Enter your name: ", "white", "blue", "italic, bold", "left", None, False
         )
         readline.assert_called_once_with()
 
@@ -62,7 +62,17 @@ class TestInput:
         input(" Enter your name: ", highlight="blue", position="center")
 
         print.assert_called_once_with(
-            " Enter your name: ", None, "blue", None, "center", False
+            " Enter your name: ", None, "blue", None, "center", None, False
+        )
+        readline.assert_called_once_with()
+
+    @patch("sys.stdin.readline")
+    @patch("termspark.print")
+    def test_input_can_set_separator(self, print, readline):
+        input(" Enter your name: ", highlight="blue", position="center", separator=".")
+
+        print.assert_called_once_with(
+            " Enter your name: ", None, "blue", None, "center", ".", False
         )
         readline.assert_called_once_with()
 
@@ -74,7 +84,7 @@ class TestInput:
         )
 
         print.assert_called_once_with(
-            " Enter your name: ", None, "blue", None, "center", True
+            " Enter your name: ", None, "blue", None, "center", None, True
         )
         readline.assert_called_once_with()
 

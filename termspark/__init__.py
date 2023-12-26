@@ -18,6 +18,7 @@ def print(
     highlight: Optional[str] = None,
     style: Optional[str] = None,
     position: str = "left",
+    separator: Optional[str] = None,
     full_width: bool = False,
 ) -> None:
     if content is None:
@@ -27,6 +28,9 @@ def print(
 
     if not hasattr(termspark, f"spark_{position}"):
         raise PositionNotSupportedError(position)
+
+    if separator:
+        termspark.set_separator(separator)
 
     if full_width:
         termspark.full_width()
@@ -51,6 +55,7 @@ def input(
     position: str = "left",
     full_width: bool = False,
     type: builtinType = str,
+    separator: Optional[str] = None,
     callback: Callable = lambda prompt: prompt,
 ):
     if builtinType(type) != builtinType:
@@ -61,7 +66,7 @@ def input(
             "print", "callback", builtinType(type), types.FunctionType
         )
 
-    print(prompt, color, highlight, style, position, full_width)
+    print(prompt, color, highlight, style, position, separator, full_width)
 
     scaned = type(sys.stdin.readline().rstrip("\n"))
 

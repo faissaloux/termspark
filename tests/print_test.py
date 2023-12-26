@@ -50,6 +50,25 @@ class TestPrint:
         )
         spark.assert_called_once_with()
 
+    @patch("termspark.termspark.TermSpark.spark")
+    @patch("termspark.termspark.TermSpark.spark_right")
+    @patch("termspark.termspark.TermSpark.set_separator")
+    def test_print_with_separator(self, set_separator, spark_right, spark):
+        print(
+            "Termspark",
+            "white",
+            "blue",
+            "italic, bold",
+            position="right",
+            separator=".",
+        )
+
+        set_separator.assert_called_once_with(".")
+        spark_right.assert_called_once_with(
+            ["Termspark", "white", "blue", "italic, bold"]
+        )
+        spark.assert_called_once_with()
+
     def test_print_raise_exception_on_unsupported_position(self):
         with pytest.raises(PositionNotSupportedError):
             print("Termspark", "white", "blue", "italic, bold", position="unsupported")
