@@ -26,6 +26,15 @@ You can choose from `["left", "center", "right"]` to specify where to print by p
 You can enable the Full Width using full_width parameter:
 `print(" Termspark ", highlight="blue", full_width=True)`.
 
+You can fill the empty space by a character using `print(separator=)`.
+
+```python
+from termspark import print
+
+print(" TERMSPARK ", "white", "green", position="center", separator="_")
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/b6c38ae1-ec25-4abb-a078-1309c3234a62)
+
 ### `input()`
 
 input with colors, highlights, styles, and hyperlinks.
@@ -66,6 +75,15 @@ def age_calc(birthyear, currentyear=2023):
 age = input(" Your year birth? ", "white", "blue", type=int, callback=age_calc)
 print(f"Your age is: {age}")
 ```
+
+You can use separator in `input(separator=)` too.
+
+```python
+from termspark import input
+
+name = input(" What's your name?", "white", "blue", position="left", separator=".")
+```
+![](https://github.com/faissaloux/termspark/assets/60013703/b4a4f5b0-ff55-4079-8a82-a6c5a0ba0973)
 
 ### `line()`
 To print empty line use `line()`, you can leave it empty or fill it with a repeated character, you can specify its color too.
