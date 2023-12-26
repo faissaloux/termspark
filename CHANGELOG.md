@@ -1,5 +1,9 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.8.1...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.0...main)
 
+
+## [v1.9.0](https://github.com/faissaloux/termspark/compare/v1.8.1...v1.9.0) - 2023-12-26
+### ADDED
+- print() and input() separator support ([#74](https://github.com/faissaloux/termspark/pull/74))
 
 ## [v1.8.1](https://github.com/faissaloux/termspark/compare/v1.8.0...v1.8.1) - 2023-12-11
 ### FIXED
