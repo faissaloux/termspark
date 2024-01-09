@@ -106,7 +106,7 @@ line("-")
     TermSpark().spark_left('LEFT').spark_center('CENTER').spark_right('RIGHT').set_separator('.').spark()
 ```
 
-> **Note**
+> [!NOTE]
 > Separator can contain only one character.
 
 ### You can also paint your content
@@ -232,7 +232,7 @@ You can specify max width of content depending on position using `max_[position]
     termspark.spark()
 ```
 This should show only "LE" on the left, and "RIG" on the right.
-> **Warning**
+> [!WARNING]
 > `max_[position]()` is only supported by sparkers.
 
 ### Full width
@@ -246,7 +246,7 @@ You can enable full width by using `full_width()`.
     termspark.full_width()
     termspark.spark()
 ```
-> **Warning**
+> [!WARNING]
 > `full_width()` can only be used with one position.
 
 ### Separator
@@ -284,7 +284,7 @@ You can style your text by passing it to `print() style parameter` or to `spark(
 - reverse
 - hidden
 
-> **Note**
+> [!NOTE]
 > You can mix styles by separating them by commas.
 
 ```python
