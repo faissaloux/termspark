@@ -25,9 +25,9 @@ HyperlinkMatch = TypedDict(
 class Hyperlink:
     PLACEHOLDER_PATTERN: Final[str] = "[^\\[]*?"
     URL_PATTERN: Final[str] = "http[s]?://[^)]+"
-    HYPERLINK_PATTERN: Final[
-        str
-    ] = f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
+    HYPERLINK_PATTERN: Final[str] = (
+        f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
+    )
 
     HYPERLINK_PREFIX: Final[str] = "\x1b]8;;"
     HYPERLINK_SUFFIX: Final[str] = "\x1b]8;;"
@@ -132,9 +132,9 @@ class Hyperlink:
             hyperlinks_found = re.findall(Hyperlink.HYPERLINK_PATTERN, content)
 
             for hyperlink_found in hyperlinks_found:
-                replaces[
-                    f"[{hyperlink_found[0]}]({hyperlink_found[1]})"
-                ] = hyperlink_found[0]
+                replaces[f"[{hyperlink_found[0]}]({hyperlink_found[1]})"] = (
+                    hyperlink_found[0]
+                )
 
             for replace_from, replace_by in replaces.items():
                 replaced_content = replaced_content.replace(replace_from, replace_by)
