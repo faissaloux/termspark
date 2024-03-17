@@ -43,8 +43,9 @@ Run all tests:
 pytest
 ```
 
-> **Note**
-> Make sure tests cover 100%
+> [!NOTE]
+> Make sure tests cover 100%.
+
 ```bash
 pytest --cov
 ```
