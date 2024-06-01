@@ -2,6 +2,9 @@ from termspark.painter.constants.highlight import Highlight
 
 
 class TestHighlight:
+    def test_black(self):
+        assert Highlight.BLACK == 40
+
     def test_red(self):
         assert Highlight.RED == 41
 
@@ -19,6 +22,9 @@ class TestHighlight:
 
     def test_cyan(self):
         assert Highlight.CYAN == 46
+
+    def test_white(self):
+        assert Highlight.WHITE == 47
 
     def test_gray(self):
         assert Highlight.GRAY == 100
@@ -44,5 +50,5 @@ class TestHighlight:
     def test_light_cyan(self):
         assert Highlight.LIGHT_CYAN == 106
 
-    def test_white(self):
-        assert Highlight.WHITE == 107
+    def test_light_white(self):
+        assert Highlight.LIGHT_WHITE == 107

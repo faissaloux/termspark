@@ -23,6 +23,9 @@ class TestFore:
     def test_cyan(self):
         assert Fore.CYAN == 36
 
+    def test_white(self):
+        assert Fore.WHITE == 37
+
     def test_gray(self):
         assert Fore.GRAY == 90
 
@@ -46,3 +49,6 @@ class TestFore:
 
     def test_light_cyan(self):
         assert Fore.LIGHT_CYAN == 96
+
+    def test_light_white(self):
+        assert Fore.LIGHT_WHITE == 97

@@ -9,6 +9,7 @@ class Fore:
     BLUE: Final[int] = 34
     MAGENTA: Final[int] = 35
     CYAN: Final[int] = 36
+    WHITE: Final[int] = 37
     GRAY: Final[int] = 90
     GREY: Final[int] = 90
     LIGHT_RED: Final[int] = 91
@@ -17,3 +18,4 @@ class Fore:
     LIGHT_BLUE: Final[int] = 94
     LIGHT_MAGENTA: Final[int] = 95
     LIGHT_CYAN: Final[int] = 96
+    LIGHT_WHITE: Final[int] = 97
