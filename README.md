@@ -129,6 +129,7 @@ line("-")
 - magenta
 - cyan
 - white
+- light white
 - gray / grey
 - light red
 - light green
@@ -154,6 +155,7 @@ line("-")
 - magenta
 - cyan
 - white
+- light white
 - gray / grey
 - light red
 - light green
