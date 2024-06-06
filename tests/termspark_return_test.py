@@ -324,7 +324,7 @@ class TestTermsparkReturn:
         termspark = TermSpark().line(".", "green")
 
         terminal_width = termspark.get_terminal_width()
-        assert str(termspark) == "\x1b[42m.\x1b[0m" * terminal_width
+        assert str(termspark) == "\x1b[48;5;2m.\x1b[0m" * terminal_width
 
     def test_force_width(self):
         width = 100

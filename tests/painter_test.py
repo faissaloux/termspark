@@ -6,7 +6,7 @@ from termspark.painter.painter import Painter
 class TestPainter:
     def test_prefix(self):
         painter = Painter()
-        assert painter.PREFIX == "\x1b["
+        assert painter.PREFIX == "\x1b[48;5;"
 
     def test_suffix(self):
         painter = Painter()
@@ -42,10 +42,10 @@ class TestPainter:
 
     def test_can_paint_existed_multi_words_highlight(self):
         painter = Painter()
-        paint_highlight = painter.paint_highlight("light_blue")
+        paint_highlight = painter.paint_highlight("dark_blue")
 
         assert (
-            paint_highlight == f"{painter.PREFIX}{Highlight.LIGHT_BLUE}{painter.SUFFIX}"
+            paint_highlight == f"{painter.PREFIX}{Highlight.DARK_BLUE}{painter.SUFFIX}"
         )
 
     def test_return_empty_string_when_unexisted_highlight(self):

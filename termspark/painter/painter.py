@@ -5,7 +5,7 @@ from .constants.highlight import Highlight
 
 
 class Painter:
-    PREFIX: Final[str] = "\x1b["
+    PREFIX: Final[str] = "\x1b[48;5;"
     SUFFIX: Final[str] = "m"
     RESET: Final[str] = "\x1b[0m"
 
