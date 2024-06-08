@@ -4,10 +4,6 @@ from termspark.painter.painter import Painter
 
 
 class TestPainter:
-    def test_prefix(self):
-        painter = Painter()
-        assert painter.PREFIX == "\x1b[48;5;"
-
     def test_suffix(self):
         painter = Painter()
         assert painter.SUFFIX == "m"
@@ -20,13 +16,13 @@ class TestPainter:
         painter = Painter()
         paint_color = painter.paint_color("red")
 
-        assert paint_color == f"{painter.PREFIX}{Fore.RED}{painter.SUFFIX}"
+        assert paint_color == f"{Fore.PREFIX}{Fore.RED}{painter.SUFFIX}"
 
     def test_can_paint_existed_multi_words_fore_color(self):
         painter = Painter()
         paint_color = painter.paint_color("light_green")
 
-        assert paint_color == f"{painter.PREFIX}{Fore.LIGHT_GREEN}{painter.SUFFIX}"
+        assert paint_color == f"{Fore.PREFIX}{Fore.LIGHT_GREEN}{painter.SUFFIX}"
 
     def test_return_empty_string_when_unexisted_fore_color(self):
         painter = Painter()
@@ -38,15 +34,13 @@ class TestPainter:
         painter = Painter()
         paint_highlight = painter.paint_highlight("white")
 
-        assert paint_highlight == f"{painter.PREFIX}{Highlight.WHITE}{painter.SUFFIX}"
+        assert paint_highlight == f"{Highlight.PREFIX}{Highlight.WHITE}{painter.SUFFIX}"
 
     def test_can_paint_existed_multi_words_highlight(self):
         painter = Painter()
         paint_highlight = painter.paint_highlight("dark_blue")
 
-        assert (
-            paint_highlight == f"{painter.PREFIX}{Highlight.DARK_BLUE}{painter.SUFFIX}"
-        )
+        assert paint_highlight == f"{Highlight.PREFIX}{Highlight.DARK_BLUE}{painter.SUFFIX}"
 
     def test_return_empty_string_when_unexisted_highlight(self):
         painter = Painter()

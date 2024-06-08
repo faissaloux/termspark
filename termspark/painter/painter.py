@@ -5,13 +5,13 @@ from .constants.highlight import Highlight
 
 
 class Painter:
-    PREFIX: Final[str] = "\x1b[48;5;"
     SUFFIX: Final[str] = "m"
     RESET: Final[str] = "\x1b[0m"
 
     def __paint(self, color: str, type) -> str:
         if color and hasattr(type, color.upper()):
-            return f"{self.PREFIX}{getattr(type, color.upper())}{self.SUFFIX}"
+            return f"{type.PREFIX}{getattr(type, color.upper())}{self.SUFFIX}"
+
         return ""
 
     def paint_color(self, color: str) -> str:
