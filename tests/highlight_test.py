@@ -454,3 +454,150 @@ class TestHighlight:
 
     def test_feijoa_1(self):
         assert Highlight.FEIJOA_1 == 150
+
+    def test_pixie_green(self):
+        assert Highlight.PIXIE_GREEN == 151
+
+    def test_jungle_mist(self):
+        assert Highlight.JUNGLE_MIST == 152
+
+    def test_anakiwa_2(self):
+        assert Highlight.ANAKIWA_2 == 153
+
+    def test_lime_1(self):
+        assert Highlight.LIME_1 == 154
+
+    def test_green_yellow(self):
+        assert Highlight.GREEN_YELLOW == 155
+
+    def test_mint_green_1(self):
+        assert Highlight.MINT_GREEN_1 == 156
+
+    def test_dark_sea_green(self):
+        assert Highlight.DARK_SEA_GREEN == 157
+
+    def test_aero_blue(self):
+        assert Highlight.AERO_BLUE == 158
+
+    def test_french_pass(self):
+        assert Highlight.FRENCH_PASS == 159
+
+    def test_guardsman_red(self):
+        assert Highlight.GUARDSMAN_RED == 160
+
+    def test_razzmatazz(self):
+        assert Highlight.RAZZMATAZZ == 161
+
+    def test_hollywood_cerise(self):
+        assert Highlight.HOLLYWOOD_CERISE == 162
+
+    def test_hollywood_cerise_1(self):
+        assert Highlight.HOLLYWOOD_CERISE_1 == 163
+
+    def test_purple_pizzazz(self):
+        assert Highlight.PURPLE_PIZZAZZ == 164
+
+    def test_electric_violet_1(self):
+        assert Highlight.ELECTRIC_VIOLET_1 == 165
+
+    def test_tenn(self):
+        assert Highlight.TENN == 166
+
+    def test_roman(self):
+        assert Highlight.ROMAN == 167
+
+    def test_cranberry(self):
+        assert Highlight.CRANBERRY == 168
+
+    def test_hopbush(self):
+        assert Highlight.HOPBUSH == 169
+
+    def test_orchid(self):
+        assert Highlight.ORCHID == 170
+
+    def test_medium_orchid(self):
+        assert Highlight.MEDIUM_ORCHID == 171
+
+    def test_mango_tango(self):
+        assert Highlight.MANGO_TANGO == 172
+
+    def test_copperfield(self):
+        assert Highlight.COPPERFIELD == 173
+
+    def test_pink(self):
+        assert Highlight.PINK == 174
+
+    def test_cancan(self):
+        assert Highlight.CANCAN == 175
+
+    def test_light_orchid(self):
+        assert Highlight.LIGHT_ORCHID == 176
+
+    def test_heliotrope_3(self):
+        assert Highlight.HELIOTROPE_3 == 177
+
+    def test_corn(self):
+        assert Highlight.CORN == 178
+
+    def test_tacha(self):
+        assert Highlight.TACHA == 179
+
+    def test_tan(self):
+        assert Highlight.TAN == 180
+
+    def test_clam_shell(self):
+        assert Highlight.CLAM_SHELL == 181
+
+    def test_thistle(self):
+        assert Highlight.THISTLE == 182
+
+    def test_mauve(self):
+        assert Highlight.MAUVE == 183
+
+    def test_corn_1(self):
+        assert Highlight.CORN_1 == 184
+
+    def test_khaki(self):
+        assert Highlight.KHAKI == 185
+
+    def test_deco(self):
+        assert Highlight.DECO == 186
+
+    def test_green_mist(self):
+        assert Highlight.GREEN_MIST == 187
+
+    def test_alto(self):
+        assert Highlight.ALTO == 188
+
+    def test_FOG(self):
+        assert Highlight.FOG == 189
+
+    def test_chartreuse_yellow(self):
+        assert Highlight.CHARTREUSE_YELLOW == 190
+
+    def test_canary(self):
+        assert Highlight.CANARY == 191
+
+    def test_honeysuckle(self):
+        assert Highlight.HONEYSUCKLE == 192
+
+    def test_reef(self):
+        assert Highlight.REEF == 193
+
+    def test_snowy_mint(self):
+        assert Highlight.SNOWY_MINT == 194
+
+    def test_oyster_bay(self):
+        assert Highlight.OYSTER_BAY == 195
+
+    def test_rose(self):
+        assert Highlight.ROSE == 197
+
+    def test_deep_pink(self):
+        assert Highlight.DEEP_PINK == 198
+
+    def test_hollywood_cerise_2(self):
+        assert Highlight.HOLLYWOOD_CERISE_2 == 199
+
+    def test_purple_pizzazz_1(self):
+        assert Highlight.PURPLE_PIZZAZZ_1 == 200
