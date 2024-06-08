@@ -311,6 +311,9 @@ class TestHighlight:
     def test_gray_1(self):
         assert Highlight.GRAY_1 == 102
 
+    def test_grey_1(self):
+        assert Highlight.GREY_1 == 102
+
     def test_wild_blue_yonder(self):
         assert Highlight.WILD_BLUE_YONDER == 103
 
@@ -383,8 +386,8 @@ class TestHighlight:
     def test_medium_violet_red(self):
         assert Highlight.MEDIUM_VIOLET_RED == 126
 
-    def test_magenta(self):
-        assert Highlight.MAGENTA == 127
+    def test_magenta_1(self):
+        assert Highlight.MAGENTA_1 == 127
 
     def test_dark_violet(self):
         assert Highlight.DARK_VIOLET == 128
@@ -428,8 +431,8 @@ class TestHighlight:
     def test_heliotrope_2(self):
         assert Highlight.HELIOTROPE_2 == 141
 
-    def test_gold(self):
-        assert Highlight.GOLD == 142
+    def test_gold_1(self):
+        assert Highlight.GOLD_1 == 142
 
     def test_olve_green(self):
         assert Highlight.OLIVE_GREEN == 143
@@ -601,3 +604,162 @@ class TestHighlight:
 
     def test_purple_pizzazz_1(self):
         assert Highlight.PURPLE_PIZZAZZ_1 == 200
+
+    def test_magenta(self):
+        assert Highlight.MAGENTA == 201
+
+    def test_blaze_orange(self):
+        assert Highlight.BLAZE_ORANGE == 202
+
+    def test_bitter_sweet(self):
+        assert Highlight.BITTER_SWEET == 203
+
+    def test_wild_watermelon(self):
+        assert Highlight.WILD_WATERMELON == 204
+
+    def test_hotpink(self):
+        assert Highlight.HOTPINK == 205
+
+    def test_hotpink_1(self):
+        assert Highlight.HOTPINK_1 == 206
+
+    def test_pink_flamingo(self):
+        assert Highlight.PINK_FLAMINGO == 207
+
+    def test_flush_orange(self):
+        assert Highlight.FLUSH_ORANGE == 208
+
+    def test_salmon(self):
+        assert Highlight.SALMON == 209
+
+    def test_vivid_tangerine(self):
+        assert Highlight.VIVID_TANGERINE == 210
+
+    def test_pink_salmon(self):
+        assert Highlight.PINK_SALMON == 211
+
+    def test_lavender_rose(self):
+        assert Highlight.LAVENDER_ROSE == 212
+
+    def test_blush_pink(self):
+        assert Highlight.BLUSH_PINK == 213
+
+    def test_yellow_sea(self):
+        assert Highlight.YELLOW_SEA == 214
+
+    def test_texas_rose(self):
+        assert Highlight.TEXAS_ROSE == 215
+
+    def test_hit_pink(self):
+        assert Highlight.HIT_PINK == 216
+
+    def test_sundown(self):
+        assert Highlight.SUNDOWN == 217
+
+    def test_cotton_candy(self):
+        assert Highlight.COTTON_CANDY == 218
+
+    def test_lavender_rose_1(self):
+        assert Highlight.LAVENDER_ROSE_1 == 219
+
+    def test_gold(self):
+        assert Highlight.GOLD == 220
+
+    def test_dandelion(self):
+        assert Highlight.DANDELION == 221
+
+    def test_grandis(self):
+        assert Highlight.GRANDIS == 222
+
+    def test_caramel(self):
+        assert Highlight.CARAMEL == 223
+
+    def test_cosmos(self):
+        assert Highlight.COSMOS == 224
+
+    def test_pink_lace(self):
+        assert Highlight.PINK_LACE == 225
+
+    def test_laser_lemon(self):
+        assert Highlight.LASER_LEMON == 227
+
+    def test_dolly(self):
+        assert Highlight.DOLLY == 228
+
+    def test_portafino(self):
+        assert Highlight.PORTAFINO == 229
+
+    def test_cumulus(self):
+        assert Highlight.CUMULUS == 230
+
+    def test_cod_gray(self):
+        assert Highlight.COD_GRAY == 232
+
+    def test_cod_gray_1(self):
+        assert Highlight.COD_GRAY_1 == 233
+
+    def test_cod_gray_2(self):
+        assert Highlight.COD_GRAY_2 == 234
+
+    def test_mine_shaft(self):
+        assert Highlight.MINE_SHAFT == 235
+
+    def test_mine_shaft_1(self):
+        assert Highlight.MINE_SHAFT_1 == 236
+
+    def test_mine_shaft_2(self):
+        assert Highlight.MINE_SHAFT_2 == 237
+
+    def test_tundura(self):
+        assert Highlight.TUNDORA == 238
+
+    def test_tundura_1(self):
+        assert Highlight.TUNDORA_1 == 239
+
+    def test_scorpion_1(self):
+        assert Highlight.SCORPION_1 == 240
+
+    def test_dove_gray(self):
+        assert Highlight.DOVE_GRAY == 241
+
+    def test_dove_gray_1(self):
+        assert Highlight.DOVE_GRAY_1 == 242
+
+    def test_boulder(self):
+        assert Highlight.BOULDER == 243
+
+    def test_gray_2(self):
+        assert Highlight.GRAY_2 == 245
+
+    def test_grey_2(self):
+        assert Highlight.GREY_2 == 245
+
+    def test_dusty_gray(self):
+        assert Highlight.DUSTY_GRAY == 246
+
+    def test_silver_chalice_1(self):
+        assert Highlight.SILVER_CHALICE_1 == 247
+
+    def test_silver_chalice_2(self):
+        assert Highlight.SILVER_CHALICE_2 == 248
+
+    def test_silver_chalice_3(self):
+        assert Highlight.SILVER_CHALICE_3 == 249
+
+    def test_silver_1(self):
+        assert Highlight.SILVER_1 == 250
+
+    def test_silver_2(self):
+        assert Highlight.SILVER_2 == 251
+
+    def test_alto_1(self):
+        assert Highlight.ALTO_1 == 252
+
+    def test_alto_2(self):
+        assert Highlight.ALTO_2 == 253
+
+    def test_mercury(self):
+        assert Highlight.MERCURY == 254
+
+    def test_gallery(self):
+        assert Highlight.GALLERY == 255
