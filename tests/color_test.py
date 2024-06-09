@@ -20,8 +20,8 @@ class TestColor:
     def test_purple(self):
         assert Color.PURPLE == 5
 
-    def test_teal_1(self):
-        assert Color.TEAL_1 == 6
+    def test_teal(self):
+        assert Color.TEAL == 6
 
     def test_silver(self):
         assert Color.SILVER == 7
@@ -65,9 +65,6 @@ class TestColor:
     def test_dark_blue_1(self):
         assert Color.DARK_BLUE_1 == 20
 
-    def test_blue_1(self):
-        assert Color.BLUE_1 == 21
-
     def test_dark_green(self):
         assert Color.DARK_GREEN == 22
 
@@ -92,8 +89,8 @@ class TestColor:
     def test_deep_sea(self):
         assert Color.DEEP_SEA == 29
 
-    def test_teal(self):
-        assert Color.TEAL == 30
+    def test_turquoise(self):
+        assert Color.TURQUOISE == 30
 
     def test_deep_cerulean(self):
         assert Color.DEEP_CERULEAN == 31

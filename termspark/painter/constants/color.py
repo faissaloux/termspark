@@ -8,7 +8,7 @@ class Color:
     OLIVE: Final[int] = 3
     NAVY: Final[int] = 4
     PURPLE: Final[int] = 5
-    TEAL_1: Final[int] = 6
+    TEAL: Final[int] = 6
     SILVER: Final[int] = 7
     GRAY: Final[int] = 8
     GREY: Final[int] = 8
@@ -23,7 +23,6 @@ class Color:
     DARK_BLUE: Final[int] = 18
     DARK_BLUE_2: Final[int] = 19
     DARK_BLUE_1: Final[int] = 20
-    BLUE_1: Final[int] = 21
     DARK_GREEN: Final[int] = 22
     BLUE_STONE: Final[int] = 23
     ORIENT: Final[int] = 24
@@ -32,7 +31,7 @@ class Color:
     BLUE_RIBBON: Final[int] = 27
     JAPANESE_LAUREL: Final[int] = 28
     DEEP_SEA: Final[int] = 29
-    TEAL: Final[int] = 30
+    TURQUOISE: Final[int] = 30
     DEEP_CERULEAN: Final[int] = 31
     LOCHMARA: Final[int] = 32
     AZURE_RADIANCE: Final[int] = 33
