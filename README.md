@@ -9,6 +9,20 @@
 
 # Usage
 
+- [`print()`](#print-but-more)
+- [`input()`](#input)
+- [`line()`](#line)
+- [paint](#you-can-use-different-styles-on-same-position)
+- [`raw()`](#raw)
+- [force Width](#force-width)
+- [max width](#set-content-max-width)
+- [`full_width()`](#full-width)
+- [separator](#separator)
+- [`Termspark().line()`](#line-1)
+- [style](#style)
+- [hyperlinks](#hyperlinks)
+- [supported colors](#supported-colors)
+
 ### `print()`, but more!
 Import Termspark's print and take advantage of all its features, [colors](#you-can-also-paint-your-content), [highlights](#you-can-also-paint-your-content), [styles](#style), [hyperlinks](#hyperlinks) and more ...
 
