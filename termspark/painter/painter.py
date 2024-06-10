@@ -1,4 +1,4 @@
-from typing import Final
+from typing import Final, Type
 
 from .constants.color import Color
 from .constants.fore import Fore
@@ -9,7 +9,7 @@ class Painter:
     SUFFIX: Final[str] = "m"
     RESET: Final[str] = "\x1b[0m"
 
-    def __paint(self, color: str, type: type[Color]) -> str:
+    def __paint(self, color: str, type: Type[Color]) -> str:
         if color and hasattr(type, color.upper()):
             return f"{type.PREFIX}{getattr(type, color.upper())}{self.SUFFIX}"
 
