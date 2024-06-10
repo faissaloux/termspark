@@ -1,7 +1,13 @@
+from abc import ABC, abstractmethod
 from typing import Final
 
 
-class Color:
+class Color(ABC):
+    @property
+    @abstractmethod
+    def PREFIX(self):
+        pass
+
     BLACK: Final[int] = 0
     MAROON: Final[int] = 1
     GREEN: Final[int] = 2
