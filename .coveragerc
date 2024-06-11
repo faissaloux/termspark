@@ -2,3 +2,4 @@
 
 exclude_lines =
   codecov-ignore
+  @abstractmethod

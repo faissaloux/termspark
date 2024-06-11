@@ -35,9 +35,7 @@ class TestPrint:
     def test_print_with_all_parameters(self, spark_left, spark):
         print("Termspark", "white", "blue", "italic, bold")
 
-        spark_left.assert_called_once_with(
-            ["Termspark", "white", "blue", "italic, bold"]
-        )
+        spark_left.assert_called_once_with(["Termspark", "white", "blue", "italic, bold"])
         spark.assert_called_once_with()
 
     @patch("termspark.termspark.TermSpark.spark")
@@ -45,9 +43,7 @@ class TestPrint:
     def test_print_with_position(self, spark_right, spark):
         print("Termspark", "white", "blue", "italic, bold", position="right")
 
-        spark_right.assert_called_once_with(
-            ["Termspark", "white", "blue", "italic, bold"]
-        )
+        spark_right.assert_called_once_with(["Termspark", "white", "blue", "italic, bold"])
         spark.assert_called_once_with()
 
     @patch("termspark.termspark.TermSpark.spark")
@@ -64,9 +60,7 @@ class TestPrint:
         )
 
         set_separator.assert_called_once_with(".")
-        spark_right.assert_called_once_with(
-            ["Termspark", "white", "blue", "italic, bold"]
-        )
+        spark_right.assert_called_once_with(["Termspark", "white", "blue", "italic, bold"])
         spark.assert_called_once_with()
 
     def test_print_raise_exception_on_unsupported_position(self):
@@ -87,7 +81,5 @@ class TestPrint:
         )
 
         full_width.assert_called_once_with()
-        spark_right.assert_called_once_with(
-            ["Termspark", "white", "blue", "italic, bold"]
-        )
+        spark_right.assert_called_once_with(["Termspark", "white", "blue", "italic, bold"])
         spark.assert_called_once_with()

@@ -8,9 +8,7 @@ from termspark.exceptions.parameter_type_error import ParameterTypeError
 class TestInput:
     @patch("sys.stdin.readline")
     @patch("termspark.print")
-    def test_empty_input_calls_print_and_returns_scaned_input_with_defaults(
-        self, print, readline
-    ):
+    def test_empty_input_calls_print_and_returns_scaned_input_with_defaults(self, print, readline):
         input()
 
         print.assert_called_once_with(None, None, None, None, "left", None, False)
@@ -21,9 +19,7 @@ class TestInput:
     def test_input_with_prompt(self, print, readline):
         input(" Enter your name: ")
 
-        print.assert_called_once_with(
-            " Enter your name: ", None, None, None, "left", None, False
-        )
+        print.assert_called_once_with(" Enter your name: ", None, None, None, "left", None, False)
         readline.assert_called_once_with()
 
     @patch("sys.stdin.readline")
@@ -31,9 +27,7 @@ class TestInput:
     def test_input_change_color(self, print, readline):
         input(" Enter your name: ", "blue")
 
-        print.assert_called_once_with(
-            " Enter your name: ", "blue", None, None, "left", None, False
-        )
+        print.assert_called_once_with(" Enter your name: ", "blue", None, None, "left", None, False)
         readline.assert_called_once_with()
 
     @patch("sys.stdin.readline")
@@ -79,9 +73,7 @@ class TestInput:
     @patch("sys.stdin.readline")
     @patch("termspark.print")
     def test_input_can_take_full_width(self, print, readline):
-        input(
-            " Enter your name: ", highlight="blue", position="center", full_width=True
-        )
+        input(" Enter your name: ", highlight="blue", position="center", full_width=True)
 
         print.assert_called_once_with(
             " Enter your name: ", None, "blue", None, "center", None, True
@@ -90,9 +82,7 @@ class TestInput:
 
     def test_cant_set_type_to_input_callback(self):
         with pytest.raises(ParameterTypeError):
-            input(
-                " Enter your age: ", highlight="blue", position="center", callback=int
-            )
+            input(" Enter your age: ", highlight="blue", position="center", callback=int)
 
     def test_cant_set_not_type_function_to_input_type(self):
         with pytest.raises(ParameterTypeError):

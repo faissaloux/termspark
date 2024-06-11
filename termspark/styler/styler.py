@@ -29,9 +29,7 @@ class Styler:
 
     def element(self, element: Element):
         self.content = (
-            element["encoded_content"]
-            if "encoded_content" in element
-            else element["content"]
+            element["encoded_content"] if "encoded_content" in element else element["content"]
         )
         self.content_color = element["color"]
         self.content_highlight = element["highlight"]

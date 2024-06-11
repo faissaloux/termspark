@@ -119,12 +119,8 @@ class TermSpark:
             chars_number -= len(sentence)
 
         getattr(self, position)["content"] = new_content
-        getattr(self, position)["color"] = getattr(self, position)["color"][
-            0:breakIndex
-        ]
-        getattr(self, position)["highlight"] = getattr(self, position)["highlight"][
-            0:breakIndex
-        ]
+        getattr(self, position)["color"] = getattr(self, position)["color"][0:breakIndex]
+        getattr(self, position)["highlight"] = getattr(self, position)["highlight"][0:breakIndex]
 
     def max_left(self, max: int):
         self.__max_position("left", max)
@@ -147,9 +143,7 @@ class TermSpark:
         structured_data = Structurer(*content).form()
 
         if not positionContent:
-            positionContent = {
-                key: [] for key in ["content", "color", "highlight", "style"]
-            }
+            positionContent = {key: [] for key in ["content", "color", "highlight", "style"]}
 
         for elem in positionContent:
             positionContent[elem].append(
@@ -223,9 +217,7 @@ class TermSpark:
         if not_empty_positions > 1:
             raise MultiplePositionsNotSupportedError()
 
-        empty_space = self.get_width() - len(
-            "".join(getattr(self, active_position)["content"])
-        )
+        empty_space = self.get_width() - len("".join(getattr(self, active_position)["content"]))
 
         if active_position == "left":
             extra_left_space = ""
@@ -238,9 +230,7 @@ class TermSpark:
 
             extra_left_space = " " * half_empty_space
             extra_right_space = (
-                " " * (half_empty_space + 1)
-                if empty_space % 2 != 0
-                else " " * half_empty_space
+                " " * (half_empty_space + 1) if empty_space % 2 != 0 else " " * half_empty_space
             )
 
         getattr(self, active_position)["content"][0] = (
@@ -291,11 +281,7 @@ class TermSpark:
         if len(center_content) > 0:
             if self.mode == "raw":
                 raw_separator = self.separator.get_raw_content()
-                center = (
-                    raw_separator["left"]
-                    + "".join(center_content)
-                    + raw_separator["right"]
-                )
+                center = raw_separator["left"] + "".join(center_content) + raw_separator["right"]
             else:
                 center = (
                     styled_separator["left"]
