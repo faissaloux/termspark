@@ -62,9 +62,7 @@ def input(
         raise ParameterTypeError("print", "type", builtinType(type), builtinType)
 
     if builtinType(callback) != types.FunctionType:
-        raise ParameterTypeError(
-            "print", "callback", builtinType(type), types.FunctionType
-        )
+        raise ParameterTypeError("print", "callback", builtinType(type), types.FunctionType)
 
     print(prompt, color, highlight, style, position, separator, full_width)
 

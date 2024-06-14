@@ -21,9 +21,7 @@ class TestTrim:
         terminal_width = termspark.get_width()
 
         text = "A" * (terminal_width + 10)
-        termspark = termspark.spark_left(["A" * 8]).spark_right(
-            [text, "red"], [text, "blue"]
-        )
+        termspark = termspark.spark_left(["A" * 8]).spark_right([text, "red"], [text, "blue"])
         termspark.spark()
 
         assert (

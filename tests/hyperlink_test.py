@@ -3,10 +3,7 @@ from termspark.hyperlink.hyperlink import Hyperlink
 
 class TestHyperlink:
     def test_attributes(self):
-        assert (
-            Hyperlink.HYPERLINK_PATTERN
-            == "\\[([^\\[]*?)]\\(\\s*(http[s]?://[^)]+)\\s*\\)"
-        )
+        assert Hyperlink.HYPERLINK_PATTERN == "\\[([^\\[]*?)]\\(\\s*(http[s]?://[^)]+)\\s*\\)"
         assert Hyperlink.HYPERLINK_PREFIX == "\x1b]8;;"
         assert Hyperlink.HYPERLINK_SUFFIX == "\x1b]8;;"
         assert Hyperlink.RESET == "\x1b\\\\"

@@ -25,9 +25,7 @@ HyperlinkMatch = TypedDict(
 class Hyperlink:
     PLACEHOLDER_PATTERN: Final[str] = "[^\\[]*?"
     URL_PATTERN: Final[str] = "http[s]?://[^)]+"
-    HYPERLINK_PATTERN: Final[str] = (
-        f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
-    )
+    HYPERLINK_PATTERN: Final[str] = f"\\[({PLACEHOLDER_PATTERN})]\\(\\s*({URL_PATTERN})\\s*\\)"
 
     HYPERLINK_PREFIX: Final[str] = "\x1b]8;;"
     HYPERLINK_SUFFIX: Final[str] = "\x1b]8;;"
@@ -40,9 +38,7 @@ class Hyperlink:
     def set_content(self, content: List[str]):
         self.content = content
 
-    def reformat(
-        self, content: Dict[str, list], detected: Dict[int, list]
-    ) -> List[str]:
+    def reformat(self, content: Dict[str, list], detected: Dict[int, list]) -> List[str]:
         for index in range(len(content["content"]) - 1, -1, -1):
             new_content = content["content"].copy()
 
@@ -57,9 +53,7 @@ class Hyperlink:
                         hyperlink_to_insert = new_content[index][hyperlink_position:]
                         if new_content[index] != hyperlink_to_insert:
                             new_content.insert(index + 1, hyperlink_to_insert)
-                            new_content[index] = new_content[index].replace(
-                                hyperlink_to_insert, ""
-                            )
+                            new_content[index] = new_content[index].replace(hyperlink_to_insert, "")
 
                             self.__copy_attributes(content, index, 1)
 
@@ -132,9 +126,7 @@ class Hyperlink:
             hyperlinks_found = re.findall(Hyperlink.HYPERLINK_PATTERN, content)
 
             for hyperlink_found in hyperlinks_found:
-                replaces[f"[{hyperlink_found[0]}]({hyperlink_found[1]})"] = (
-                    hyperlink_found[0]
-                )
+                replaces[f"[{hyperlink_found[0]}]({hyperlink_found[1]})"] = hyperlink_found[0]
 
             for replace_from, replace_by in replaces.items():
                 replaced_content = replaced_content.replace(replace_from, replace_by)

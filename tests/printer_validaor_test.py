@@ -23,6 +23,4 @@ class TestPrinterValidator:
 
     def test_validate_all(self):
         with pytest.raises(PrinterArgError):
-            PrinterValidator("right").validate(
-                ["termspark"], ["black"], ["green"], ["bold"]
-            )
+            PrinterValidator("right").validate(["termspark"], ["black"], ["green"], ["bold"])
