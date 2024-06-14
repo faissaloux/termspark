@@ -37,6 +37,7 @@ nav:
 - Usage: usage.md
 - Changelog: changelog.md
 - License: license.md
+- Upgrading: upgrading.md
 
 markdown_extensions:
 - pymdownx.highlight
@@ -44,6 +45,7 @@ markdown_extensions:
 
 extra:
   version:
+    provider: mike
     default: 2.x
     alias: true
   social:
