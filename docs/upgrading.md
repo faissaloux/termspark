@@ -1,4 +1,4 @@
-## from 1.x to 2.x
+## From 1.x to 2.x
 
 ### Renamed colors
 ```diff
