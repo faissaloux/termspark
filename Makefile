@@ -23,6 +23,9 @@ update_docs_changelog: clean
 build_docs: clean
 	mkdocs build -d docs_build
 
+deploy_docs: clean
+	mike deploy --push 2.x
+
 build: clean
 	$(PYTHON) setup.py bdist_wheel
 
