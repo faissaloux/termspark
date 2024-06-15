@@ -37,8 +37,10 @@ nav:
 - Usage: usage.md
 - Changelog: changelog.md
 - License: license.md
+- Upgrading: upgrading.md
 
 markdown_extensions:
+- admonition
 - pymdownx.highlight
 - pymdownx.superfences
 

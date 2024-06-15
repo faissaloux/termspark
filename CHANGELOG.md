@@ -1,4 +1,4 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.0...main)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.0...1.x)
 
 
 ## [v1.9.0](https://github.com/faissaloux/termspark/compare/v1.8.1...v1.9.0) - 2023-12-26
