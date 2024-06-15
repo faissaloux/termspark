@@ -2,27 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://termspark.faissaloux.com/2.x/</loc>
-         <lastmod>2024-06-14</lastmod>
+         <lastmod>2024-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://termspark.faissaloux.com/2.x/changelog/</loc>
-         <lastmod>2024-06-14</lastmod>
+         <lastmod>2024-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://termspark.faissaloux.com/2.x/installation/</loc>
-         <lastmod>2024-06-14</lastmod>
+         <lastmod>2024-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://termspark.faissaloux.com/2.x/license/</loc>
-         <lastmod>2024-06-14</lastmod>
+         <lastmod>2024-06-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://termspark.faissaloux.com/2.x/upgrading/</loc>
+         <lastmod>2024-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://termspark.faissaloux.com/2.x/usage/</loc>
-         <lastmod>2024-06-14</lastmod>
+         <lastmod>2024-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
