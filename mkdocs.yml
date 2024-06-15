@@ -43,6 +43,10 @@ markdown_extensions:
 - pymdownx.superfences
 
 extra:
+  version:
+    provider: mike
+    default: 2.x
+    alias: true
   social:
   - icon: fontawesome/brands/github-alt
     link: https://github.com/faissaloux
