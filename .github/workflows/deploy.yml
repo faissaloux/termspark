@@ -1,7 +1,8 @@
 name: Build and Deploy Docs
 on:
   push:
-  pull_request:
+    tags:
+    - '*'
 
 jobs:
   docs-deploy:
