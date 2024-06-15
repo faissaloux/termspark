@@ -1,0 +1,19 @@
+name: Build and Deploy Docs
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  docs-deploy:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v3
+    - name: Deploy docs
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
