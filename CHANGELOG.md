@@ -1,5 +1,10 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.0...1.x)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.1...1.x)
 
+## [v1.9.1](https://github.com/faissaloux/termspark/compare/v1.9.0...v1.9.1) - 2024-06-15
+### DOCUMENTATION
+- [1.x] Upgrading ([#97](https://github.com/faissaloux/termspark/pull/97))
+- Fix CONTRIBUTING Note ([#82](https://github.com/faissaloux/termspark/pull/82))
+- Update mardown highlights ([#76](https://github.com/faissaloux/termspark/pull/76))
 
 ## [v1.9.0](https://github.com/faissaloux/termspark/compare/v1.8.1...v1.9.0) - 2023-12-26
 ### ADDED
