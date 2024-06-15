@@ -1,4 +1,5 @@
 NAME = termspark
+VERSION = 2.x
 PYTHON = python3
 
 clean:
@@ -24,7 +25,10 @@ build_docs: clean
 	mkdocs build -d docs_build
 
 deploy_docs: clean
-	mike deploy --push 2.x
+	mike deploy $(VERSION)
+
+push_docs: clean
+	mike set-default --push $(VERSION)
 
 build: clean
 	$(PYTHON) setup.py bdist_wheel
