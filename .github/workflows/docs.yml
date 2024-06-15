@@ -23,8 +23,8 @@ jobs:
       run: make build_docs
     - name: Setup Docs Deploy
       run: |
-        git config --global user.name "Docs Deploy"
-        git config --global user.email "docs@dummy.bot.com"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
     - name: Build Docs
       run: |
         make deploy_docs
