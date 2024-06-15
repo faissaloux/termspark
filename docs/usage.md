@@ -1,5 +1,10 @@
 # Usage
 
+!!! warning
+
+    You're browsing the documentation for an old version of Termspark.
+    Consider upgrading to Termspark [2.x](/termspark/2.x).
+
 ### `print()`, but more!
 Import Termspark's print and take advantage of all its features, [colors](#you-can-also-paint-your-content), [highlights](#you-can-also-paint-your-content), [styles](#style), [hyperlinks](#hyperlinks) and more ...
 
