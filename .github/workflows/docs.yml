@@ -1,6 +1,9 @@
 name: Build and Deploy Docs
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - '*.x'
 
 jobs:
   docs-deploy:
