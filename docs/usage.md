@@ -247,6 +247,9 @@ You can style your text by passing it to `print() style parameter` or to `spark(
 - italic
 - overline
 - underline
+- curly underline
+- dotted underline
+- dashed underline
 - double underline
 - strike through
 - blink
