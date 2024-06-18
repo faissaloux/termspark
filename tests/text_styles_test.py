@@ -14,6 +14,15 @@ class TestTextStyles:
     def test_underline(self):
         assert Style.UNDERLINE == 4
 
+    def test_curly_underline(self):
+        assert Style.CURLY_UNDERLINE == "4:3"
+
+    def test_dotted_underline(self):
+        assert Style.DOTTED_UNDERLINE == "4:4"
+
+    def test_dashed_underline(self):
+        assert Style.DASHED_UNDERLINE == "4:5"
+
     def test_blink(self):
         assert Style.BLINK == 5
 
