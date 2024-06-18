@@ -6,6 +6,9 @@ class Style:
     DIM: Final[int] = 2
     ITALIC: Final[int] = 3
     UNDERLINE: Final[int] = 4
+    CURLY_UNDERLINE: Final[str] = "4:3"
+    DOTTED_UNDERLINE: Final[str] = "4:4"
+    DASHED_UNDERLINE: Final[str] = "4:5"
     BLINK: Final[int] = 5
     REVERSE: Final[int] = 7
     HIDDEN: Final[int] = 8
