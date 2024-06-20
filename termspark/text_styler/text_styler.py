@@ -13,6 +13,5 @@ class TextStyler:
         for style in styles:
             if style and hasattr(Style, style.upper()):
                 code += f"{self.PREFIX}{getattr(Style, style.upper())}{self.SUFFIX}"
-            code += ""
 
         return code
