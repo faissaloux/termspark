@@ -50,9 +50,9 @@ class TestPainter:
 
     def test_can_paint_rgb_color(self):
         painter = Painter()
-        paint_color = painter.paint_color("255,22,200")
+        paint_color = painter.paint_color("255,255,255")
 
-        assert paint_color == f"{Fore.RGB_PREFIX}255;22;200{painter.SUFFIX}"
+        assert paint_color == f"{Fore.RGB_PREFIX}255;255;255{painter.SUFFIX}"
 
     def test_paint_with_wrong_rgb_color(self):
         painter = Painter()
@@ -62,9 +62,9 @@ class TestPainter:
 
     def test_can_paint_rgb_highlight(self):
         painter = Painter()
-        paint_highlight = painter.paint_highlight("255,22,200")
+        paint_highlight = painter.paint_highlight("36,114,200")
 
-        assert paint_highlight == f"{Highlight.RGB_PREFIX}255;22;200{painter.SUFFIX}"
+        assert paint_highlight == f"{Highlight.RGB_PREFIX}36;114;200{painter.SUFFIX}"
 
     def test_paint_with_wrong_rgb_highlight(self):
         painter = Painter()
