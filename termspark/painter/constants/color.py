@@ -8,6 +8,11 @@ class Color(ABC):
     def PREFIX(self):
         pass
 
+    @property
+    @abstractmethod
+    def RGB_PREFIX(self):
+        pass
+
     BLACK: Final[int] = 0
     MAROON: Final[int] = 1
     GREEN: Final[int] = 2
