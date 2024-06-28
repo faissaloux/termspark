@@ -5,3 +5,4 @@ from termspark.painter.constants.color import Color
 
 class Fore(Color):
     PREFIX: Final[str] = "\x1b[38;5;"
+    RGB_PREFIX: Final[str] = "\x1b[38;2;"
