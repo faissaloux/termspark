@@ -238,6 +238,15 @@ termspark.spark()
 ```
 ![](https://github.com/faissaloux/termspark/assets/60013703/41be7d15-4cab-4f73-a460-89c6d254db78)
 
+### RGB
+We support RGB too!
+```python
+from termspark import print, line
+
+print(" RGB! ", color="255,255,255", highlight="36,114,200")
+line(highlight="36,114,200")
+```
+
 ### Style
 You can style your text by passing it to `print() style parameter` or to `spark([]) fourth list element`.
 
