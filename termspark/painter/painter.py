@@ -11,11 +11,11 @@ class Painter:
     RESET: Final[str] = "\x1b[0m"
 
     def __paint(self, color: str, type: Type[Color]) -> str:
-        if color and self.__is_rgb(color):
-            return f"{type.RGB_PREFIX}{color.replace(',', ';')}{self.SUFFIX}"
+        if hasattr(type, color.upper()):
+            color = getattr(type, color.upper())
 
-        if color and hasattr(type, color.upper()):
-            return f"{type.PREFIX}{getattr(type, color.upper())}{self.SUFFIX}"
+        if color and self.__is_rgb(color):
+            return f"{type.PREFIX}{color.replace(',', ';')}{self.SUFFIX}"
 
         return ""
 

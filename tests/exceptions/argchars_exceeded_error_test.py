@@ -1,5 +1,4 @@
 from termspark.exceptions.arg_chars_exceeded_error import ArgCharsExceededError
-from termspark.painter.constants.fore import Fore
 
 
 class TestArgCharsExceededError:
@@ -14,7 +13,7 @@ class TestArgCharsExceededError:
             word in str(left_exception)
             for word in [
                 "Sorry, separator can contain only one character",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )
 
@@ -23,12 +22,15 @@ class TestArgCharsExceededError:
             word in str(center_exception)
             for word in [
                 "Sorry, separator can contain only three character",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )
 
         right_exception = ArgCharsExceededError("line", "three")
         assert all(
             word in str(right_exception)
-            for word in ["Sorry, line can contain only three character", str(Fore.RED)]
+            for word in [
+                "Sorry, line can contain only three character",
+                "255;0;0",  # Red.
+            ]
         )

@@ -1,5 +1,4 @@
 from termspark.exceptions.min_not_reached_error import MinNotReachedError
-from termspark.painter.constants.fore import Fore
 
 
 class TestMinNotReachedError:
@@ -14,6 +13,6 @@ class TestMinNotReachedError:
             word in str(exception)
             for word in [
                 "max must be at least 1!",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )

@@ -4,10 +4,7 @@ from termspark.painter.constants.fore import Fore
 
 class TestFore:
     def test_prefix(self):
-        assert Fore.PREFIX == "\x1b[38;5;"
-
-    def test_rgb_prefix(self):
-        assert Fore.RGB_PREFIX == "\x1b[38;2;"
+        assert Fore.PREFIX == "\x1b[38;2;"
 
     def test_inherited_from_color(self):
         assert issubclass(Fore, Color)

@@ -1,5 +1,4 @@
 from termspark.exceptions.len_not_supported_error import LenNotSupportedError
-from termspark.painter.constants.fore import Fore
 
 
 class TestLenNotSupportedError:
@@ -14,6 +13,6 @@ class TestLenNotSupportedError:
             word in str(exception)
             for word in [
                 f"{exception.var} must contain {exception.length} character!",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )

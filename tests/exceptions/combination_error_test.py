@@ -1,5 +1,4 @@
 from termspark.exceptions.combination_error import CombinationError
-from termspark.painter.constants.fore import Fore
 
 
 class TestCombinationError:
@@ -13,6 +12,6 @@ class TestCombinationError:
             word in str(exception)
             for word in [
                 f"can't combine ('line', 'separator')",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )
