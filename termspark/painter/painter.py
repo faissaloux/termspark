@@ -1,3 +1,4 @@
+import re
 from typing import Final, Type
 
 from .constants.color import Color
@@ -10,8 +11,12 @@ class Painter:
     RESET: Final[str] = "\x1b[0m"
 
     def __paint(self, color: str, type: Type[Color]) -> str:
-        if color and hasattr(type, color.upper()):
-            return f"{type.PREFIX}{getattr(type, color.upper())}{self.SUFFIX}"
+        if hasattr(type, color.upper()):
+            color = getattr(type, color.upper())
+
+        color = color.replace("_", "")
+        if color and self.__is_rgb(color):
+            return f"{type.PREFIX}{color.replace(',', ';')}{self.SUFFIX}"
 
         return ""
 
@@ -20,3 +25,12 @@ class Painter:
 
     def paint_highlight(self, highlight: str) -> str:
         return self.__paint(highlight, Highlight)
+
+    def __is_rgb(self, color: str) -> bool:
+        regex = r"(\d+),\s*(\d+),\s*(\d+)"
+        match = re.match(regex, color)
+
+        if match is None:
+            return False
+
+        return all(0 <= int(group) <= 255 for group in match.groups())

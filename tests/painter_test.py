@@ -16,13 +16,13 @@ class TestPainter:
         painter = Painter()
         paint_color = painter.paint_color("red")
 
-        assert paint_color == f"{Fore.PREFIX}{Fore.RED}{painter.SUFFIX}"
+        assert paint_color == f"{Fore.PREFIX}255;0;0{painter.SUFFIX}"
 
     def test_can_paint_existed_multi_words_fore_color(self):
         painter = Painter()
         paint_color = painter.paint_color("light_green")
 
-        assert paint_color == f"{Fore.PREFIX}{Fore.LIGHT_GREEN}{painter.SUFFIX}"
+        assert paint_color == f"{Fore.PREFIX}135;255;95{painter.SUFFIX}"
 
     def test_return_empty_string_when_unexisted_fore_color(self):
         painter = Painter()
@@ -34,16 +34,52 @@ class TestPainter:
         painter = Painter()
         paint_highlight = painter.paint_highlight("white")
 
-        assert paint_highlight == f"{Highlight.PREFIX}{Highlight.WHITE}{painter.SUFFIX}"
+        assert paint_highlight == f"{Highlight.PREFIX}255;255;255{painter.SUFFIX}"
 
     def test_can_paint_existed_multi_words_highlight(self):
         painter = Painter()
         paint_highlight = painter.paint_highlight("dark_blue")
 
-        assert paint_highlight == f"{Highlight.PREFIX}{Highlight.DARK_BLUE}{painter.SUFFIX}"
+        assert paint_highlight == f"{Highlight.PREFIX}0;0;135{painter.SUFFIX}"
 
     def test_return_empty_string_when_unexisted_highlight(self):
         painter = Painter()
         paint_highlight = painter.paint_highlight("unexisted")
+
+        assert paint_highlight == ""
+
+    def test_can_paint_rgb_color(self):
+        painter = Painter()
+        paint_color = painter.paint_color("255,255,255")
+
+        assert paint_color == f"{Fore.PREFIX}255;255;255{painter.SUFFIX}"
+
+    def test_allow_spaces_on_rgb_color(self):
+        painter = Painter()
+        paint_color = painter.paint_color("_255,_255,_____255_")
+
+        assert paint_color == f"{Fore.PREFIX}255;255;255{painter.SUFFIX}"
+
+    def test_paint_with_wrong_rgb_color(self):
+        painter = Painter()
+        paint_color = painter.paint_color("255,22,256")
+
+        assert paint_color == ""
+
+    def test_can_paint_rgb_highlight(self):
+        painter = Painter()
+        paint_highlight = painter.paint_highlight("36,114,200")
+
+        assert paint_highlight == f"{Highlight.PREFIX}36;114;200{painter.SUFFIX}"
+
+    def test_allow_spaces_rgb_highlight(self):
+        painter = Painter()
+        paint_highlight = painter.paint_highlight("___36___,___114__,_200__")
+
+        assert paint_highlight == f"{Highlight.PREFIX}36;114;200{painter.SUFFIX}"
+
+    def test_paint_with_wrong_rgb_highlight(self):
+        painter = Painter()
+        paint_highlight = painter.paint_highlight("255,22,256")
 
         assert paint_highlight == ""

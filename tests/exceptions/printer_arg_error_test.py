@@ -1,5 +1,4 @@
 from termspark.exceptions.printer_arg_error import PrinterArgError
-from termspark.painter.constants.fore import Fore
 from termspark.painter.constants.highlight import Highlight
 
 
@@ -14,11 +13,11 @@ class TestPrinterArgError:
             word in str(left_exception)
             for word in [
                 "print_left()",
-                str(Highlight.RED),
+                str(Highlight.RED).replace(",", ";"),
                 " doesn't accept lists, maybe you wanna use ",
-                str(Fore.RED),
+                "255;0;0",  # Red.
                 " spark_left()",
-                str(Highlight.BLUE),
+                "0;0;255",  # Blue.
             ]
         )
 
@@ -27,11 +26,11 @@ class TestPrinterArgError:
             word in str(center_exception)
             for word in [
                 "print_center",
-                str(Highlight.RED),
+                str(Highlight.RED).replace(",", ";"),
                 " doesn't accept lists, maybe you wanna use ",
-                str(Fore.RED),
+                "255;0;0",  # Red.
                 " spark_center",
-                str(Highlight.BLUE),
+                "0;0;255",  # Blue.
             ]
         )
 
@@ -40,10 +39,10 @@ class TestPrinterArgError:
             word in str(right_exception)
             for word in [
                 "print_right",
-                str(Highlight.RED),
+                str(Highlight.RED).replace(",", ";"),
                 " doesn't accept lists, maybe you wanna use ",
-                str(Fore.RED),
+                "255;0;0",  # Red.
                 " spark_right",
-                str(Highlight.BLUE),
+                "0;0;255",  # Blue.
             ]
         )

@@ -1,5 +1,4 @@
 from termspark.exceptions.position_not_supported_error import PositionNotSupportedError
-from termspark.painter.constants.fore import Fore
 
 
 class TestPositionNotSupportedError:
@@ -13,6 +12,6 @@ class TestPositionNotSupportedError:
             word in str(exception)
             for word in [
                 f"{exception.position} position is not supported!",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )

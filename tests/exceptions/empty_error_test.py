@@ -1,5 +1,4 @@
 from termspark.exceptions.empty_error import EmptyError
-from termspark.painter.constants.fore import Fore
 
 
 class TestEmptyError:
@@ -9,6 +8,6 @@ class TestEmptyError:
             word in str(exception)
             for word in [
                 "can't be empty! Set a line or fill content.",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )

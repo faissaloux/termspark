@@ -1,7 +1,6 @@
 from termspark.exceptions.multiple_positions_not_supported_error import (
     MultiplePositionsNotSupportedError,
 )
-from termspark.painter.constants.fore import Fore
 
 
 class TestMultiplePositionsNotSupportedError:
@@ -11,6 +10,6 @@ class TestMultiplePositionsNotSupportedError:
             word in str(exception)
             for word in [
                 "full_width() can only be used with one position!",
-                str(Fore.RED),
+                "255;0;0",  # Red.
             ]
         )
