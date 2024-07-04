@@ -1,4 +1,8 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.1...1.x)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v1.9.2...1.x)
+
+## [v1.9.2](https://github.com/faissaloux/termspark/compare/v1.9.1...v1.9.2) - 2024-07-04
+### OPTIMISED
+- [1.x] Remove unnecessary line ([#100](https://github.com/faissaloux/termspark/pull/100))
 
 ## [v1.9.1](https://github.com/faissaloux/termspark/compare/v1.9.0...v1.9.1) - 2024-06-15
 ### DOCUMENTATION
