@@ -14,6 +14,7 @@ class Painter:
         if hasattr(type, color.upper()):
             color = getattr(type, color.upper())
 
+        color = color.replace("_", "")
         if color and self.__is_rgb(color):
             return f"{type.PREFIX}{color.replace(',', ';')}{self.SUFFIX}"
 
