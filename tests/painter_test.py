@@ -54,6 +54,12 @@ class TestPainter:
 
         assert paint_color == f"{Fore.PREFIX}255;255;255{painter.SUFFIX}"
 
+    def test_can_paint_tuple_rgb_color(self):
+        painter = Painter()
+        paint_color = painter.paint_color((255, 255, 255))
+
+        assert paint_color == f"{Fore.PREFIX}255;255;255{painter.SUFFIX}"
+
     def test_allow_spaces_on_rgb_color(self):
         painter = Painter()
         paint_color = painter.paint_color("_255,_255,_____255_")
@@ -69,6 +75,12 @@ class TestPainter:
     def test_can_paint_rgb_highlight(self):
         painter = Painter()
         paint_highlight = painter.paint_highlight("36,114,200")
+
+        assert paint_highlight == f"{Highlight.PREFIX}36;114;200{painter.SUFFIX}"
+
+    def test_can_paint_tuple_rgb_highlight(self):
+        painter = Painter()
+        paint_highlight = painter.paint_highlight((36, 114, 200))
 
         assert paint_highlight == f"{Highlight.PREFIX}36;114;200{painter.SUFFIX}"
 
