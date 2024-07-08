@@ -11,17 +11,14 @@ class Painter:
     RESET: Final[str] = "\x1b[0m"
 
     def __paint(self, color: Union[str, tuple], kind: Type[Color]) -> str:
-        if type(color) == tuple:
-            color = RGB.to_str(color)
+        color_str: str = color if type(color) == str else RGB.to_str(color)
 
-        assert type(color) == str
-        if hasattr(kind, color.upper()):
-            color = getattr(kind, color.upper())
+        if hasattr(kind, color_str.upper()):
+            color_str = getattr(kind, color_str.upper())
 
-        assert type(color) == str
-        color = color.replace("_", "")
-        if color and RGB.check(color):
-            return f"{kind.PREFIX}{color.replace(',', ';')}{self.SUFFIX}"
+        color_str = color_str.replace("_", "")
+        if color_str and RGB.check(color_str):
+            return f"{kind.PREFIX}{color_str.replace(',', ';')}{self.SUFFIX}"
 
         return ""
 
