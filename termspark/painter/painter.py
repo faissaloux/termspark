@@ -13,8 +13,7 @@ class Painter:
     def __paint(self, color: Union[str, tuple], kind: Type[Color]) -> str:
         color_str: str = color if type(color) == str else RGB.to_str(color)
 
-        if hasattr(kind, color_str.upper()):
-            color_str = getattr(kind, color_str.upper())
+        color_str = getattr(kind, color_str.upper(), color_str)
 
         color_str = color_str.replace("_", "")
         if color_str and RGB.check(color_str):
