@@ -10,3 +10,17 @@ class TestListHelper:
 
     def test_none_to_snake(self):
         assert List().snake([None, "light blue"]) == [None, "light_blue"]
+
+    def test_list_has_rgb_to_snake(self):
+        assert List().snake([None, "light blue", "36,114,200"]) == [
+            None,
+            "light_blue",
+            "36,114,200",
+        ]
+
+    def test_list_has_tuple_rgb_to_snake(self):
+        assert List().snake([None, "light blue", (36, 114, 200)]) == [
+            None,
+            "light_blue",
+            (36, 114, 200),
+        ]

@@ -243,8 +243,13 @@ We support RGB too!
 ```python
 from termspark import print, line
 
+# String RGB
 print(" RGB! ", color="255,255,255", highlight="36,114,200")
 line(highlight="36,114,200")
+
+# Tuple RGB
+print(" Tuple RGB! ", color=(255, 255, 255), highlight=(36, 114, 200))
+line(highlight=(36,114,200))
 ```
 
 ### Style
