@@ -13,3 +13,12 @@ class HEX:
         match = re.match(regex, color)
 
         return match is not None
+
+    @staticmethod
+    def to_rgb(color: str) -> tuple:
+        color = color.lstrip("#")
+
+        if len(color) == 3:
+            color = "".join(2 * char for char in color)
+
+        return tuple(int(color[i : i + 2], 16) for i in (0, 2, 4))
