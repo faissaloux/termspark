@@ -1,4 +1,9 @@
-## [Unreleased](https://github.com/faissaloux/termspark/compare/v2.1.0...2.x)
+## [Unreleased](https://github.com/faissaloux/termspark/compare/v2.2.0...2.x)
+
+## [v2.2.0](https://github.com/faissaloux/termspark/compare/v2.1.0...v2.2.0) - 2024-07-11
+### ADDED
+- [2.x] HEX support ([#104](https://github.com/faissaloux/termspark/pull/104))
+- [2.x] Support tuple rgb ([#103](https://github.com/faissaloux/termspark/pull/103))
 
 ## [v2.1.0](https://github.com/faissaloux/termspark/compare/v2.0.0...v2.1.0) - 2024-07-04
 ### ADDED
