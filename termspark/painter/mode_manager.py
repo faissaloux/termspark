@@ -1,7 +1,7 @@
 from importlib import import_module
 from typing import Union
 
-from termspark.painter.modes.mode import Mode
+from .modes.mode import Mode
 
 
 class ModeManager:

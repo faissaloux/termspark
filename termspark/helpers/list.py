@@ -1,6 +1,6 @@
 from typing import Sequence, Union
 
-from termspark.painter.modes.rgb import RGB
+from ..painter.modes.rgb import RGB
 
 
 class List:
