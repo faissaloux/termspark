@@ -1,10 +1,15 @@
 import re
 from typing import Sequence, Union
 
+from .mode import Mode
 
-class RGB:
+
+class RGB(Mode):
+    def __init__(self, color: Union[str, tuple]):
+        self.__color = color if type(color) == str else RGB.to_str(color)
+
     @staticmethod
-    def check(color: Union[str, Sequence[str]]) -> bool:
+    def check(color: Union[str, Sequence[str], None]) -> bool:
         if color is None:
             return False
 
@@ -29,3 +34,11 @@ class RGB:
             return color
 
         return ",".join([str(comp) for comp in color])
+
+    def format(self) -> Union[str, bool]:
+        self.__color = self.__color.replace("_", "")
+
+        if self.check(self.__color):
+            return self.__color.replace(",", ";")
+
+        return False
