@@ -1,4 +1,4 @@
-from termspark.helpers.hex import HEX
+from termspark.painter.modes.hex import HEX
 
 
 class TestHEX:
@@ -29,3 +29,7 @@ class TestHEX:
         assert HEX.to_rgb("#000") == (0, 0, 0)
         assert HEX.to_rgb("#fff") == (255, 255, 255)
         assert HEX.to_rgb("#FFF") == (255, 255, 255)
+
+    def test_format(self):
+        assert HEX("#2472C8").format() == ("36;114;200")
+        assert HEX("#FFF").format() == ("255;255;255")

@@ -72,6 +72,18 @@ class TestPainter:
 
         assert paint_color == ""
 
+    def test_can_paint_hex_color(self):
+        painter = Painter()
+        paint_color = painter.paint_color("#FFF")
+
+        assert paint_color == f"{Fore.PREFIX}255;255;255{painter.SUFFIX}"
+
+    def test_paint_with_wrong_hex_color(self):
+        painter = Painter()
+        paint_color = painter.paint_color("#FFG")
+
+        assert paint_color == ""
+
     def test_can_paint_rgb_highlight(self):
         painter = Painter()
         paint_highlight = painter.paint_highlight("36,114,200")
@@ -93,5 +105,17 @@ class TestPainter:
     def test_paint_with_wrong_rgb_highlight(self):
         painter = Painter()
         paint_highlight = painter.paint_highlight("255,22,256")
+
+        assert paint_highlight == ""
+
+    def test_can_paint_hex_highlight(self):
+        painter = Painter()
+        paint_highlight = painter.paint_highlight("#2472C8")
+
+        assert paint_highlight == f"{Highlight.PREFIX}36;114;200{painter.SUFFIX}"
+
+    def test_paint_with_wrong_hex_highlight(self):
+        painter = Painter()
+        paint_highlight = painter.paint_highlight("2472")
 
         assert paint_highlight == ""

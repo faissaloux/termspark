@@ -1,9 +1,9 @@
 from typing import Final, Type, Union
 
-from ..helpers.rgb import RGB
 from .constants.color import Color
 from .constants.fore import Fore
 from .constants.highlight import Highlight
+from .mode_manager import ModeManager
 
 
 class Painter:
@@ -11,13 +11,11 @@ class Painter:
     RESET: Final[str] = "\x1b[0m"
 
     def __paint(self, color: Union[str, tuple], kind: Type[Color]) -> str:
-        color_str: str = color if type(color) == str else RGB.to_str(color)
+        if color:
+            color = ModeManager(color).format()
 
-        color_str = getattr(kind, color_str.upper(), color_str)
-
-        color_str = color_str.replace("_", "")
-        if color_str and RGB.check(color_str):
-            return f"{kind.PREFIX}{color_str.replace(',', ';')}{self.SUFFIX}"
+        if color:
+            return f"{kind.PREFIX}{color}{self.SUFFIX}"
 
         return ""
 
