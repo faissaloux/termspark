@@ -1,8 +1,6 @@
 import os
 from typing import Dict, Final, List, Optional, Sequence, Union
 
-from termspark.line.line import Line
-
 from .exceptions.combination_error import CombinationError
 from .exceptions.empty_error import EmptyError
 from .exceptions.len_not_supported_error import LenNotSupportedError
@@ -11,6 +9,7 @@ from .exceptions.multiple_positions_not_supported_error import (
     MultiplePositionsNotSupportedError,
 )
 from .hyperlink.hyperlink import EncodedHyperlink, Hyperlink
+from .line.line import Line
 from .separator.separator import Separator
 from .structurer.structurer import Structurer
 from .styler.styler import Styler

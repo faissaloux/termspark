@@ -1,8 +1,8 @@
 from typing import Union
 
-from termspark.painter.modes.hex import HEX
-from termspark.painter.modes.name import Name
-from termspark.painter.modes.rgb import RGB
+from .modes.hex import HEX
+from .modes.name import Name
+from .modes.rgb import RGB
 
 
 class ModeManager:
