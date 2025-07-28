@@ -13,20 +13,20 @@ repos:
   - id: pretty-format-json
     args: [--autofix]
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.14.0
+  rev: v2.15.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix]
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.14.0  # Supports py3.8
+  rev: v1.17.0  # Supports py3.8
   hooks:
   - id: mypy
 - repo: https://github.com/PyCQA/isort
-  rev: 5.13.2 # Supports py3.8
+  rev: 6.0.1 # Supports py3.8
   hooks:
   - id: isort
 - repo: https://github.com/psf/black
-  rev: 24.8.0 # Supports py3.8
+  rev: 25.1.0 # Supports py3.8
   hooks:
   - id: black
     args:
