@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: check-merge-conflict
   - id: check-added-large-files
@@ -13,20 +13,20 @@ repos:
   - id: pretty-format-json
     args: [--autofix]
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.14.0
+  rev: v2.15.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix]
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.14.0  # Supports py3.8
+  rev: v1.18.2  # Supports py3.8
   hooks:
   - id: mypy
 - repo: https://github.com/PyCQA/isort
-  rev: 5.13.2 # Supports py3.8
+  rev: 7.0.0 # Supports py3.8
   hooks:
   - id: isort
-- repo: https://github.com/psf/black
-  rev: 24.8.0 # Supports py3.8
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 25.11.0 # Supports py3.8
   hooks:
   - id: black
     args:
