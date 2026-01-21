@@ -145,9 +145,7 @@ class TermSpark:
             positionContent = {key: [] for key in ["content", "color", "highlight", "style"]}
 
         for elem in positionContent:
-            positionContent[elem].append(
-                structured_data[elem]  # type:ignore[literal-required]
-            )
+            positionContent[elem].append(structured_data[elem])  # type: ignore[literal-required]
 
         return positionContent
 
