@@ -22,7 +22,7 @@ repos:
   hooks:
   - id: mypy
 - repo: https://github.com/PyCQA/isort
-  rev: 9.0.0b5
+  rev: 9.0.1
   hooks:
   - id: isort
 - repo: https://github.com/psf/black-pre-commit-mirror
@@ -32,7 +32,7 @@ repos:
     args:
     - --line-length=100
 - repo: https://github.com/PyCQA/autoflake
-  rev: v2.3.3
+  rev: v2.4.0
   hooks:
   - id: autoflake
     exclude: __init__.py
