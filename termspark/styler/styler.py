@@ -1,6 +1,5 @@
-from typing import Final
+from typing import Final, Sequence
 from typing import List as ListType
-from typing import Sequence
 
 from typing_extensions import TypedDict
 
